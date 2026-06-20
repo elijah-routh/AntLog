@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://x3ehb4jly4h3"
+path="res://.godot/imported/sitar_negative_quick.wav-a35b20c6ffd035444c7e25866cfc1f83.sample"
+
+[deps]
+
+source_file="res://Assets/SFX/400 Sounds Pack/Musical Effects/sitar_negative_quick.wav"
+dest_files=["res://.godot/imported/sitar_negative_quick.wav-a35b20c6ffd035444c7e25866cfc1f83.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

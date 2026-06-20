@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://d0rhomlily6un"]
+
+[ext_resource type="Script" uid="uid://b6n7y8y3hy5o6" path="res://Script/Item/ItemPickup.cs" id="1_sne73"]
+[ext_resource type="Resource" uid="uid://crs4uvcy5gl5v" path="res://Script/Item/Data/StarData.tres" id="2_e3c6d"]
+[ext_resource type="Material" uid="uid://1socim47qhxu" path="res://Art/tankGunAlpha.tres" id="3_47uug"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_yspco"]
+height = 0.15
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yspco"]
+size = Vector3(1, 1, 0.15)
+
+[node name="Star" type="Area3D" unique_id=1889842609]
+collision_layer = 4
+script = ExtResource("1_sne73")
+Item = ExtResource("2_e3c6d")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=783234955]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_yspco")
+surface_material_override/0 = ExtResource("3_47uug")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=482548669]
+shape = SubResource("BoxShape3D_yspco")

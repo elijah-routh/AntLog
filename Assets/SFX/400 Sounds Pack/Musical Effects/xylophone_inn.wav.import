@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://rgprmub2ti5g"
+path="res://.godot/imported/xylophone_inn.wav-5fdcb8a80ba3ac0414507ad719dfd9d4.sample"
+
+[deps]
+
+source_file="res://Assets/SFX/400 Sounds Pack/Musical Effects/xylophone_inn.wav"
+dest_files=["res://.godot/imported/xylophone_inn.wav-5fdcb8a80ba3ac0414507ad719dfd9d4.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,23 @@
+Scenario 1 : Create Signal - Signal Sender
+Steps -> 
+
+To create new custom signal
+[Signal] public delegate void DamagedEventHandler(float damage);
+
+Send custom signal
+EmitSignal(SignalName.Damaged, damage);
+
+Scenario 2 :  Signal Listener
+Steps -> 
+
+Add a function to execute when signal is recieved
+public override void _Ready()
+{
+	BodyEntered += OnBodyEntered;
+}
+
+Create function usable by premade signal
+private void OnBodyEntered(Node3D body)
+{
+
+}

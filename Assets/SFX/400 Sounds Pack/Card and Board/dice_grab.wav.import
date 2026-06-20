@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b6fgnbs3cctln"
+path="res://.godot/imported/dice_grab.wav-2477ae351e0266f548a5f50826f879ac.sample"
+
+[deps]
+
+source_file="res://Assets/SFX/400 Sounds Pack/Card and Board/dice_grab.wav"
+dest_files=["res://.godot/imported/dice_grab.wav-2477ae351e0266f548a5f50826f879ac.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

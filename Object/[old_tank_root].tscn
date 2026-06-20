@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://2hf38yfn370h"]
+
+[ext_resource type="PackedScene" uid="uid://dli6ligenhpeg" path="res://Assets/Imports/stylized_tank.tscn" id="2_yq44k"]
+[ext_resource type="Script" uid="uid://dqkidhdcjxqas" path="res://Script/Player/PlayerCamera.cs" id="3_t4uqo"]
+[ext_resource type="Script" uid="uid://c2b2jlce8ajra" path="res://Script/Player/PlayerMoveComponent.cs" id="4_xqr3a"]
+[ext_resource type="Script" uid="uid://bw8e2f22ssydd" path="res://Script/Player/PlayerInventory.cs" id="6_38s7f"]
+[ext_resource type="Script" uid="uid://chmvkchg48xg7" path="res://Script/Weapon/WeaponController.cs" id="7_sut7s"]
+[ext_resource type="Resource" uid="uid://co8x08kedqq8o" path="res://Script/Weapon/Data/TestTurret.tres" id="8_flmrq"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_aas58"]
+
+[node name="TankRoot" type="Node3D" unique_id=508092780]
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=392885907 node_paths=PackedStringArray("SpringArm")]
+transform = Transform3D(1, 0, 0, 0, 0.91363764, -0.40652943, 0, 0.40652943, 0.91363764, 0, 0, 0)
+script = ExtResource("3_t4uqo")
+SpringArm = NodePath("SpringArm3D")
+MinSpringLength = 5.0
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=1727021286]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+collision_mask = 14
+shape = SubResource("SphereShape3D_aas58")
+spring_length = 8.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=210543592]
+current = true
+
+[node name="Inventory" type="Node" parent="." unique_id=1587878622 groups=["player_inventory"]]
+script = ExtResource("6_38s7f")
+
+[node name="WeaponHolder" type="Node3D" parent="." unique_id=409194021]
+script = ExtResource("7_sut7s")
+CurrentWeapon = ExtResource("8_flmrq")
+
+[node name="Move" type="Node" parent="." unique_id=247101323]
+script = ExtResource("4_xqr3a")
+
+[node name="VisualRoot" type="Node3D" parent="." unique_id=1130078480]
+
+[node name="StylizedTank" parent="VisualRoot" unique_id=1662689700 instance=ExtResource("2_yq44k")]
+
+[editable path="VisualRoot/StylizedTank"]

@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://dxsevhhuvx4u"]
+
+[ext_resource type="Script" uid="uid://dqeb6o8xxjw4" path="res://Script/Enemy/TestEnemy.cs" id="1_wtueg"]
+[ext_resource type="Resource" uid="uid://cpctkfdnnf708" path="res://Script/Enemy/Data/TestEnemy1.tres" id="2_c6j6f"]
+[ext_resource type="Script" uid="uid://dblhsflas6dvv" path="res://Script/Entity/MoveComponent.cs" id="2_wg2dq"]
+[ext_resource type="Material" uid="uid://dp3mpvw3juhmi" path="res://Trenchbroom/textures/kenney_prototypeTextures/PNG/Purple/texture_08.tres" id="3_46ks3"]
+[ext_resource type="Script" uid="uid://cgiws4dpe64rt" path="res://Script/Entity/HealthComponent.cs" id="3_c6j6f"]
+[ext_resource type="Script" uid="uid://bal6jflxl81xj" path="res://Script/Enemy/EnemyController.cs" id="4_46ks3"]
+[ext_resource type="Material" uid="uid://1socim47qhxu" path="res://Art/tankGunAlpha.tres" id="4_ry5el"]
+[ext_resource type="PackedScene" uid="uid://cw5s7id8meur2" path="res://laser.tscn" id="8_ry5el"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7xaro"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7k104"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_5ipgq"]
+
+[node name="EnemyBody" type="CharacterBody3D" unique_id=773946387]
+collision_layer = 8
+collision_mask = 11
+script = ExtResource("1_wtueg")
+Data = ExtResource("2_c6j6f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1041290374]
+shape = SubResource("CapsuleShape3D_7xaro")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2079214735]
+mesh = SubResource("CapsuleMesh_7k104")
+surface_material_override/0 = ExtResource("3_46ks3")
+
+[node name="BarrelPivot" type="Node3D" parent="MeshInstance3D" unique_id=815083652]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.6, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D/BarrelPivot" unique_id=2089376380]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 1.5, 0, 0, 1)
+mesh = SubResource("BoxMesh_5ipgq")
+surface_material_override/0 = ExtResource("4_ry5el")
+
+[node name="Barrel" type="Marker3D" parent="MeshInstance3D/BarrelPivot/MeshInstance3D" unique_id=186099475]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5379825)
+
+[node name="MoveComponent" type="Node" parent="." unique_id=1518310129]
+script = ExtResource("2_wg2dq")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=839736057]
+script = ExtResource("3_c6j6f")
+DestroyOwnerOnDeath = true
+
+[node name="EnemyController" type="Node" parent="." unique_id=309207712 node_paths=PackedStringArray("LaserBarrel")]
+script = ExtResource("4_46ks3")
+OrbitDistance = 20.0
+OrbitStrength = 1.0
+ApproachStrength = 2.0
+SlamJumpHeight = 15.0
+LaserBarrel = NodePath("../MeshInstance3D/BarrelPivot/MeshInstance3D/Barrel")
+LaserBeamScene = ExtResource("8_ry5el")

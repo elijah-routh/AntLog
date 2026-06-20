@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://t4hhfr677r73"]
+
+[ext_resource type="Script" uid="uid://dhrulubvl8rqk" path="res://Script/Sound/SoundManager.cs" id="1_6dcse"]
+[ext_resource type="AudioStream" uid="uid://t6ors47j2aek" path="res://Assets/Music/not-jam-music-pack-zip_ogg/NotJamMusicPack_ogg/Loopable_ogg/UntitledTrack01_Loopable.ogg" id="3_6dcse"]
+[ext_resource type="AudioStream" uid="uid://cbls68lghy844" path="res://Assets/Music/not-jam-music-pack-zip_ogg/NotJamMusicPack_ogg/Loopable_ogg/KleptoLindaMountainB_Loopable.ogg" id="3_pkwmk"]
+[ext_resource type="AudioStream" uid="uid://dyvdlfrl82cpx" path="res://Assets/SFX/400 Sounds Pack/Weapons/harsh_thud.wav" id="4_412vp"]
+
+[node name="SoundManager" type="Node" unique_id=252104342 node_paths=PackedStringArray("MusicPlayer", "ButtonPlayer")]
+script = ExtResource("1_6dcse")
+MusicPlayer = NodePath("MusicPlayer")
+MenuMusic = ExtResource("3_pkwmk")
+LevelMusic = ExtResource("3_6dcse")
+ButtonPlayer = NodePath("ButtonPlayer")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=359551822]
+
+[node name="ButtonPlayer" type="AudioStreamPlayer" parent="." unique_id=806121701]
+stream = ExtResource("4_412vp")

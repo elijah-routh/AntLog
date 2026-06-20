@@ -1,0 +1,160 @@
+[gd_scene format=3 uid="uid://is0bi0rnssm1"]
+
+[ext_resource type="Script" uid="uid://bhsavsy1vwskm" path="res://Script/Player/Tank/TankController.cs" id="1_8ss2l"]
+[ext_resource type="Script" uid="uid://dqkidhdcjxqas" path="res://Script/Player/PlayerCamera.cs" id="2_xxyji"]
+[ext_resource type="Script" uid="uid://bw8e2f22ssydd" path="res://Script/Player/PlayerInventory.cs" id="3_tvt5u"]
+[ext_resource type="Script" uid="uid://chmvkchg48xg7" path="res://Script/Weapon/WeaponController.cs" id="4_s8fy4"]
+[ext_resource type="Resource" uid="uid://co8x08kedqq8o" path="res://Script/Weapon/Data/TestTurret.tres" id="5_wmgmf"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_3b3d4"]
+size = Vector3(1.5, 1, 2.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l26ek"]
+size = Vector3(1.5, 1, 2.5)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ssghm"]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 0.1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_isatg"]
+
+[node name="TestTankRoot" type="Node3D" unique_id=1711942093]
+
+[node name="VehicleBody3D" type="VehicleBody3D" parent="." unique_id=255835085 node_paths=PackedStringArray("LeftWheels", "RightWheels")]
+collision_mask = 14
+mass = 200.0
+gravity_scale = 2.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -3, 0)
+linear_damp = 5.0
+angular_damp = 5.0
+engine_force = 680.59
+brake = 19.7
+steering = 1.5515977
+script = ExtResource("1_8ss2l")
+AlignSpeed = 1.0
+TurnMultiplier = 1.0
+LeftWheels = [NodePath("LeftWheel"), NodePath("LeftWheel2"), NodePath("LeftWheel3")]
+RightWheels = [NodePath("RightWheel"), NodePath("RightWheel2"), NodePath("RightWheel3")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D" unique_id=2147034666]
+mesh = SubResource("BoxMesh_3b3d4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleBody3D" unique_id=1148156662]
+shape = SubResource("BoxShape3D_l26ek")
+debug_fill = false
+
+[node name="LeftWheel" type="VehicleWheel3D" parent="VehicleBody3D" unique_id=1189557221]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.919716, -0.5916655, 0.95486677)
+use_as_traction = true
+wheel_roll_influence = 6.0
+wheel_radius = 0.26
+suspension_travel = 0.05
+suspension_stiffness = 80.0
+suspension_max_force = 12000.0
+damping_compression = 10.0
+damping_relaxation = 10.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/LeftWheel" unique_id=1449671866]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_ssghm")
+
+[node name="LeftWheel2" type="VehicleWheel3D" parent="VehicleBody3D" unique_id=1669543475]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.919716, -0.5916655, -0.045133233)
+use_as_traction = true
+wheel_roll_influence = 6.0
+wheel_radius = 0.26
+suspension_travel = 0.05
+suspension_stiffness = 80.0
+suspension_max_force = 12000.0
+damping_compression = 10.0
+damping_relaxation = 10.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/LeftWheel2" unique_id=1857913218]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_ssghm")
+
+[node name="LeftWheel3" type="VehicleWheel3D" parent="VehicleBody3D" unique_id=728506892]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.919716, -0.5916655, -1.0451332)
+use_as_traction = true
+wheel_roll_influence = 6.0
+wheel_radius = 0.26
+suspension_travel = 0.05
+suspension_stiffness = 80.0
+suspension_max_force = 12000.0
+damping_compression = 10.0
+damping_relaxation = 10.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/LeftWheel3" unique_id=1613564419]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_ssghm")
+
+[node name="RightWheel" type="VehicleWheel3D" parent="VehicleBody3D" unique_id=1783976365]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9510835, -0.5916655, 0.95486677)
+use_as_traction = true
+wheel_roll_influence = 6.0
+wheel_radius = 0.26
+suspension_travel = 0.05
+suspension_stiffness = 80.0
+suspension_max_force = 12000.0
+damping_compression = 10.0
+damping_relaxation = 10.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/RightWheel" unique_id=82581797]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_ssghm")
+
+[node name="RightWheel2" type="VehicleWheel3D" parent="VehicleBody3D" unique_id=718771886]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9510835, -0.5916655, -0.045133233)
+use_as_traction = true
+wheel_roll_influence = 6.0
+wheel_radius = 0.26
+suspension_travel = 0.05
+suspension_stiffness = 80.0
+suspension_max_force = 12000.0
+damping_compression = 10.0
+damping_relaxation = 10.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/RightWheel2" unique_id=1388381434]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_ssghm")
+
+[node name="RightWheel3" type="VehicleWheel3D" parent="VehicleBody3D" unique_id=1294435724]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9510835, -0.5916655, -1.0451332)
+use_as_traction = true
+wheel_roll_influence = 6.0
+wheel_radius = 0.26
+suspension_travel = 0.05
+suspension_stiffness = 80.0
+suspension_max_force = 12000.0
+damping_compression = 10.0
+damping_relaxation = 10.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/RightWheel3" unique_id=1793559700]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_ssghm")
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=1691176032 node_paths=PackedStringArray("Target", "SpringArm")]
+transform = Transform3D(1, 0, 0, 0, 0.91363764, -0.40652943, 0, 0.40652943, 0.91363764, 0, 0, 0)
+script = ExtResource("2_xxyji")
+Target = NodePath("../VehicleBody3D")
+SpringArm = NodePath("SpringArm3D")
+MinSpringLength = 5.0
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=1371777644]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+collision_mask = 14
+shape = SubResource("SphereShape3D_isatg")
+spring_length = 8.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=876860289]
+current = true
+
+[node name="Inventory" type="Node" parent="." unique_id=620462207 groups=["player_inventory"]]
+script = ExtResource("3_tvt5u")
+
+[node name="WeaponHolder" type="Node3D" parent="." unique_id=1099937133 node_paths=PackedStringArray("Barrel")]
+script = ExtResource("4_s8fy4")
+CurrentWeapon = ExtResource("5_wmgmf")
+Barrel = NodePath("")

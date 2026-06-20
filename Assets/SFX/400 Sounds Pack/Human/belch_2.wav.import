@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://fsak1jki5fcd"
+path="res://.godot/imported/belch_2.wav-7dce7684c405c72c295a17b242034e53.sample"
+
+[deps]
+
+source_file="res://Assets/SFX/400 Sounds Pack/Human/belch_2.wav"
+dest_files=["res://.godot/imported/belch_2.wav-7dce7684c405c72c295a17b242034e53.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

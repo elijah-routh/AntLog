@@ -1,0 +1,159 @@
+[gd_scene format=3 uid="uid://bcpcyrk5h032x"]
+
+[ext_resource type="Script" uid="uid://54c8fol816xe" path="res://Script/Player/Tank/Warthog.cs" id="1_55fhy"]
+[ext_resource type="Script" uid="uid://dqkidhdcjxqas" path="res://Script/Player/PlayerCamera.cs" id="2_55fhy"]
+[ext_resource type="Material" uid="uid://oalp035575kt" path="res://Trenchbroom/textures/kenney_prototypeTextures/PNG/Orange/texture_08.tres" id="2_73jbu"]
+[ext_resource type="Script" uid="uid://chqufperkix03" path="res://Script/Weapon/TurretController.cs" id="2_v6311"]
+[ext_resource type="Material" uid="uid://1socim47qhxu" path="res://Art/tankGunAlpha.tres" id="2_ydpxq"]
+[ext_resource type="Script" uid="uid://bw8e2f22ssydd" path="res://Script/Player/PlayerInventory.cs" id="3_ydpxq"]
+[ext_resource type="Script" uid="uid://chmvkchg48xg7" path="res://Script/Weapon/WeaponController.cs" id="4_v6311"]
+[ext_resource type="Resource" uid="uid://co8x08kedqq8o" path="res://Script/Weapon/Data/TestTurret.tres" id="5_73jbu"]
+[ext_resource type="Script" uid="uid://b0djdbskxxhsb" path="res://Script/Player/Tank/BoostComponent.cs" id="9_jvr51"]
+[ext_resource type="Script" uid="uid://cgiws4dpe64rt" path="res://Script/Entity/HealthComponent.cs" id="10_131ej"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qhabs"]
+size = Vector3(1.5, 1, 2.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xifw6"]
+size = Vector3(1.5, 1, 2.5)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jkqao"]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 0.1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_v6311"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_73jbu"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_jvr51"]
+
+[node name="Warthog" type="Node3D" unique_id=1653131424]
+
+[node name="WarthogBody3D" type="VehicleBody3D" parent="." unique_id=481016929 node_paths=PackedStringArray("Boost", "Health", "FrontLeftWheel", "RearLeftWheel", "FrontRightWheel", "RearRightWheel") groups=["player"]]
+collision_mask = 14
+mass = 200.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -3, 0)
+linear_damp = 2.0
+angular_damp = 4.0
+engine_force = 680.59
+brake = 19.7
+steering = 1.5515977
+script = ExtResource("1_55fhy")
+Boost = NodePath("../BoostComponent")
+Health = NodePath("../HealthComponent")
+FrontLeftWheel = NodePath("LeftWheel")
+RearLeftWheel = NodePath("LeftWheel3")
+FrontRightWheel = NodePath("RightWheel")
+RearRightWheel = NodePath("RightWheel3")
+SuspensionStiffness = 50.0
+Acceleration = 5000.0
+MaxSpeed = 60.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WarthogBody3D" unique_id=309705436]
+mesh = SubResource("BoxMesh_qhabs")
+surface_material_override/0 = ExtResource("2_73jbu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WarthogBody3D" unique_id=123669687]
+shape = SubResource("BoxShape3D_xifw6")
+debug_fill = false
+
+[node name="LeftWheel" type="VehicleWheel3D" parent="WarthogBody3D" unique_id=1501590998]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.5916655, 0.95486677)
+use_as_traction = true
+use_as_steering = true
+wheel_roll_influence = 6.0
+wheel_radius = 0.26
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WarthogBody3D/LeftWheel" unique_id=482881628]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_jkqao")
+
+[node name="LeftWheel3" type="VehicleWheel3D" parent="WarthogBody3D" unique_id=1395476976]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.5916655, -1.0451332)
+use_as_traction = true
+wheel_roll_influence = 6.0
+wheel_radius = 0.26
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WarthogBody3D/LeftWheel3" unique_id=1350943274]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_jkqao")
+
+[node name="RightWheel" type="VehicleWheel3D" parent="WarthogBody3D" unique_id=951226796]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, -0.5916655, 0.95486677)
+use_as_traction = true
+use_as_steering = true
+wheel_roll_influence = 6.0
+wheel_radius = 0.26
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WarthogBody3D/RightWheel" unique_id=1610091576]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_jkqao")
+
+[node name="RightWheel3" type="VehicleWheel3D" parent="WarthogBody3D" unique_id=769570748]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, -0.5916655, -1.0451332)
+use_as_traction = true
+wheel_roll_influence = 6.0
+wheel_radius = 0.26
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WarthogBody3D/RightWheel3" unique_id=2068005353]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_jkqao")
+
+[node name="TurretPivot" type="Node3D" parent="WarthogBody3D" unique_id=1905930771 node_paths=PackedStringArray("CameraPivot", "TurretPivot", "BarrelPivot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.19513702, 0.64233685)
+script = ExtResource("2_v6311")
+CameraPivot = NodePath("../../CameraPivot")
+TurretPivot = NodePath(".")
+BarrelPivot = NodePath("MeshInstance3D/BarrelPivot")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WarthogBody3D/TurretPivot" unique_id=786823409]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0.6, 0)
+mesh = SubResource("CylinderMesh_v6311")
+surface_material_override/0 = ExtResource("2_ydpxq")
+
+[node name="BarrelPivot" type="Node3D" parent="WarthogBody3D/TurretPivot/MeshInstance3D" unique_id=264933522]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WarthogBody3D/TurretPivot/MeshInstance3D/BarrelPivot" unique_id=1262417276]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 1.5, 0, 0, 1)
+mesh = SubResource("BoxMesh_73jbu")
+surface_material_override/0 = ExtResource("2_ydpxq")
+
+[node name="Barrel" type="Marker3D" parent="WarthogBody3D/TurretPivot/MeshInstance3D/BarrelPivot/MeshInstance3D" unique_id=1561841234]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=1621150238 node_paths=PackedStringArray("Target", "SpringArm")]
+transform = Transform3D(1, 0, 0, 0, 0.91363764, -0.40652943, 0, 0.40652943, 0.91363764, 0, 0, 0)
+script = ExtResource("2_55fhy")
+Target = NodePath("../WarthogBody3D")
+Offset = Vector3(0, 2.5, 0)
+SpringArm = NodePath("SpringArm3D")
+MinSpringLength = 5.0
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=2092623310]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+collision_mask = 14
+shape = SubResource("SphereShape3D_jvr51")
+spring_length = 8.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=200359611]
+current = true
+
+[node name="Inventory" type="Node" parent="." unique_id=125780023 groups=["player_inventory"]]
+script = ExtResource("3_ydpxq")
+
+[node name="WeaponHolder" type="Node3D" parent="." unique_id=235199083 node_paths=PackedStringArray("Barrel")]
+script = ExtResource("4_v6311")
+CurrentWeapon = ExtResource("5_73jbu")
+Barrel = NodePath("../WarthogBody3D/TurretPivot/MeshInstance3D/BarrelPivot/MeshInstance3D/Barrel")
+
+[node name="BoostComponent" type="Node" parent="." unique_id=64884975]
+script = ExtResource("9_jvr51")
+RequireGrounded = false
+RequireForwardThrottle = false
+
+[node name="HealthComponent" type="Node" parent="." unique_id=402165270]
+script = ExtResource("10_131ej")
+DestroyOwnerOnDeath = true

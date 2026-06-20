@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://crs4uvcy5gl5v"]
+
+[ext_resource type="Texture2D" uid="uid://b20mrjlr4nl0o" path="res://Assets/Images/FunnyFish.png" id="1_77ewk"]
+[ext_resource type="Script" uid="uid://w01n2mr31tfk" path="res://Script/Item/ItemData.cs" id="1_ggwcs"]
+
+[resource]
+script = ExtResource("1_ggwcs")
+Id = "star"
+DisplayName = "Star"
+Icon = ExtResource("1_77ewk")
+metadata/_custom_type_script = "uid://w01n2mr31tfk"

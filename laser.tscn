@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cw5s7id8meur2"]
+
+[ext_resource type="Script" uid="uid://m6qk0l3vdroq" path="res://Script/Weapon/Projectile/LaserBeam.cs" id="1_fn5yt"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_oes6l"]
+top_radius = 0.3
+bottom_radius = 0.3
+height = 0.01
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fn5yt"]
+transparency = 1
+albedo_color = Color(0.8666667, 0.07450981, 0, 0.8392157)
+emission_enabled = true
+emission = Color(0.8666667, 0.07450981, 0, 1)
+emission_energy_multiplier = 10.0
+
+[node name="Laser" type="RayCast3D" unique_id=1207442033 node_paths=PackedStringArray("BeamMesh")]
+collision_mask = 11
+debug_shape_custom_color = Color(0, 0, 1, 1)
+script = ExtResource("1_fn5yt")
+BeamMesh = NodePath("BeamMesh")
+
+[node name="BeamMesh" type="MeshInstance3D" parent="." unique_id=2011634553]
+mesh = SubResource("CylinderMesh_oes6l")
+surface_material_override/0 = SubResource("StandardMaterial3D_fn5yt")

@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://dhsq1cio25516"]
+
+[ext_resource type="Script" uid="uid://dqkidhdcjxqas" path="res://Script/Player/PlayerCamera.cs" id="1_62nw6"]
+[ext_resource type="Script" uid="uid://ul7s8q45rop0" path="res://Script/Player/PlayerController.cs" id="1_l8tau"]
+[ext_resource type="Material" uid="uid://bbgyd8jaflfkp" path="res://Art/tankAlpha.tres" id="2_e5oj2"]
+[ext_resource type="Script" uid="uid://chqufperkix03" path="res://Script/Weapon/TurretController.cs" id="3_4g26t"]
+[ext_resource type="Material" uid="uid://1socim47qhxu" path="res://Art/tankGunAlpha.tres" id="3_rjotr"]
+[ext_resource type="Script" uid="uid://chmvkchg48xg7" path="res://Script/Weapon/WeaponController.cs" id="5_car0r"]
+[ext_resource type="Script" uid="uid://bw8e2f22ssydd" path="res://Script/Player/PlayerInventory.cs" id="5_tfkfv"]
+[ext_resource type="Resource" uid="uid://co8x08kedqq8o" path="res://Script/Weapon/Data/TestTurret.tres" id="6_11a6d"]
+[ext_resource type="Script" uid="uid://c2b2jlce8ajra" path="res://Script/Player/PlayerMoveComponent.cs" id="8_roeef"]
+[ext_resource type="Script" uid="uid://c7ur3coklrfv1" path="res://Script/Player/GroundAlignComponent.cs" id="9_app8l"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_62nw6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_jkgat"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_l8tau"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_e5oj2"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_l8tau"]
+
+[node name="PlayerRoot" type="Node3D" unique_id=920046093]
+
+[node name="PlayerBody" type="CharacterBody3D" parent="." unique_id=750631945 node_paths=PackedStringArray("CameraPivot", "Movement", "GroundAlignment") groups=["player"]]
+collision_mask = 14
+script = ExtResource("1_l8tau")
+CameraPivot = NodePath("../CameraPivot")
+Movement = NodePath("../Move")
+GroundAlignment = NodePath("../GroundAlign")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerBody" unique_id=1285463699]
+shape = SubResource("BoxShape3D_62nw6")
+
+[node name="VisualNode" type="Node3D" parent="PlayerBody" unique_id=47670187]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerBody/VisualNode" unique_id=1318024319]
+mesh = SubResource("BoxMesh_jkgat")
+surface_material_override/0 = ExtResource("2_e5oj2")
+
+[node name="TurretPivot" type="Node3D" parent="PlayerBody/VisualNode" unique_id=1225034893 node_paths=PackedStringArray("CameraPivot", "TurretPivot", "BarrelPivot")]
+script = ExtResource("3_4g26t")
+CameraPivot = NodePath("../../../CameraPivot")
+TurretPivot = NodePath(".")
+BarrelPivot = NodePath("MeshInstance3D/BarrelPivot")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerBody/VisualNode/TurretPivot" unique_id=1211883956]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0.6, 0)
+mesh = SubResource("CylinderMesh_l8tau")
+surface_material_override/0 = ExtResource("3_rjotr")
+
+[node name="BarrelPivot" type="Node3D" parent="PlayerBody/VisualNode/TurretPivot/MeshInstance3D" unique_id=1829665253]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerBody/VisualNode/TurretPivot/MeshInstance3D/BarrelPivot" unique_id=1465521852]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 1.5, 0, 0, 1)
+mesh = SubResource("BoxMesh_e5oj2")
+surface_material_override/0 = ExtResource("3_rjotr")
+
+[node name="Barrel" type="Marker3D" parent="PlayerBody/VisualNode/TurretPivot/MeshInstance3D/BarrelPivot/MeshInstance3D" unique_id=1595772770]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=1257778811 node_paths=PackedStringArray("Target", "SpringArm")]
+transform = Transform3D(1, 0, 0, 0, 0.91363764, -0.40652943, 0, 0.40652943, 0.91363764, 0, 0, 0)
+script = ExtResource("1_62nw6")
+Target = NodePath("../PlayerBody")
+SpringArm = NodePath("SpringArm3D")
+MinSpringLength = 5.0
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=2023088979]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+collision_mask = 14
+shape = SubResource("SphereShape3D_l8tau")
+spring_length = 8.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=1357364569]
+current = true
+
+[node name="Inventory" type="Node" parent="." unique_id=1939709177 groups=["player_inventory"]]
+script = ExtResource("5_tfkfv")
+
+[node name="WeaponHolder" type="Node3D" parent="." unique_id=1145145934 node_paths=PackedStringArray("Barrel")]
+script = ExtResource("5_car0r")
+CurrentWeapon = ExtResource("6_11a6d")
+Barrel = NodePath("../PlayerBody/VisualNode/TurretPivot/MeshInstance3D/BarrelPivot/MeshInstance3D/Barrel")
+
+[node name="Move" type="Node" parent="." unique_id=1944470523]
+script = ExtResource("8_roeef")
+
+[node name="GroundAlign" type="Node" parent="." unique_id=1418479131 node_paths=PackedStringArray("VisualRoot")]
+script = ExtResource("9_app8l")
+VisualRoot = NodePath("../PlayerBody/VisualNode")

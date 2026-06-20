@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dsliklqur8w3g"]
+
+[ext_resource type="Shader" uid="uid://wor4cjjarlca" path="res://Art/Shaders/SkyShader.gdshader" id="1_xgxfq"]
+[ext_resource type="Texture2D" uid="uid://b307v2kdr0w8p" path="res://Assets/Imports/AllSky/addons/AllSkyFree/Skyboxes/AllSkyFree_Sky_OvercastLow_Equirect.png" id="2_prd7m"]
+
+[resource]
+shader = ExtResource("1_xgxfq")
+shader_parameter/skyColor = Color(0.14980733, 0.37766844, 0.9727195, 1)
+shader_parameter/horizonColor = Color(0.4608165, 0.69491214, 0.86413205, 1)
+shader_parameter/skyTexture = ExtResource("2_prd7m")

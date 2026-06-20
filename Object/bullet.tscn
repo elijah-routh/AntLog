@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dsujyhyva10i"]
+
+[ext_resource type="Material" uid="uid://1socim47qhxu" path="res://Art/tankGunAlpha.tres" id="1_74w4f"]
+[ext_resource type="Script" uid="uid://dclwwuocyoc83" path="res://Script/Weapon/Projectile/Bullet.cs" id="1_iutib"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_iutib"]
+material = ExtResource("1_74w4f")
+radius = 1.0
+height = 2.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ufrha"]
+size = Vector3(1.6, 1.6, 1.6)
+
+[node name="Bullet" type="Area3D" unique_id=1308113529]
+collision_layer = 128
+collision_mask = 14
+script = ExtResource("1_iutib")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=759504275]
+mesh = SubResource("SphereMesh_iutib")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1060318698]
+shape = SubResource("BoxShape3D_ufrha")

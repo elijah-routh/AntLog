@@ -1,3 +1,97 @@
-# Godot 4+ specific ignores
+# =========================
+# GODOT
+# =========================
+
+# Godot 4 cache/editor data
 .godot/
-/android/
+
+# Godot import cache
+.import/
+
+# Temporary/export files
+export.cfg
+export_credentials.cfg
+*.tmp
+
+# Imported localization files
+*.translation
+
+# Crash logs
+godot*.log
+
+# Mono/.NET generated
+.mono/
+data_*/
+mono_crash.*.json
+
+# =========================
+# C# / .NET
+# =========================
+
+# Build output
+bin/
+obj/
+
+# Rider
+.idea/
+
+# Visual Studio
+.vs/
+*.csproj.user
+*.suo
+*.user
+*.userprefs
+
+# Visual Studio Code
+.vscode/
+
+# JetBrains Rider caches
+*.sln.iml
+
+# NuGet
+*.nupkg
+
+# =========================
+# OS FILES
+# =========================
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Linux
+.directory
+
+# =========================
+# TEMP / CACHE
+# =========================
+
+*.log
+*.cache
+*.bak
+*.swp
+*.pid
+
+# =========================
+# OPTIONAL LARGE FILES
+# =========================
+
+# Uncomment if desired
+
+# Builds
+# Builds/
+
+# Blender autosaves
+# *.blend1
+# *.blend2
+
+# Audio production files
+# *.flp
+# *.als
+
+# Video editing caches
+# *.prproj
+# *.aep

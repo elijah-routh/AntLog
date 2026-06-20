@@ -1,0 +1,14 @@
+[remap]
+
+importer="func_godot.map"
+type="Resource"
+uid="uid://c55i50fhwik30"
+path="res://.godot/imported/Spin1.map-eaa0a3a75c976800ca6a1851a3d40e66.tres"
+
+[deps]
+
+source_file="res://Trenchbroom/Maps/Spin1.map"
+dest_files=["res://.godot/imported/Spin1.map-eaa0a3a75c976800ca6a1851a3d40e66.tres"]
+
+[params]
+

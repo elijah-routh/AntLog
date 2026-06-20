@@ -1,0 +1,6 @@
+[gd_resource type="Sky" format=3 uid="uid://rwxaax84eqt8"]
+
+[ext_resource type="Material" uid="uid://dsliklqur8w3g" path="res://Art/Shaders/SkyShader.tres" id="1_mh20f"]
+
+[resource]
+sky_material = ExtResource("1_mh20f")

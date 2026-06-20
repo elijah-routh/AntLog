@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://6ofw4l8wouoi"
+path="res://.godot/imported/dice_shake_4.wav-6fa48a66a56e6e9a7ba67f5dd79eecfe.sample"
+
+[deps]
+
+source_file="res://Assets/SFX/400 Sounds Pack/Card and Board/dice_shake_4.wav"
+dest_files=["res://.godot/imported/dice_shake_4.wav-6fa48a66a56e6e9a7ba67f5dd79eecfe.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

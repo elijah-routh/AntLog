@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://cpctkfdnnf708"]
+
+[ext_resource type="Script" uid="uid://cmarmoyfixg3k" path="res://Script/Enemy/EnemyData.cs" id="1_byxcp"]
+
+[resource]
+script = ExtResource("1_byxcp")
+MoveSpeed = 7.0
+metadata/_custom_type_script = "uid://cmarmoyfixg3k"

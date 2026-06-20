@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bbgyd8jaflfkp"]
+
+[ext_resource type="Texture2D" uid="uid://6u3b6t24r7gc" path="res://icon.svg" id="1_eptoi"]
+
+[resource]
+albedo_color = Color(0.061999995, 0.31, 0.08266664, 1)
+albedo_texture = ExtResource("1_eptoi")

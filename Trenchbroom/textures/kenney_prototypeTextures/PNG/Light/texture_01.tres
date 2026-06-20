@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://3jwpdom35u3j"]
+
+[ext_resource type="Texture2D" uid="uid://dshvhwtfkvb4m" path="res://Trenchbroom/textures/kenney_prototypeTextures/PNG/Light/texture_01.png" id="1_y0emr"]
+
+[resource]
+albedo_texture = ExtResource("1_y0emr")
+metallic_specular = 0.0
+texture_filter = 2

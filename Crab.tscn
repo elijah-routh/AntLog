@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://dxa56ivevmr7r"]
+
+[ext_resource type="Script" uid="uid://dqeb6o8xxjw4" path="res://Script/Enemy/TestEnemy.cs" id="1_qj5wv"]
+[ext_resource type="Resource" uid="uid://eafp3ldsixhv" path="res://Script/Enemy/Data/Crab.tres" id="2_bl74u"]
+[ext_resource type="Script" uid="uid://dblhsflas6dvv" path="res://Script/Entity/MoveComponent.cs" id="3_o6mc7"]
+[ext_resource type="Script" uid="uid://cgiws4dpe64rt" path="res://Script/Entity/HealthComponent.cs" id="4_qj5wv"]
+[ext_resource type="Script" uid="uid://bal6jflxl81xj" path="res://Script/Enemy/EnemyController.cs" id="5_bl74u"]
+[ext_resource type="Texture2D" uid="uid://cmaexh7qqqbh1" path="res://Art/Sprites/crab3.png" id="5_o6mc7"]
+[ext_resource type="PackedScene" uid="uid://cw5s7id8meur2" path="res://laser.tscn" id="6_axggk"]
+[ext_resource type="Texture2D" uid="uid://c7vxvlarin0s8" path="res://Art/Sprites/crab4.png" id="6_qj5wv"]
+[ext_resource type="Texture2D" uid="uid://b638ok5m8fbic" path="res://Art/Sprites/crab1.png" id="7_bl74u"]
+[ext_resource type="Texture2D" uid="uid://csxmlibwc2464" path="res://Art/Sprites/crab2.png" id="8_axggk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o6mc7"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6i38n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_o6mc7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_qj5wv")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_bl74u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_axggk")
+}],
+"loop": true,
+"name": &"Walking",
+"speed": 5.0
+}]
+
+[node name="Node3D" type="CharacterBody3D" unique_id=1543973491]
+collision_layer = 8
+collision_mask = 11
+script = ExtResource("1_qj5wv")
+Data = ExtResource("2_bl74u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1072426166]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.034240723, 0.03219825, 0)
+shape = SubResource("BoxShape3D_o6mc7")
+
+[node name="MoveComponent" type="Node" parent="." unique_id=1659587442]
+script = ExtResource("3_o6mc7")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1483484578]
+script = ExtResource("4_qj5wv")
+
+[node name="EnemyController" type="Node" parent="." unique_id=2081610504 node_paths=PackedStringArray("LaserBarrel")]
+script = ExtResource("5_bl74u")
+OrbitDistance = 20.0
+OrbitStrength = 1.0
+ApproachStrength = 2.0
+SlamJumpHeight = 15.0
+LaserBarrel = NodePath("")
+LaserBeamScene = ExtResource("6_axggk")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=28789270]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.20836753, 0)
+sprite_frames = SubResource("SpriteFrames_6i38n")
+animation = &"Idle"

@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://dtsk2y3a502g1"]
+
+[ext_resource type="Texture2D" uid="uid://bjnjm0jttjaih" path="res://Assets/Images/FunTankTitle.png" id="1_5uwur"]
+[ext_resource type="Script" uid="uid://bd10uv5iedn61" path="res://Script/Menu/MenuTitle.cs" id="1_otv0n"]
+
+[node name="MenuTitle" type="Control" unique_id=1479504731]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_otv0n")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1992518534]
+layout_mode = 0
+offset_left = -8.0
+offset_top = -10.0
+offset_right = 1160.0
+offset_bottom = 653.0
+color = Color(0.53333336, 0.5019608, 0.42352942, 1)
+
+[node name="Label" type="Label" parent="." unique_id=1086393875]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 82.0
+offset_right = 847.0
+offset_bottom = 265.0
+theme_override_colors/font_color = Color(0.034499995, 0.08663328, 0.23, 1)
+theme_override_font_sizes/font_size = 67
+text = "CRAZZZY TANK"
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=915761803]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 188.0
+offset_right = 695.0
+offset_bottom = 652.0
+texture = ExtResource("1_5uwur")
+expand_mode = 1
+
+[node name="PlayButton" type="Button" parent="." unique_id=1257736704]
+layout_mode = 0
+offset_left = 811.0
+offset_top = 307.0
+offset_right = 1055.0
+offset_bottom = 405.0
+theme_override_colors/font_color = Color(0.15294118, 0.21568628, 0.019607844, 1)
+theme_override_colors/font_pressed_color = Color(0.025162227, 0.1633339, 0.35780388, 1)
+theme_override_colors/font_hover_color = Color(0.039215688, 0.21568628, 0.5019608, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.003921569, 0.12156863, 0.26666668, 1)
+theme_override_font_sizes/font_size = 40
+text = "PLAY"
+flat = true
