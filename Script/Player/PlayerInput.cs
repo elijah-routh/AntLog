@@ -32,4 +32,7 @@ public static class PlayerInput
 
     public static bool DamagePressed =>
         Input.IsActionJustPressed("debug_damage");
+
+    public static bool GrabPressed =>
+        Input.IsActionJustPressed("grab");
 }

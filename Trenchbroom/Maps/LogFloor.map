@@ -1,0 +1,35 @@
+// Game: TankDev
+// Format: Valve
+// entity 0
+{
+"mapversion" "220"
+"wad" ""
+"classname" "worldspawn"
+// brush 0
+{
+( 6877 -1513 45 ) ( 6877 -1513 46 ) ( 6877 -1514 45 ) kenney_prototypeTextures/PNG/Light/texture_11 [ -1.8369701987210297e-16 -1 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( 5976 -4259 61 ) ( 5976 -4259 62 ) ( 5977 -4259 61 ) kenney_prototypeTextures/PNG/Light/texture_11 [ 1 -1.8369701987210297e-16 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 5864 -1513 -195 ) ( 5864 -1514 -195 ) ( 5865 -1513 -195 ) kenney_prototypeTextures/PNG/Light/texture_11 [ 1.8369701987210297e-16 1 0 0 ] [ -1 1.8369701987210297e-16 0 0 ] 180 1 1
+( 5976 -1689 61 ) ( 5977 -1689 61 ) ( 5976 -1690 61 ) kenney_prototypeTextures/PNG/Light/texture_11 [ -1.8369701987210297e-16 -1 0 0 ] [ -1 1.8369701987210297e-16 0 0 ] 90 1 1
+( 5864 3621 45 ) ( 5865 3621 45 ) ( 5864 3621 46 ) kenney_prototypeTextures/PNG/Light/texture_11 [ -1 1.8369701987210297e-16 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( 9848 -1689 61 ) ( 9848 -1690 61 ) ( 9848 -1689 62 ) kenney_prototypeTextures/PNG/Light/texture_11 [ 1.8369701987210297e-16 1 0 0 ] [ 0 0 -1 0 ] 180 1 1
+}
+// brush 1
+{
+( -5177 -752 45 ) ( -5177 -751 45 ) ( -5177 -752 46 ) kenney_prototypeTextures/PNG/Light/texture_11 [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 1080 -4049 45 ) ( 1080 -4049 46 ) ( 1081 -4049 45 ) kenney_prototypeTextures/PNG/Light/texture_11 [ 1 0 0 0 ] [ 0 0 -1 0 ] 180 1 1
+( 1080 -752 -195 ) ( 1081 -752 -195 ) ( 1080 -751 -195 ) kenney_prototypeTextures/PNG/Light/texture_11 [ -1 0 0 0 ] [ 0 -1 0 0 ] 270 1 1
+( 1256 -640 61 ) ( 1256 -639 61 ) ( 1257 -640 61 ) kenney_prototypeTextures/PNG/Light/texture_11 [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( 1256 3232 61 ) ( 1257 3232 61 ) ( 1256 3232 62 ) kenney_prototypeTextures/PNG/Light/texture_11 [ -1 0 0 0 ] [ 0 0 -1 0 ] 180 1 1
+( 4985 -640 61 ) ( 4985 -640 62 ) ( 4985 -639 61 ) kenney_prototypeTextures/PNG/Light/texture_11 [ 0 1 0 0 ] [ 0 0 -1 0 ] 90 1 1
+}
+// brush 2
+{
+( -9786 -1621 45 ) ( -9786 -1621 46 ) ( -9786 -1622 45 ) kenney_prototypeTextures/PNG/Light/texture_11 [ -1.8369701987210297e-16 -1 0 0 ] [ 0 0 -1 0 ] 180 1 1
+( -10615 -4475 61 ) ( -10615 -4475 62 ) ( -10614 -4475 61 ) kenney_prototypeTextures/PNG/Light/texture_11 [ 1 -1.8369701987210297e-16 0 0 ] [ 0 0 -1 0 ] 180 1 1
+( -10727 -1621 -195 ) ( -10727 -1622 -195 ) ( -10726 -1621 -195 ) kenney_prototypeTextures/PNG/Light/texture_11 [ 1.8369701987210297e-16 1 0 0 ] [ -1 1.8369701987210297e-16 0 0 ] 0 1 1
+( -10615 -1797 61 ) ( -10614 -1797 61 ) ( -10615 -1798 61 ) kenney_prototypeTextures/PNG/Light/texture_11 [ -1.8369701987210297e-16 -1 0 0 ] [ -1 1.8369701987210297e-16 0 0 ] 270 1 1
+( -10727 3767 45 ) ( -10726 3767 45 ) ( -10727 3767 46 ) kenney_prototypeTextures/PNG/Light/texture_11 [ -1 1.8369701987210297e-16 0 0 ] [ 0 0 -1 0 ] 90 1 1
+( -6743 -1797 61 ) ( -6743 -1798 61 ) ( -6743 -1797 62 ) kenney_prototypeTextures/PNG/Light/texture_11 [ 1.8369701987210297e-16 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+}
+}
