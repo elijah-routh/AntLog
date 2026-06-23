@@ -56,6 +56,11 @@ public partial class GrabbableComponent : Node
 
     public void Throw(Vector3 velocity)
     {
+        Throw(velocity, 1.0f);
+    }
+
+    public void Throw(Vector3 velocity, float damageMultiplier)
+    {
         if (!IsGrabbed || GrabRoot == null)
             return;
 
@@ -80,8 +85,12 @@ public partial class GrabbableComponent : Node
             return;
         }
 
-        GD.Print($"[Grabbable] Throwing with velocity: {velocity}");
-        Projectile.Launch(velocity);
+        GD.Print(
+            $"[Grabbable] Throwing with velocity: {velocity}, " +
+            $"Damage Multiplier: {damageMultiplier}"
+        );
+
+        Projectile.Launch(velocity, damageMultiplier);
     }
 
     private void AlignAttachPointToHoldPoint(Node3D holdPoint)

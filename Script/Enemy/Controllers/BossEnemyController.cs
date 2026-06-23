@@ -48,6 +48,9 @@ namespace Game.Enemy
         [Export] public float LaserCooldown { get; set; } = 5f;
         [Export] public float LaserMaxDistance { get; set; } = 40f;
 
+        [ExportGroup("Pathfinding")]
+        [Export] public float PathUpdateInterval { get; set; } = 0.2f;
+
         protected override void EnterInitialState()
         {
             ChangeState(new IdleState(this, Enemy));

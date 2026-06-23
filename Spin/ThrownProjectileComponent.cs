@@ -9,13 +9,14 @@ public partial class ThrownProjectileComponent : Area3D
 
     [ExportGroup("Projectile")]
     [Export] public float Lifetime = 2.0f;
-    [Export] public float Damage = 25.0f;
+    [Export] public float BaseDamage = 25.0f;
     [Export] public bool StopOnHit = true;
 
     public bool IsActive { get; private set; }
 
     private Vector3 _velocity;
     private float _timer;
+    private float _currentDamage;
 
     public override void _Ready()
     {
@@ -25,6 +26,8 @@ public partial class ThrownProjectileComponent : Area3D
 
         if (ProjectileRoot == null)
             ProjectileRoot = GetParent<Node3D>();
+
+        _currentDamage = BaseDamage;
 
         GD.Print($"[ThrownProjectile] Ready. Root: {ProjectileRoot?.Name}");
     }
@@ -49,12 +52,26 @@ public partial class ThrownProjectileComponent : Area3D
 
     public void Launch(Vector3 velocity)
     {
+        Launch(velocity, 1.0f);
+    }
+
+    public void Launch(Vector3 velocity, float damageMultiplier)
+    {
+        damageMultiplier = Mathf.Max(damageMultiplier, 0.0f);
+
         _velocity = velocity;
         _timer = Lifetime;
+        _currentDamage = BaseDamage * damageMultiplier;
+
         IsActive = true;
         Monitoring = true;
 
-        GD.Print($"[ThrownProjectile] Launched with velocity: {_velocity}");
+        GD.Print(
+            $"[ThrownProjectile] Launched. " +
+            $"Velocity: {_velocity}, " +
+            $"Damage: {_currentDamage}, " +
+            $"Damage Multiplier: {damageMultiplier}"
+        );
     }
 
     private void OnBodyEntered(Node3D body)
@@ -88,8 +105,8 @@ public partial class ThrownProjectileComponent : Area3D
 
         if (target is IDamageable damageable)
         {
-            damageable.TakeDamage(Damage);
-            GD.Print($"[ThrownProjectile] Damaged {target.Name} for {Damage}");
+            damageable.TakeDamage(_currentDamage);
+            GD.Print($"[ThrownProjectile] Damaged {target.Name} for {_currentDamage}");
 
             if (StopOnHit)
                 StopProjectile();
@@ -104,6 +121,7 @@ public partial class ThrownProjectileComponent : Area3D
         IsActive = false;
         _velocity = Vector3.Zero;
         Monitoring = false;
+        _currentDamage = BaseDamage;
 
         NotifyThrowFinished();
 

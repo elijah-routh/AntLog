@@ -183,6 +183,9 @@ grow_horizontal = 2
 grow_vertical = 2
 Camera = NodePath("../../PlayerRoot/CameraPivot/SpringArm3D/Camera3D")
 
+[node name="SpinPowerBar" parent="HUD/SpinPowerBarUI" parent_id_path=PackedInt32Array(1896632546, 674463225) index="0" unique_id=1311810174 node_paths=PackedStringArray("SpinPower")]
+SpinPower = NodePath("../../../PlayerRoot/SpinPowerComponent")
+
 [node name="menu_pause" parent="." unique_id=559940024 instance=ExtResource("18_hsq0f")]
 
 [node name="Kaiju" parent="." unique_id=773946387 instance=ExtResource("22_xjovg")]
@@ -211,4 +214,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 20)
 HealthBar = NodePath("../../HUD/HealthBar")
 
 [editable path="HUD"]
+[editable path="HUD/SpinPowerBarUI"]
 [editable path="PlayerRoot"]

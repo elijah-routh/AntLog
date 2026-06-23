@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://bpf57o0yvii5l" path="res://Script/Menu/HUD.cs" id="1_3quw2"]
 [ext_resource type="Texture2D" uid="uid://b20mrjlr4nl0o" path="res://Assets/Images/FunnyFish.png" id="1_cevek"]
 [ext_resource type="Script" uid="uid://cd3y4al2n7y44" path="res://Scene/Menu/Reticle.cs" id="3_11exn"]
-[ext_resource type="PackedScene" uid="uid://bc5oehkxb5ey8" path="res://Scene/Menu/HealthBar.tscn" id="4_id85m"]
+[ext_resource type="PackedScene" uid="uid://b0sjrn1cmy1x5" path="res://Scene/Menu/HealthBar.tscn" id="4_id85m"]
+[ext_resource type="PackedScene" uid="uid://rtfdii1hgpwy" path="res://Scene/Menu/SpinPowerBar.tscn" id="5_bvxm0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gs7re"]
 bg_color = Color(0, 0, 0, 0.33333334)
@@ -50,3 +51,9 @@ offset_top = 57.0
 offset_right = -542.0
 offset_bottom = -581.0
 scale = Vector2(2, 2)
+
+[node name="SpinPowerBarUI" parent="." unique_id=674463225 instance=ExtResource("5_bvxm0")]
+offset_left = 1078.0
+offset_top = 427.0
+offset_right = 1128.0
+offset_bottom = 627.0

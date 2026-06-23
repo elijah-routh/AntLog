@@ -100,6 +100,8 @@ public partial class DiveGrabComponent : Node
 
     private void OnGrabSucceeded()
     {
+        Movement?.SpinPower?.SetHoldingThrowable(true);
+
         GD.Print("Dive grab succeeded!");
     }
 
@@ -135,12 +137,28 @@ public partial class DiveGrabComponent : Node
         throwDirection.Y = 0.05f;
         throwDirection = throwDirection.Normalized();
 
-        CurrentGrabbed.Throw(throwDirection * ThrowSpeed);
+        SpinThrowModifier spinModifier = Movement != null && Movement.SpinPower != null
+        ? Movement.SpinPower.GetThrowModifier()
+        : new SpinThrowModifier(0, 1.0f, 1.0f);
+
+        float finalThrowSpeed = ThrowSpeed * spinModifier.ForceMultiplier;
+
+        CurrentGrabbed.Throw(
+            throwDirection * finalThrowSpeed,
+            spinModifier.DamageMultiplier
+        );
 
         CurrentGrabbed = null;
         _grabbedThisDive = false;
 
-        GD.Print("[DiveGrab] Threw held enemy.");
+        Movement?.SpinPower?.SetHoldingThrowable(false);
+
+        GD.Print(
+            $"[DiveGrab] Threw held enemy. " +
+            $"Power Step: {spinModifier.PowerStep}, " +
+            $"Force x{spinModifier.ForceMultiplier}, " +
+            $"Throw Speed: {finalThrowSpeed}"
+        );
 
         return true;
     }

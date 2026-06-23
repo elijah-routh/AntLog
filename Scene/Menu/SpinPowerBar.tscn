@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://rtfdii1hgpwy"]
+
+[ext_resource type="Script" uid="uid://dkse1prq14lr3" path="res://Script/Menu/SpinPowerBar.cs" id="1_ab747"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ab747"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ffnu"]
+bg_color = Color(0.9764706, 0.98039216, 0.5882353, 1)
+
+[node name="SpinPowerBarUI" type="Control" unique_id=674463225]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 50.0
+offset_bottom = 200.0
+
+[node name="SpinPowerBar" type="ProgressBar" parent="." unique_id=1311810174]
+layout_mode = 0
+offset_right = 50.0
+offset_bottom = 200.0
+theme_override_styles/background = SubResource("StyleBoxFlat_ab747")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7ffnu")
+max_value = 4.0
+step = 1.0
+value = 2.0
+fill_mode = 3
+show_percentage = false
+script = ExtResource("1_ab747")
+PrintDebug = false

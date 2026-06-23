@@ -9,6 +9,7 @@
 [ext_resource type="Material" uid="uid://1socim47qhxu" path="res://Art/tankGunAlpha.tres" id="4_ry5el"]
 [ext_resource type="PackedScene" uid="uid://cw5s7id8meur2" path="res://laser.tscn" id="8_ry5el"]
 [ext_resource type="PackedScene" uid="uid://dj3utbkcft8us" path="res://Scene/EnemyHealthBar.tscn" id="9_5ipgq"]
+[ext_resource type="Script" uid="uid://crnrjjg02mj5k" path="res://Script/Entity/EdgeCheckComponent.cs" id="10_gd3ju"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7xaro"]
 
@@ -63,6 +64,15 @@ EnemyHealthBar = NodePath("../EnemyHealthBar3D")
 [node name="EnemyHealthBar3D" parent="." unique_id=868444524 instance=ExtResource("9_5ipgq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3071289, 0)
 texture = SubResource("ViewportTexture_gd3ju")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1299013436]
+
+[node name="EdgeCheckComponent" type="Node3D" parent="." unique_id=92355007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.99261665, 0)
+script = ExtResource("10_gd3ju")
+ProbeDistance = 5.0
+ProbeHeight = 2.0
+RayLength = 7.0
 
 [editable path="EnemyHealthBar3D"]
 [editable path="EnemyHealthBar3D/SubViewport/HealthBar"]

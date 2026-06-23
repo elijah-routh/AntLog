@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://cgiws4dpe64rt" path="res://Script/Entity/HealthComponent.cs" id="11_7ama1"]
 [ext_resource type="Script" uid="uid://d2pbq0v0r15su" path="res://Spin/DiveGrabComponent.cs" id="12_mgt8x"]
 [ext_resource type="Script" uid="uid://bpjn3wj3o0eff" path="res://Spin/GrabAreaDebugVisual.cs" id="12_n0ld7"]
+[ext_resource type="Script" uid="uid://c1iv2wg3b04rb" path="res://Spin/SpinPowerComponent.cs" id="15_16ymb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_62nw6"]
 
@@ -119,10 +120,11 @@ script = ExtResource("5_car0r")
 CurrentWeapon = ExtResource("6_11a6d")
 Barrel = NodePath("../PlayerBody/VisualNode/TurretPivot/MeshInstance3D/BarrelPivot/MeshInstance3D/Barrel")
 
-[node name="Move" type="Node" parent="." unique_id=1944470523 node_paths=PackedStringArray("DiveGrab")]
+[node name="Move" type="Node" parent="." unique_id=1944470523 node_paths=PackedStringArray("SpinPower", "DiveGrab")]
 script = ExtResource("8_roeef")
 Acceleration = 20.0
 Deceleration = 36.0
+SpinPower = NodePath("../SpinPowerComponent")
 DiveGrab = NodePath("../DiveGrabComponent")
 CanDiveInAir = true
 
@@ -139,4 +141,13 @@ script = ExtResource("12_mgt8x")
 Movement = NodePath("../Move")
 DiveGrabArea = NodePath("../PlayerBody/GrabArea")
 HoldPoint = NodePath("../PlayerBody/GrabArea/HoldPoint")
+ThrowSpeed = 15.0
 ThrowDirectionSource = NodePath("../PlayerBody/VisualNode/TurretPivot/MeshInstance3D/BarrelPivot/MeshInstance3D/Barrel")
+
+[node name="SpinPowerComponent" type="Node" parent="." unique_id=1486777677]
+script = ExtResource("15_16ymb")
+Step0DamageMultiplier = 0.5
+Step1DamageMultiplier = 1.0
+Step2DamageMultiplier = 1.25
+Step3DamageMultiplier = 1.5
+Step4DamageMultiplier = 2.0

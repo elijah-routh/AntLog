@@ -10,10 +10,12 @@ public partial class PlayerMoveComponent : Node
     [Export] public float RotationSpeed = 12.0f;
 
     [ExportGroup("Spin")]
-    [Export] public float SpinSpeed = 14.0f;
-    [Export(PropertyHint.Range, "0.1,1.0,0.05")]
-    public float SpinMoveSpeedMultiplier = 0.45f;
-    [Export] public int SpinDirection = 1;
+    [Export] public SpinPowerComponent SpinPower;
+    [Export] public float MinSpinSpeed = 180.0f;
+    [Export] public float MaxSpinSpeed = 900.0f;
+    [Export] public float SpinAcceleration = 600.0f;
+    [Export] public float SpinDeceleration = 900.0f;
+    [Export] public float SpinningMoveSpeedMultiplier = 0.45f;
 
     [ExportGroup("Dive Grab")]
     [Export] public DiveGrabComponent DiveGrab;
@@ -25,6 +27,9 @@ public partial class PlayerMoveComponent : Node
 
     public bool IsDiving { get; private set; }
     public bool IsSpinning { get; private set; }
+
+    private float _currentSpinSpeed;
+    private int _spinDirection = 1;
 
     private float _diveTimer;
     private float _diveCooldownTimer;
@@ -55,7 +60,7 @@ public partial class PlayerMoveComponent : Node
 
         if (IsDiving)
         {
-            IsSpinning = false;
+            StopSpin(delta);
             HandleDive(body, delta);
             return;
         }
@@ -65,13 +70,13 @@ public partial class PlayerMoveComponent : Node
         if (IsDiving)
             return;
 
-        IsSpinning = PlayerInput.SpinHeld;
+        UpdateSpinState(delta);
 
         Vector2 input = PlayerInput.Movement;
         Vector3 direction = GetCameraRelativeDirection(input, cameraPivot);
 
         float currentMoveSpeed = IsSpinning
-            ? MoveSpeed * SpinMoveSpeedMultiplier
+            ? MoveSpeed * SpinningMoveSpeedMultiplier
             : MoveSpeed;
 
         Vector3 velocity = body.Velocity;
@@ -96,13 +101,13 @@ public partial class PlayerMoveComponent : Node
         {
             velocity.X = Mathf.MoveToward(
                 velocity.X,
-                0,
+                0.0f,
                 Deceleration * delta
             );
 
             velocity.Z = Mathf.MoveToward(
                 velocity.Z,
-                0,
+                0.0f,
                 Deceleration * delta
             );
         }
@@ -119,11 +124,56 @@ public partial class PlayerMoveComponent : Node
         }
     }
 
+    private void UpdateSpinState(float delta)
+    {
+        IsSpinning = PlayerInput.SpinHeld;
+
+        if (IsSpinning)
+        {
+            if (_currentSpinSpeed <= 0.0f)
+            {
+                _spinDirection = GD.Randf() > 0.5f ? 1 : -1;
+                _currentSpinSpeed = MinSpinSpeed;
+            }
+
+            _currentSpinSpeed = Mathf.MoveToward(
+                _currentSpinSpeed,
+                MaxSpinSpeed,
+                SpinAcceleration * delta
+            );
+
+            float spinSpeedPercent = Mathf.InverseLerp(
+                MinSpinSpeed,
+                MaxSpinSpeed,
+                _currentSpinSpeed
+            );
+
+            SpinPower?.BuildPower(delta, spinSpeedPercent);
+        }
+        else
+        {
+            StopSpin(delta);
+        }
+    }
+
+    private void StopSpin(float delta)
+    {
+        IsSpinning = false;
+
+        _currentSpinSpeed = Mathf.MoveToward(
+            _currentSpinSpeed,
+            0.0f,
+            SpinDeceleration * delta
+        );
+
+        SpinPower?.DecayPower(delta);
+    }
+
     private void Spin(Node3D player, float delta)
     {
-        Vector3 rotation = player.Rotation;
-        rotation.Y += SpinSpeed * SpinDirection * delta;
-        player.Rotation = rotation;
+        float spinRadians = Mathf.DegToRad(_currentSpinSpeed) * _spinDirection * delta;
+
+        player.RotateY(spinRadians);
     }
 
     private void TryStartDive(CharacterBody3D body, Node3D cameraPivot)
@@ -146,7 +196,7 @@ public partial class PlayerMoveComponent : Node
         if (inputDirection == Vector3.Zero)
         {
             inputDirection = -body.GlobalBasis.Z;
-            inputDirection.Y = 0;
+            inputDirection.Y = 0.0f;
             inputDirection = inputDirection.Normalized();
         }
 
@@ -157,6 +207,8 @@ public partial class PlayerMoveComponent : Node
     {
         IsDiving = true;
         IsSpinning = false;
+
+        _currentSpinSpeed = 0.0f;
 
         _diveTimer = DiveDuration;
         _diveCooldownTimer = DiveCooldown;
@@ -195,8 +247,8 @@ public partial class PlayerMoveComponent : Node
 
         Vector3 velocity = body.Velocity;
 
-        velocity.X = Mathf.MoveToward(velocity.X, 0, DiveEndDrag);
-        velocity.Z = Mathf.MoveToward(velocity.Z, 0, DiveEndDrag);
+        velocity.X = Mathf.MoveToward(velocity.X, 0.0f, DiveEndDrag);
+        velocity.Z = Mathf.MoveToward(velocity.Z, 0.0f, DiveEndDrag);
 
         body.Velocity = velocity;
     }
@@ -216,13 +268,13 @@ public partial class PlayerMoveComponent : Node
 
         Vector3 forward = new Vector3(
             -Mathf.Sin(yaw),
-            0,
+            0.0f,
             -Mathf.Cos(yaw)
         );
 
         Vector3 right = new Vector3(
             Mathf.Cos(yaw),
-            0,
+            0.0f,
             -Mathf.Sin(yaw)
         );
 
