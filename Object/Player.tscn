@@ -121,6 +121,8 @@ Barrel = NodePath("../PlayerBody/VisualNode/TurretPivot/MeshInstance3D/BarrelPiv
 
 [node name="Move" type="Node" parent="." unique_id=1944470523 node_paths=PackedStringArray("DiveGrab")]
 script = ExtResource("8_roeef")
+Acceleration = 20.0
+Deceleration = 36.0
 DiveGrab = NodePath("../DiveGrabComponent")
 CanDiveInAir = true
 

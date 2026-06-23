@@ -1,5 +1,6 @@
 using Godot;
 using Game.Entity;
+using Game.Enemy;
 
 public partial class ThrownProjectileComponent : Area3D
 {
@@ -97,10 +98,31 @@ public partial class ThrownProjectileComponent : Area3D
 
     public void StopProjectile()
     {
+        if (!IsActive)
+            return;
+
         IsActive = false;
         _velocity = Vector3.Zero;
         Monitoring = false;
 
+        NotifyThrowFinished();
+
         GD.Print("[ThrownProjectile] Stopped.");
+    }
+
+    private void NotifyThrowFinished()
+    {
+        if (ProjectileRoot == null)
+            return;
+
+        Node controller = ProjectileRoot.GetNodeOrNull("EnemyController");
+
+        if (controller is IGrabStateReceiver receiver)
+        {
+            receiver.OnThrowFinished();
+            return;
+        }
+
+        GD.Print($"[ThrownProjectile] No IGrabStateReceiver found on {ProjectileRoot.Name}/EnemyController.");
     }
 }

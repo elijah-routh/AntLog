@@ -2,7 +2,7 @@ using Godot;
 
 namespace Game.Enemy
 {
-    public partial class DinoEnemyController : EnemyControllerBase
+    public partial class DinoEnemyController : EnemyControllerBase, IGrabStateReceiver
     {
         [ExportGroup("References")]
         [Export] public DinoAnimationController Animations { get; set; }
@@ -43,6 +43,9 @@ namespace Game.Enemy
         private float _chargeCooldownTimer;
         private int _chargesUsed;
 
+        public bool IsGrabbed { get; private set; }
+        public bool IsThrown { get; private set; }
+
         public override void _PhysicsProcess(double delta)
         {
             base._PhysicsProcess(delta);
@@ -62,6 +65,9 @@ namespace Game.Enemy
                 return;
 
             if (IsInState<DinoDeadState>())
+                return;
+
+            if (IsGrabbed || IsThrown)
                 return;
 
             if (IsInState<DinoChargeState>())
@@ -214,6 +220,84 @@ namespace Game.Enemy
             );
 
             Enemy.GlobalRotation = rotation;
+        }
+
+        public void SetGrabbed(bool grabbed)
+        {
+            IsGrabbed = grabbed;
+
+            if (grabbed)
+            {
+                ChangeState(new DinoGrabState(this, Enemy));
+            }
+            else
+            {
+                if (IsInState<DinoDeadState>())
+                    return;
+
+                ChangeState(new DinoTiredState(this, Enemy, Target));
+            }
+        }
+
+        public void OnGrabbed()
+        {
+            GD.Print($"{Enemy.Name}: Dino controller received OnGrabbed");
+
+            if (IsInState<DinoDeadState>())
+                return;
+
+            IsGrabbed = true;
+            IsThrown = false;
+
+            Enemy.Movement.ResetSpeedMultiplier();
+            Enemy.Movement.Stop();
+
+            ChangeState(new DinoGrabState(this, Enemy));
+        }
+
+        public void OnReleased()
+        {
+            GD.Print($"{Enemy.Name}: Dino controller received OnReleased");
+
+            if (IsInState<DinoDeadState>())
+                return;
+
+            IsGrabbed = false;
+            IsThrown = false;
+
+            ChangeState(new DinoTiredState(this, Enemy, Target));
+        }
+
+        public void OnThrown()
+        {
+            GD.Print($"{Enemy.Name}: Dino controller received OnThrown");
+
+            if (IsInState<DinoDeadState>())
+                return;
+
+            IsGrabbed = false;
+            IsThrown = true;
+
+            Enemy.Movement.ResetSpeedMultiplier();
+            Enemy.Movement.Stop();
+
+            ChangeState(new DinoThrownState(this, Enemy));
+        }
+
+        public void OnThrowFinished()
+        {
+            GD.Print($"{Enemy.Name}: Dino controller received OnThrowFinished");
+
+            if (IsInState<DinoDeadState>())
+                return;
+
+            IsGrabbed = false;
+            IsThrown = false;
+
+            Enemy.Movement.ResetSpeedMultiplier();
+            Enemy.Movement.Stop();
+
+            ChangeState(new DinoTiredState(this, Enemy, Target));
         }
     }
 }

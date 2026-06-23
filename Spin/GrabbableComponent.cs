@@ -1,4 +1,5 @@
 using Godot;
+using Game.Enemy;
 
 public partial class GrabbableComponent : Node
 {
@@ -27,13 +28,60 @@ public partial class GrabbableComponent : Node
 
         _originalParent = GrabRoot.GetParent();
 
-        // Move the whole enemy so its AttachPoint lines up with the player's HoldPoint.
         AlignAttachPointToHoldPoint(holdPoint);
-
-        // Then parent it to the hold point so it follows the player.
         GrabRoot.Reparent(holdPoint, true);
 
-        SetEnemyActive(false);
+        GetGrabReceiver()?.OnGrabbed();
+
+        // Keep controller active so DinoGrabState can run.
+        SetEnemyActive(true);
+    }
+
+    public void Release(Node parentToReturnTo = null)
+    {
+        if (!IsGrabbed || GrabRoot == null)
+            return;
+
+        IsGrabbed = false;
+        CanBeGrabbed = true;
+
+        Node returnParent = parentToReturnTo ?? _originalParent;
+
+        if (returnParent != null)
+            GrabRoot.Reparent(returnParent, true);
+
+        SetEnemyActive(true);
+        GetGrabReceiver()?.OnReleased();
+    }
+
+    public void Throw(Vector3 velocity)
+    {
+        if (!IsGrabbed || GrabRoot == null)
+            return;
+
+        IsGrabbed = false;
+        CanBeGrabbed = true;
+
+        Node sceneRoot = GetTree().CurrentScene;
+
+        if (sceneRoot != null)
+            GrabRoot.Reparent(sceneRoot, true);
+        else if (_originalParent != null)
+            GrabRoot.Reparent(_originalParent, true);
+
+        GetGrabReceiver()?.OnThrown();
+
+        // Keep the controller active so DinoThrownState can run.
+        SetEnemyActive(true);
+
+        if (Projectile == null)
+        {
+            GD.Print("[Grabbable] Throw failed: Projectile not assigned.");
+            return;
+        }
+
+        GD.Print($"[Grabbable] Throwing with velocity: {velocity}");
+        Projectile.Launch(velocity);
     }
 
     private void AlignAttachPointToHoldPoint(Node3D holdPoint)
@@ -53,20 +101,17 @@ public partial class GrabbableComponent : Node
         GrabRoot.GlobalTransform = holdTransform * rootToAttach.AffineInverse();
     }
 
-    public void Release(Node parentToReturnTo = null)
+    private IGrabStateReceiver GetGrabReceiver()
     {
-        if (!IsGrabbed || GrabRoot == null)
-            return;
+        if (GrabRoot == null)
+            return null;
 
-        IsGrabbed = false;
-        CanBeGrabbed = true;
+        Node controller = GrabRoot.GetNodeOrNull("EnemyController");
 
-        Node returnParent = parentToReturnTo ?? _originalParent;
+        if (controller is IGrabStateReceiver receiver)
+            return receiver;
 
-        if (returnParent != null)
-            GrabRoot.Reparent(returnParent, true);
-
-        SetEnemyActive(true);
+        return null;
     }
 
     private void SetEnemyActive(bool active)
@@ -74,33 +119,9 @@ public partial class GrabbableComponent : Node
         Node enemyController = GrabRoot.GetNodeOrNull("EnemyController");
 
         if (enemyController != null)
-            enemyController.SetProcess(active);
-    }
-
-    public void Throw(Vector3 velocity)
-    {
-        if (!IsGrabbed || GrabRoot == null)
-            return;
-
-        IsGrabbed = false;
-        CanBeGrabbed = true;
-
-        Node sceneRoot = GetTree().CurrentScene;
-
-        if (sceneRoot != null)
-            GrabRoot.Reparent(sceneRoot, true);
-        else if (_originalParent != null)
-            GrabRoot.Reparent(_originalParent, true);
-
-        SetEnemyActive(false);
-
-        if (Projectile == null)
         {
-            GD.Print("[Grabbable] Throw failed: Projectile not assigned.");
-            return;
+            enemyController.SetProcess(active);
+            enemyController.SetPhysicsProcess(active);
         }
-
-        GD.Print($"[Grabbable] Throwing with velocity: {velocity}");
-        Projectile.Launch(velocity);
     }
 }

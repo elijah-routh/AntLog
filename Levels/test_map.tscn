@@ -202,7 +202,7 @@ transform = Transform3D(1, 0, 0, 0, -0.62923896, 0.7772119, 0, -0.7772119, -0.62
 [node name="Enemies" type="Node" parent="." unique_id=212556385]
 
 [node name="BallChain" parent="Enemies" unique_id=1259955506 instance=ExtResource("13_elxrv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 6, 21)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59, 6, 21)
 
 [node name="PlayerRoot" parent="." unique_id=920046093 instance=ExtResource("13_ywusi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 20)
