@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1_8f10v")
 MaxHealth = 25.0
+MoveSpeed = 10.0
 metadata/_custom_type_script = "uid://cmarmoyfixg3k"

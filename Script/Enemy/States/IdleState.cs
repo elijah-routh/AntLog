@@ -6,7 +6,7 @@ namespace Game.Enemy
     public class IdleState : EnemyStateBase
     {
         public IdleState(
-            EnemyController controller,
+            EnemyControllerBase controller,
             EnemyBase enemy)
             : base(controller, enemy)
         {

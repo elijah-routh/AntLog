@@ -4,11 +4,11 @@ namespace Game.Enemy
 {
     public abstract class EnemyStateBase : StateBase
     {
-        protected EnemyController Controller { get; }
+        protected EnemyControllerBase Controller { get; }
         protected EnemyBase Enemy { get; }
 
         protected EnemyStateBase(
-            EnemyController controller,
+            EnemyControllerBase controller,
             EnemyBase enemy)
         {
             Controller = controller;

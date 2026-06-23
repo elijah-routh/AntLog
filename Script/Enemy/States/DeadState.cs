@@ -8,7 +8,7 @@ namespace Game.Enemy
         private const float DeathDuration = 2f;
 
         public DeadState(
-            EnemyController controller,
+            EnemyControllerBase controller,
             EnemyBase enemy)
             : base(controller, enemy)
         {

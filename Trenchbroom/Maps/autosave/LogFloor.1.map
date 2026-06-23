@@ -1,0 +1,18 @@
+// Game: TankDev
+// Format: Valve
+// entity 0
+{
+"mapversion" "220"
+"wad" ""
+"classname" "worldspawn"
+"_tb_mod" "Trenchbroom"
+// brush 0
+{
+( -5177 -752 45 ) ( -5177 -751 45 ) ( -5177 -752 46 ) kenney_prototypeTextures/PNG/Light/texture_11 [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 1080 -4049 45 ) ( 1080 -4049 46 ) ( 1081 -4049 45 ) kenney_prototypeTextures/PNG/Light/texture_11 [ 1 0 0 0 ] [ 0 0 -1 0 ] 180 1 1
+( 1080 -752 -195 ) ( 1081 -752 -195 ) ( 1080 -751 -195 ) kenney_prototypeTextures/PNG/Light/texture_11 [ -1 0 0 0 ] [ 0 -1 0 0 ] 270 1 1
+( 1256 -640 61 ) ( 1256 -639 61 ) ( 1257 -640 61 ) kenney_prototypeTextures/PNG/Light/texture_11 [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( 1256 3232 61 ) ( 1257 3232 61 ) ( 1256 3232 62 ) kenney_prototypeTextures/PNG/Light/texture_11 [ -1 0 0 0 ] [ 0 0 -1 0 ] 180 1 1
+( 4985 -640 61 ) ( 4985 -640 62 ) ( 4985 -639 61 ) kenney_prototypeTextures/PNG/Light/texture_11 [ 0 1 0 0 ] [ 0 0 -1 0 ] 90 1 1
+}
+}

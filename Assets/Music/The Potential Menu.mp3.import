@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://5k8sqqpakma7"
+path="res://.godot/imported/The Potential Menu.mp3-f48fd21d1399ba9cde34fe8c7b95b419.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music/The Potential Menu.mp3"
+dest_files=["res://.godot/imported/The Potential Menu.mp3-f48fd21d1399ba9cde34fe8c7b95b419.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -10,6 +10,8 @@ namespace Game.Components
         private float _friction;
         private float _gravity;
 
+        private float _speedMultiplier = 1f;
+
         private CharacterBody3D _body;
         private Vector3 _horizontalVelocity;
         private Vector3 _knockbackVelocity;
@@ -62,12 +64,19 @@ namespace Game.Components
             if (_body == null) return;
 
             direction.Y = 0f;
+
+            if (direction.LengthSquared() <= 0.001f)
+            {
+                Stop();
+                return;
+            }
+
             direction = direction.Normalized();
 
             float dt = (float)GetPhysicsProcessDeltaTime();
 
             _horizontalVelocity = _horizontalVelocity.Lerp(
-                direction * _moveSpeed,
+                direction * _moveSpeed * _speedMultiplier,
                 _acceleration * dt
             );
         }
@@ -85,6 +94,16 @@ namespace Game.Components
         public void ApplyKnockback(Vector3 force)
         {
             _knockbackVelocity += force;
+        }
+
+        public void SetSpeedMultiplier(float multiplier)
+        {
+            _speedMultiplier = Mathf.Max(multiplier, 0f);
+        }
+
+        public void ResetSpeedMultiplier()
+        {
+            _speedMultiplier = 1f;
         }
     }
 }

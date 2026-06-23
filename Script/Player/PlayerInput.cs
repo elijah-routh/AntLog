@@ -35,4 +35,7 @@ public static class PlayerInput
 
     public static bool GrabPressed =>
         Input.IsActionJustPressed("grab");
+
+    public static bool SpinHeld =>
+        Input.IsActionPressed("spin");
 }

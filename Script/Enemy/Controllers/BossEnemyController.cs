@@ -1,15 +1,12 @@
 using Godot;
-using Game.Entity;
-using Game.Items;
 
 namespace Game.Enemy
 {
-    public partial class EnemyController : Node
+    public partial class BossEnemyController : EnemyControllerBase
     {
-        private EnemyBase _enemy;
-        private StateMachine _stateMachine;
-
-        [Export] public Node3D Target { get; set; }
+        // =========================
+        // Rotation
+        // =========================
 
         [ExportGroup("Rotation")]
         [Export] public float RotationSpeed { get; set; } = 8f;
@@ -19,25 +16,16 @@ namespace Game.Enemy
         // =========================
 
         [ExportGroup("Orbit")]
-
-        [Export]
-        public float OrbitDistance { get; set; } = 6f;
-
-        [Export]
-        public float OrbitStrength { get; set; } = 1.2f;
-
-        [Export]
-        public float ApproachStrength { get; set; } = 1f;
-
-        [Export]
-        public float AttackCheckInterval { get; set; } = 1.25f;
+        [Export] public float OrbitDistance { get; set; } = 6f;
+        [Export] public float OrbitStrength { get; set; } = 1.2f;
+        [Export] public float ApproachStrength { get; set; } = 1f;
+        [Export] public float AttackCheckInterval { get; set; } = 1.25f;
 
         // =========================
         // Slam Settings
         // =========================
 
         [ExportGroup("Slam")]
-
         [Export] public float SlamAttackRange { get; set; } = 30f;
         [Export] public float SlamRadius { get; set; } = 4f;
         [Export] public float SlamCooldown { get; set; } = 4f;
@@ -60,51 +48,27 @@ namespace Game.Enemy
         [Export] public float LaserCooldown { get; set; } = 5f;
         [Export] public float LaserMaxDistance { get; set; } = 40f;
 
-
-        public void Initialize(EnemyBase enemy)
+        protected override void EnterInitialState()
         {
-            _enemy = enemy;
-
-            _stateMachine = new StateMachine();
-
-            Target = GetTree().GetFirstNodeInGroup("player") as Node3D;
-
-            _enemy.Health.Damaged += OnDamaged;
-            _enemy.Health.Died += OnDied;
-
-            ChangeState(new IdleState(this, _enemy));
+            ChangeState(new IdleState(this, Enemy));
         }
 
-        public override void _Process(double delta)
+        protected override void OnDamaged(float damage)
         {
-            _stateMachine?.Update(delta);
-        }
-
-        public override void _PhysicsProcess(double delta)
-        {
-            _stateMachine?.PhysicsUpdate(delta);
-        }
-
-        public void ChangeState(EnemyStateBase state)
-        {
-            _stateMachine?.ChangeState(state);
-        }
-
-        private void OnDamaged(float damage)
-        {
-            if (_stateMachine.IsInState<ChaseState>())
+            if (IsInState<ChaseState>())
                 return;
 
             if (Target == null)
                 return;
 
-            ChangeState(new ChaseState(this, _enemy, Target));
+            ChangeState(new ChaseState(this, Enemy, Target));
         }
 
-        private void OnDied()
+        protected override void OnDied()
         {
-            ChangeState(new DeadState(this, _enemy));
-        }
+            base.OnDied();
 
+            ChangeState(new DeadState(this, Enemy));
+        }
     }
 }

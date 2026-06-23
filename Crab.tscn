@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://eafp3ldsixhv" path="res://Script/Enemy/Data/Crab.tres" id="2_bl74u"]
 [ext_resource type="Script" uid="uid://dblhsflas6dvv" path="res://Script/Entity/MoveComponent.cs" id="3_o6mc7"]
 [ext_resource type="Script" uid="uid://cgiws4dpe64rt" path="res://Script/Entity/HealthComponent.cs" id="4_qj5wv"]
-[ext_resource type="Script" uid="uid://bal6jflxl81xj" path="res://Script/Enemy/EnemyController.cs" id="5_bl74u"]
+[ext_resource type="Script" uid="uid://bal6jflxl81xj" path="res://Script/Enemy/Controllers/BossEnemyController.cs" id="5_bl74u"]
 [ext_resource type="Texture2D" uid="uid://cmaexh7qqqbh1" path="res://Art/Sprites/crab3.png" id="5_o6mc7"]
 [ext_resource type="PackedScene" uid="uid://cw5s7id8meur2" path="res://laser.tscn" id="6_axggk"]
 [ext_resource type="Texture2D" uid="uid://c7vxvlarin0s8" path="res://Art/Sprites/crab4.png" id="6_qj5wv"]

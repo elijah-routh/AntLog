@@ -4,12 +4,8 @@ namespace Game.Enemy
 {
     public class ChaseState : EnemyStateBase
     {
+        private readonly BossEnemyController _bossController;
         private readonly Node3D _target;
-
-        private readonly float _orbitDistance = 6f;
-        private readonly float _orbitStrength = 1.2f;
-        private readonly float _approachStrength = 1.0f;
-        private readonly float _attackCheckInterval = 1.25f;
 
         private float _attackTimer;
         private int _orbitDirection = 1;
@@ -18,11 +14,12 @@ namespace Game.Enemy
         private LaserBeamAttack _laserAttack;
 
         public ChaseState(
-            EnemyController controller,
+            BossEnemyController controller,
             EnemyBase enemy,
             Node3D target)
             : base(controller, enemy)
         {
+            _bossController = controller;
             _target = target;
         }
 
@@ -35,23 +32,23 @@ namespace Game.Enemy
             _slamAttack = new SlamAttack(
                 Enemy,
                 _target,
-                Controller.SlamRadius,
-                Controller.SlamCooldown,
-                Controller.SlamJumpHeight,
-                Controller.SlamSpeed,
-                Controller.SlamJumpUpDuration,
-                Controller.SlamHangTime
+                _bossController.SlamRadius,
+                _bossController.SlamCooldown,
+                _bossController.SlamJumpHeight,
+                _bossController.SlamSpeed,
+                _bossController.SlamJumpUpDuration,
+                _bossController.SlamHangTime
             );
 
             _laserAttack = new LaserBeamAttack(
                 Enemy,
                 _target,
-                Controller.LaserBarrel,
-                Controller.LaserBeamScene,
-                Controller.LaserTrackingSpeed,
-                Controller.LaserDuration,
-                Controller.LaserCooldown,
-                Controller.LaserMaxDistance
+                _bossController.LaserBarrel,
+                _bossController.LaserBeamScene,
+                _bossController.LaserTrackingSpeed,
+                _bossController.LaserDuration,
+                _bossController.LaserCooldown,
+                _bossController.LaserMaxDistance
             );
         }
 
@@ -79,7 +76,7 @@ namespace Game.Enemy
             if (_attackTimer <= 0f)
             {
                 TryAttack();
-                _attackTimer = _attackCheckInterval;
+                _attackTimer = _bossController.AttackCheckInterval;
             }
         }
 
@@ -100,7 +97,7 @@ namespace Game.Enemy
             ) * _orbitDirection;
 
             Vector3 desiredPosition =
-                _target.GlobalPosition + radialDirection * Controller.OrbitDistance;
+                _target.GlobalPosition + radialDirection * _bossController.OrbitDistance;
 
             desiredPosition.Y = Enemy.GlobalPosition.Y;
 
@@ -108,15 +105,8 @@ namespace Game.Enemy
             correctionDirection.Y = 0f;
 
             Vector3 finalDirection =
-                tangentDirection * Controller.OrbitStrength +
-                correctionDirection * Controller.ApproachStrength;
-
-            //GD.Print(
-            //    $"{Enemy.Name}: Orbiting | " +
-            //    $"Distance={Enemy.GlobalPosition.DistanceTo(_target.GlobalPosition):F2} | " +
-            //    $"OrbitDistance={Controller.OrbitDistance:F2} | " +
-            //    $"Correction={correctionDirection.Length():F2}"
-            //);
+                tangentDirection * _bossController.OrbitStrength +
+                correctionDirection * _bossController.ApproachStrength;
 
             Enemy.Movement.Move(finalDirection);
         }
@@ -125,7 +115,7 @@ namespace Game.Enemy
         {
             float distance = Enemy.GlobalPosition.DistanceTo(_target.GlobalPosition);
 
-            if (distance <= Controller.SlamAttackRange && _slamAttack.CanUse)
+            if (distance <= _bossController.SlamAttackRange && _slamAttack.CanUse)
             {
                 _slamAttack.Start();
                 return;
@@ -134,7 +124,6 @@ namespace Game.Enemy
             if (_laserAttack.CanUse)
             {
                 _laserAttack.Start();
-                return;
             }
         }
 
@@ -163,7 +152,7 @@ namespace Game.Enemy
             rotation.Y = Mathf.LerpAngle(
                 rotation.Y,
                 targetYaw,
-                Mathf.Clamp(Controller.RotationSpeed * (float)delta, 0f, 1f)
+                Mathf.Clamp(_bossController.RotationSpeed * (float)delta, 0f, 1f)
             );
 
             Enemy.GlobalRotation = rotation;

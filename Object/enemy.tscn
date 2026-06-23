@@ -5,15 +5,19 @@
 [ext_resource type="Script" uid="uid://dblhsflas6dvv" path="res://Script/Entity/MoveComponent.cs" id="2_wg2dq"]
 [ext_resource type="Material" uid="uid://dp3mpvw3juhmi" path="res://Trenchbroom/textures/kenney_prototypeTextures/PNG/Purple/texture_08.tres" id="3_46ks3"]
 [ext_resource type="Script" uid="uid://cgiws4dpe64rt" path="res://Script/Entity/HealthComponent.cs" id="3_c6j6f"]
-[ext_resource type="Script" uid="uid://bal6jflxl81xj" path="res://Script/Enemy/EnemyController.cs" id="4_46ks3"]
+[ext_resource type="Script" uid="uid://bal6jflxl81xj" path="res://Script/Enemy/Controllers/BossEnemyController.cs" id="4_46ks3"]
 [ext_resource type="Material" uid="uid://1socim47qhxu" path="res://Art/tankGunAlpha.tres" id="4_ry5el"]
 [ext_resource type="PackedScene" uid="uid://cw5s7id8meur2" path="res://laser.tscn" id="8_ry5el"]
+[ext_resource type="PackedScene" uid="uid://dj3utbkcft8us" path="res://Scene/EnemyHealthBar.tscn" id="9_5ipgq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7xaro"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_7k104"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_5ipgq"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_gd3ju"]
+viewport_path = NodePath("SubViewport")
 
 [node name="EnemyBody" type="CharacterBody3D" unique_id=773946387]
 collision_layer = 8
@@ -46,7 +50,7 @@ script = ExtResource("2_wg2dq")
 script = ExtResource("3_c6j6f")
 DestroyOwnerOnDeath = true
 
-[node name="EnemyController" type="Node" parent="." unique_id=309207712 node_paths=PackedStringArray("LaserBarrel")]
+[node name="EnemyController" type="Node" parent="." unique_id=309207712 node_paths=PackedStringArray("LaserBarrel", "EnemyHealthBar")]
 script = ExtResource("4_46ks3")
 OrbitDistance = 20.0
 OrbitStrength = 1.0
@@ -54,3 +58,11 @@ ApproachStrength = 2.0
 SlamJumpHeight = 15.0
 LaserBarrel = NodePath("../MeshInstance3D/BarrelPivot/MeshInstance3D/Barrel")
 LaserBeamScene = ExtResource("8_ry5el")
+EnemyHealthBar = NodePath("../EnemyHealthBar3D")
+
+[node name="EnemyHealthBar3D" parent="." unique_id=868444524 instance=ExtResource("9_5ipgq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3071289, 0)
+texture = SubResource("ViewportTexture_gd3ju")
+
+[editable path="EnemyHealthBar3D"]
+[editable path="EnemyHealthBar3D/SubViewport/HealthBar"]

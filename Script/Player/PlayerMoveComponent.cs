@@ -9,6 +9,12 @@ public partial class PlayerMoveComponent : Node
     [Export] public float JumpVelocity = 8.5f;
     [Export] public float RotationSpeed = 12.0f;
 
+    [ExportGroup("Spin")]
+    [Export] public float SpinSpeed = 14.0f;
+    [Export(PropertyHint.Range, "0.1,1.0,0.05")]
+    public float SpinMoveSpeedMultiplier = 0.45f;
+    [Export] public int SpinDirection = 1;
+
     [ExportGroup("Dive Grab")]
     [Export] public DiveGrabComponent DiveGrab;
     [Export] public float DiveSpeed = 24.0f;
@@ -18,6 +24,7 @@ public partial class PlayerMoveComponent : Node
     [Export] public bool CanDiveInAir = false;
 
     public bool IsDiving { get; private set; }
+    public bool IsSpinning { get; private set; }
 
     private float _diveTimer;
     private float _diveCooldownTimer;
@@ -48,6 +55,7 @@ public partial class PlayerMoveComponent : Node
 
         if (IsDiving)
         {
+            IsSpinning = false;
             HandleDive(body, delta);
             return;
         }
@@ -57,14 +65,20 @@ public partial class PlayerMoveComponent : Node
         if (IsDiving)
             return;
 
+        IsSpinning = PlayerInput.SpinHeld;
+
         Vector2 input = PlayerInput.Movement;
         Vector3 direction = GetCameraRelativeDirection(input, cameraPivot);
+
+        float currentMoveSpeed = IsSpinning
+            ? MoveSpeed * SpinMoveSpeedMultiplier
+            : MoveSpeed;
 
         Vector3 velocity = body.Velocity;
 
         if (direction != Vector3.Zero)
         {
-            Vector3 targetVelocity = direction * MoveSpeed;
+            Vector3 targetVelocity = direction * currentMoveSpeed;
 
             velocity.X = Mathf.MoveToward(
                 velocity.X,
@@ -77,8 +91,6 @@ public partial class PlayerMoveComponent : Node
                 targetVelocity.Z,
                 Acceleration * delta
             );
-
-            RotateTowards(body, direction, delta);
         }
         else
         {
@@ -96,6 +108,22 @@ public partial class PlayerMoveComponent : Node
         }
 
         body.Velocity = velocity;
+
+        if (IsSpinning)
+        {
+            Spin(body, delta);
+        }
+        else if (direction != Vector3.Zero)
+        {
+            RotateTowards(body, direction, delta);
+        }
+    }
+
+    private void Spin(Node3D player, float delta)
+    {
+        Vector3 rotation = player.Rotation;
+        rotation.Y += SpinSpeed * SpinDirection * delta;
+        player.Rotation = rotation;
     }
 
     private void TryStartDive(CharacterBody3D body, Node3D cameraPivot)
@@ -117,7 +145,6 @@ public partial class PlayerMoveComponent : Node
 
         if (inputDirection == Vector3.Zero)
         {
-            // Dive in the direction the player is already facing.
             inputDirection = -body.GlobalBasis.Z;
             inputDirection.Y = 0;
             inputDirection = inputDirection.Normalized();
@@ -129,6 +156,8 @@ public partial class PlayerMoveComponent : Node
     private void StartDive(CharacterBody3D body, Vector3 direction)
     {
         IsDiving = true;
+        IsSpinning = false;
+
         _diveTimer = DiveDuration;
         _diveCooldownTimer = DiveCooldown;
         _diveDirection = direction.Normalized();
