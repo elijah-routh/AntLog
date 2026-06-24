@@ -35,7 +35,12 @@ namespace Game.Enemy
             if (_dinoController.IsTargetInDetectionRange())
             {
                 _dinoController.ChangeState(
-                    new DinoRunState(_dinoController, Enemy, _dinoController.Target)
+                    new DinoChaseOrbitState(_dinoController, Enemy, _dinoController.Target)
+                );
+            } else
+            {
+                _dinoController.ChangeState(
+                    new DinoWanderState(_dinoController, Enemy, _dinoController.Target)
                 );
             }
         }

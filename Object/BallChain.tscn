@@ -45,10 +45,11 @@ MaxHealth = 25.0
 [node name="EnemyController" type="Node" parent="." unique_id=1245759659 node_paths=PackedStringArray("Animations", "EnemyHealthBar")]
 script = ExtResource("5_6o4ei")
 Animations = NodePath("../Parasaurolophus/DinoAnimationController")
+PathUpdateInterval = 0.5
 DetectionRange = 40.0
 LoseTargetRange = 70.0
-TiredRotationSpeed = 0.5
-ChargeStartDistance = 15.0
+TiredRotationSpeed = 0.4
+ChargeStartDistance = 20.0
 ChargeHopDuration = 0.65
 HopInPlaceChance = 1.0
 ChargeSpeedMultiplier = 5.0
@@ -56,7 +57,10 @@ ChargeMinDuration = 0.7
 ChargeMaxDuration = 1.2
 ChargeCooldown = 6.0
 ChargesBeforeTired = 2
-TiredDuration = 5.0
+TiredDuration = 6.0
+OrbitIdealDistance = 12.0
+ChargeMinDistance = 6.5
+ChargeMaxDistance = 18.0
 EnemyHealthBar = NodePath("../EnemyHealthBar3D")
 
 [node name="GrabbableComponent" type="Node" parent="." unique_id=1444724679 node_paths=PackedStringArray("GrabRoot", "AttachPoint", "Projectile")]
@@ -162,6 +166,11 @@ transform = Transform3D(1, 4.2853185e-07, -2.7100273e-06, 4.285326e-07, -0.99999
 transform = Transform3D(1, -6.82121e-13, -3.663702e-06, 4.3674732e-13, -0.9999999, 2.3841856e-07, -3.6637018e-06, -2.3841856e-07, -0.9999999, 0.0074793375, 0.008284223, 0.0008617053)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1943428122]
+path_desired_distance = 1.5
+target_desired_distance = 3.0
+path_max_distance = 20.01
+avoidance_enabled = true
+neighbor_distance = 6.0
 
 [editable path="EnemyHealthBar3D"]
 [editable path="EnemyHealthBar3D/SubViewport/HealthBar"]

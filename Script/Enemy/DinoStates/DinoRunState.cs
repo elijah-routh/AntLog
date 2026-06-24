@@ -28,13 +28,12 @@ namespace Game.Enemy
             Enemy.Movement.ResetSpeedMultiplier();
             _dinoController.Animations?.PlayRun();
 
-            if (Enemy.NavigationAgent != null && _target != null)
-                Enemy.NavigationAgent.TargetPosition = _target.GlobalPosition;
+            UpdateNavigationTarget();
         }
 
         public override void PhysicsUpdate(double delta)
         {
-            if (_target == null)
+            if (_target == null || !GodotObject.IsInstanceValid(_target))
             {
                 Enemy.Movement.Stop();
                 _dinoController.ChangeState(new DinoIdleState(_dinoController, Enemy));
@@ -59,7 +58,15 @@ namespace Game.Enemy
                 return;
             }
 
-            Vector3 direction = GetPathDirection((float)delta);
+            _pathUpdateTimer -= (float)delta;
+
+            if (_pathUpdateTimer <= 0f)
+            {
+                UpdateNavigationTarget();
+                _pathUpdateTimer = _dinoController.PathUpdateInterval;
+            }
+
+            Vector3 direction = GetBestChaseDirection();
 
             if (direction == Vector3.Zero)
             {
@@ -74,35 +81,44 @@ namespace Game.Enemy
                 _dinoController.RunRotationSpeed
             );
 
+            //GD.Print($"{Enemy.Name}: Run direction = {direction}, distance = {_dinoController.GetDistanceToTarget()}");
             Enemy.Movement.Move(direction);
             _dinoController.Animations?.PlayRun();
         }
 
-        private Vector3 GetPathDirection(float delta)
+        private void UpdateNavigationTarget()
         {
             if (Enemy.NavigationAgent == null)
-                return _dinoController.GetDirectionToTarget();
+                return;
 
-            _pathUpdateTimer -= delta;
+            if (_target == null || !GodotObject.IsInstanceValid(_target))
+                return;
 
-            if (_pathUpdateTimer <= 0f)
-            {
-                Enemy.NavigationAgent.TargetPosition = _target.GlobalPosition;
-                _pathUpdateTimer = _dinoController.PathUpdateInterval;
-            }
+            Enemy.NavigationAgent.TargetPosition = _target.GlobalPosition;
+        }
 
+        private Vector3 GetBestChaseDirection()
+        {
+            Vector3 directDirection = _dinoController.GetDirectionToTarget();
+
+            if (Enemy.NavigationAgent == null)
+                return directDirection;
+
+            // If navigation has finished but we are not close enough to charge,
+            // keep chasing directly instead of freezing.
             if (Enemy.NavigationAgent.IsNavigationFinished())
-                return Vector3.Zero;
+                return directDirection;
 
-            Vector3 nextPosition = Enemy.NavigationAgent.GetNextPathPosition();
+            Vector3 nextPathPosition = Enemy.NavigationAgent.GetNextPathPosition();
 
-            Vector3 direction = nextPosition - Enemy.GlobalPosition;
-            direction.Y = 0f;
+            Vector3 pathDirection = nextPathPosition - Enemy.GlobalPosition;
+            pathDirection.Y = 0f;
 
-            if (direction.LengthSquared() <= 0.001f)
-                return Vector3.Zero;
+            // If the next path position is too close or bad, fall back to direct chase.
+            if (pathDirection.LengthSquared() <= 0.01f)
+                return directDirection;
 
-            return direction.Normalized();
+            return pathDirection.Normalized();
         }
 
         public override void Exit()

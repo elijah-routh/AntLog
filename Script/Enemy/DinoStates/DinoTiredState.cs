@@ -57,7 +57,7 @@ namespace Game.Enemy
             }
 
             _dinoController.ChangeState(
-                new DinoRunState(_dinoController, Enemy, _target)
+                new DinoChaseOrbitState(_dinoController, Enemy, _target)
             );
         }
 

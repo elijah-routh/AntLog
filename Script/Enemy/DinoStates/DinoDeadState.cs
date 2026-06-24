@@ -6,6 +6,8 @@ namespace Game.Enemy
     {
         private readonly DinoEnemyController _dinoController;
 
+        private float _despawnTimer = 2.0f;
+
         public DinoDeadState(
             DinoEnemyController controller,
             EnemyBase enemy)
@@ -23,7 +25,20 @@ namespace Game.Enemy
 
             _dinoController.Animations?.PlayDeath();
 
-            Enemy.SetPhysicsProcess(false);
+            // Do not disable physics process here if your controller/state machine needs it.
+            // Enemy.SetPhysicsProcess(false);
+        }
+
+        public override void PhysicsUpdate(double delta)
+        {
+            Enemy.Movement.Stop();
+
+            _despawnTimer -= (float)delta;
+
+            if (_despawnTimer <= 0f)
+            {
+                Enemy.QueueFree();
+            }
         }
     }
 }

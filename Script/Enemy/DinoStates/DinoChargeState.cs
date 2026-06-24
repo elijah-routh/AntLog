@@ -50,7 +50,7 @@ namespace Game.Enemy
                 StopCharge();
 
                 _dinoController.ChangeState(
-                    new DinoTiredState(_dinoController, Enemy, _target)
+                    new DinoChaseOrbitState(_dinoController, Enemy, _target)
                 );
 
                 return;
@@ -73,7 +73,7 @@ namespace Game.Enemy
                 else
                 {
                     _dinoController.ChangeState(
-                        new DinoRunState(_dinoController, Enemy, _target)
+                        new DinoChaseOrbitState(_dinoController, Enemy, _target)
                     );
                 }
             }

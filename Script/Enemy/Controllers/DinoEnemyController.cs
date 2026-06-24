@@ -38,6 +38,26 @@ namespace Game.Enemy
         [ExportGroup("Tired")]
         [Export] public float TiredDuration { get; set; } = 2.0f;
 
+        [ExportGroup("Wander")]
+        [Export] public float WanderRadius { get; set; } = 12f;
+        [Export] public float WanderPointReachedDistance { get; set; } = 1.25f;
+        [Export] public float WanderPauseMin { get; set; } = 0.4f;
+        [Export] public float WanderPauseMax { get; set; } = 1.2f;
+        [Export] public float WanderChargeChance { get; set; } = 0.15f;
+
+        [ExportGroup("Orbit")]
+        [Export] public float OrbitEnterDistance { get; set; } = 16f;
+        [Export] public float OrbitIdealDistance { get; set; } = 8f;
+        [Export] public float OrbitDistanceTolerance { get; set; } = 1.5f;
+        [Export] public float OrbitSpeedMultiplier { get; set; } = 0.85f;
+        [Export] public float OrbitDirectionChangeChance { get; set; } = 0.15f;
+
+        [ExportGroup("Charge Intent")]
+        [Export] public float ChaseChargeMinDelay { get; set; } = 1.0f;
+        [Export] public float ChaseChargeMaxDelay { get; set; } = 3.0f;
+        [Export] public float ChargeMinDistance { get; set; } = 5.5f;
+        [Export] public float ChargeMaxDistance { get; set; } = 11f;
+
         public bool CanCharge { get; private set; } = true;
 
         private float _chargeCooldownTimer;
@@ -73,7 +93,7 @@ namespace Game.Enemy
             if (IsInState<DinoChargeState>())
                 return;
 
-            ChangeState(new DinoRunState(this, Enemy, Target));
+            ChangeState(new DinoChaseOrbitState(this, Enemy, Target));
         }
 
         protected override void OnDied()
@@ -298,6 +318,36 @@ namespace Game.Enemy
             Enemy.Movement.Stop();
 
             ChangeState(new DinoTiredState(this, Enemy, Target));
+        }
+
+        public bool ShouldEnterOrbit()
+        {
+            return HasValidTarget() && GetDistanceToTarget() <= OrbitEnterDistance;
+        }
+
+        public bool IsInGoodChargeRange()
+        {
+            float distance = GetDistanceToTarget();
+
+            return distance >= ChargeMinDistance &&
+                   distance <= ChargeMaxDistance;
+        }
+
+        public bool CanAttemptCharge()
+        {
+            return CanCharge &&
+                   HasValidTarget() &&
+                   IsInGoodChargeRange();
+        }
+
+        public float GetRandomChaseChargeDelay()
+        {
+            return (float)GD.RandRange(ChaseChargeMinDelay, ChaseChargeMaxDelay);
+        }
+
+        public bool RollWanderChargeChance()
+        {
+            return GD.Randf() <= WanderChargeChance;
         }
     }
 }

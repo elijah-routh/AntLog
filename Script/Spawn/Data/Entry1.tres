@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemySpawnEntryData" format=3 uid="uid://b5pqpph3gofj5"]
+
+[ext_resource type="PackedScene" uid="uid://bau34wars06ad" path="res://Object/BallChain.tscn" id="1_46nrs"]
+[ext_resource type="Script" uid="uid://c5aucc2c1t4gr" path="res://Script/Spawn/EnemySpawnEntryData.cs" id="1_thdef"]
+
+[resource]
+script = ExtResource("1_thdef")
+EnemyScene = ExtResource("1_46nrs")
+Count = 10
+metadata/_custom_type_script = "uid://c5aucc2c1t4gr"
