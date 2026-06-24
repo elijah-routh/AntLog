@@ -38,6 +38,8 @@ namespace Game.Enemy
             _dinoController.RegisterChargeUsed();
             _dinoController.StartChargeCooldown();
 
+            _dinoController.ChargeHitbox?.EnableHitbox();
+
             _dinoController.Animations?.PlayRun();
         }
 
@@ -94,6 +96,8 @@ namespace Game.Enemy
 
         private void StopCharge()
         {
+            _dinoController.ChargeHitbox?.DisableHitbox();
+
             Enemy.Movement.ResetSpeedMultiplier();
             Enemy.Movement.Stop();
         }

@@ -9,7 +9,11 @@ namespace Game.Enemy
 
         private float _pathUpdateTimer;
         private float _chargeDecisionTimer;
+        private float _chargeAttemptCooldownTimer;
         private int _orbitDirection;
+
+        private Vector3 _currentOrbitPoint;
+        private Vector3 _lastMoveDirection = Vector3.Zero;
 
         public DinoChaseOrbitState(
             DinoEnemyController controller,
@@ -30,13 +34,20 @@ namespace Game.Enemy
 
             _pathUpdateTimer = 0f;
             _chargeDecisionTimer = _dinoController.GetRandomChaseChargeDelay();
+            _chargeAttemptCooldownTimer = _dinoController.ChargeAttemptCooldown;
+
             _orbitDirection = GD.Randf() > 0.5f ? 1 : -1;
+
+            _currentOrbitPoint = Enemy.GlobalPosition;
+            _lastMoveDirection = Vector3.Zero;
 
             _dinoController.Animations?.PlayRun();
         }
 
         public override void PhysicsUpdate(double delta)
         {
+            float dt = (float)delta;
+
             if (_target == null || !GodotObject.IsInstanceValid(_target))
             {
                 Enemy.Movement.Stop();
@@ -51,9 +62,9 @@ namespace Game.Enemy
                 return;
             }
 
-            UpdateChargeDecision((float)delta);
+            UpdateTimers(dt);
 
-            if (_dinoController.CanAttemptCharge() && _chargeDecisionTimer <= 0f)
+            if (ShouldCommitToCharge())
             {
                 Enemy.Movement.Stop();
 
@@ -64,29 +75,51 @@ namespace Game.Enemy
                 return;
             }
 
-            if (GD.Randf() <= _dinoController.OrbitDirectionChangeChance * (float)delta)
+            if (GD.Randf() <= _dinoController.OrbitDirectionChangeChance * dt)
                 _orbitDirection *= -1;
 
-            UpdateOrbitNavigation((float)delta);
+            UpdateOrbitNavigation(dt);
 
-            Vector3 direction = GetPathDirection();
+            Vector3 direction = GetMovementDirection();
 
             if (direction == Vector3.Zero)
             {
+                // Do not instantly swap to idle. This causes run/idle flicker
+                // when the nav point is very close or briefly unreachable.
                 Enemy.Movement.Stop();
-                _dinoController.Animations?.PlayIdle();
+
+                if (_lastMoveDirection != Vector3.Zero)
+                    _dinoController.FaceDirection(
+                        _lastMoveDirection,
+                        delta,
+                        _dinoController.RunRotationSpeed
+                    );
+
+                _dinoController.Animations?.PlayRun();
                 return;
             }
 
-            _dinoController.FaceTarget(delta, _dinoController.RunRotationSpeed);
+            _lastMoveDirection = direction;
+
+            // Important change:
+            // While orbiting, face where the dino is moving, not the player.
+            // This exposes its side/back/tail more often.
+            _dinoController.FaceDirection(
+                direction,
+                delta,
+                _dinoController.RunRotationSpeed
+            );
 
             Enemy.Movement.Move(direction);
             _dinoController.Animations?.PlayRun();
         }
 
-        private void UpdateChargeDecision(float delta)
+        private void UpdateTimers(float delta)
         {
             _chargeDecisionTimer -= delta;
+
+            if (_chargeAttemptCooldownTimer > 0f)
+                _chargeAttemptCooldownTimer -= delta;
 
             if (_chargeDecisionTimer <= 0f && !_dinoController.CanAttemptCharge())
             {
@@ -94,59 +127,105 @@ namespace Game.Enemy
             }
         }
 
+        private bool ShouldCommitToCharge()
+        {
+            if (_chargeAttemptCooldownTimer > 0f)
+                return false;
+
+            if (_chargeDecisionTimer > 0f)
+                return false;
+
+            if (!_dinoController.CanAttemptCharge())
+                return false;
+
+            return true;
+        }
+
         private void UpdateOrbitNavigation(float delta)
         {
-            if (Enemy.NavigationAgent == null)
-                return;
-
             _pathUpdateTimer -= delta;
 
             if (_pathUpdateTimer > 0f)
                 return;
 
-            Vector3 orbitPoint = GetOrbitPoint();
+            _currentOrbitPoint = GetOrbitPoint();
 
-            Enemy.NavigationAgent.TargetPosition = orbitPoint;
+            if (Enemy.NavigationAgent != null)
+                Enemy.NavigationAgent.TargetPosition = _currentOrbitPoint;
 
             _pathUpdateTimer = _dinoController.PathUpdateInterval;
         }
 
         private Vector3 GetOrbitPoint()
         {
-            Vector3 toEnemy = Enemy.GlobalPosition - _target.GlobalPosition;
-            toEnemy.Y = 0f;
+            Vector3 enemyPosition = Enemy.GlobalPosition;
+            Vector3 targetPosition = _target.GlobalPosition;
 
-            if (toEnemy.LengthSquared() <= 0.001f)
-                toEnemy = -_target.GlobalTransform.Basis.Z;
+            Vector3 awayFromTarget = enemyPosition - targetPosition;
+            awayFromTarget.Y = 0f;
 
-            toEnemy = toEnemy.Normalized();
+            if (awayFromTarget.LengthSquared() <= 0.001f)
+            {
+                awayFromTarget = -_target.GlobalTransform.Basis.Z;
+                awayFromTarget.Y = 0f;
+            }
 
-            Vector3 tangent = new Vector3(-toEnemy.Z, 0f, toEnemy.X) * _orbitDirection;
+            awayFromTarget = awayFromTarget.Normalized();
 
-            float currentDistance = Enemy.GlobalPosition.DistanceTo(_target.GlobalPosition);
+            Vector3 tangent = new Vector3(
+                -awayFromTarget.Z,
+                0f,
+                awayFromTarget.X
+            ) * _orbitDirection;
 
-            Vector3 desiredRadial = toEnemy * _dinoController.OrbitIdealDistance;
-            Vector3 desiredOrbitCenter = _target.GlobalPosition + desiredRadial;
+            float distanceToTarget = enemyPosition.DistanceTo(targetPosition);
 
-            Vector3 orbitOffset = tangent * 3.0f;
+            Vector3 desiredRadial = awayFromTarget * _dinoController.OrbitIdealDistance;
+            Vector3 orbitPoint = targetPosition + desiredRadial;
 
-            Vector3 orbitPoint = desiredOrbitCenter + orbitOffset;
-            orbitPoint.Y = Enemy.GlobalPosition.Y;
+            // Sideways orbit motion.
+            orbitPoint += tangent * _dinoController.OrbitSideOffset;
+
+            // If too close, strongly bias the point away from the player.
+            // This makes the dino back up instead of hugging the player.
+            if (distanceToTarget < _dinoController.BackUpDistance)
+            {
+                float closeness = 1f - Mathf.Clamp(
+                    distanceToTarget / _dinoController.BackUpDistance,
+                    0f,
+                    1f
+                );
+
+                orbitPoint += awayFromTarget * _dinoController.BackUpStrength * closeness;
+            }
+
+            orbitPoint.Y = enemyPosition.Y;
 
             return orbitPoint;
         }
 
-        private Vector3 GetPathDirection()
+        private Vector3 GetMovementDirection()
         {
-            if (Enemy.NavigationAgent == null)
-                return Vector3.Zero;
+            Vector3 direction = Vector3.Zero;
 
-            if (Enemy.NavigationAgent.IsNavigationFinished())
-                return Vector3.Zero;
+            if (Enemy.NavigationAgent != null)
+            {
+                if (!Enemy.NavigationAgent.IsNavigationFinished())
+                {
+                    Vector3 nextPosition = Enemy.NavigationAgent.GetNextPathPosition();
 
-            Vector3 nextPosition = Enemy.NavigationAgent.GetNextPathPosition();
+                    direction = nextPosition - Enemy.GlobalPosition;
+                    direction.Y = 0f;
 
-            Vector3 direction = nextPosition - Enemy.GlobalPosition;
+                    if (direction.LengthSquared() > 0.05f)
+                        return direction.Normalized();
+                }
+            }
+
+            // Fallback: move toward the desired orbit point directly.
+            // This prevents the dino from stopping just because the nav path
+            // briefly reports finished or the next point is too close.
+            direction = _currentOrbitPoint - Enemy.GlobalPosition;
             direction.Y = 0f;
 
             if (direction.LengthSquared() <= 0.05f)

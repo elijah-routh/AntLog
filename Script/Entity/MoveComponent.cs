@@ -17,6 +17,8 @@ namespace Game.Components
         private Vector3 _knockbackVelocity;
         private float _verticalVelocity;
 
+        public bool IsPhysicsLocked { get; private set; }
+
         public void Initialize(
             float moveSpeed,
             float acceleration,
@@ -41,6 +43,17 @@ namespace Game.Components
         {
             if (_body == null) return;
 
+            if (IsPhysicsLocked)
+            {
+                _horizontalVelocity = Vector3.Zero;
+                _knockbackVelocity = Vector3.Zero;
+                _verticalVelocity = 0f;
+                _body.Velocity = Vector3.Zero;
+
+                // Important: do not call MoveAndSlide while grabbed.
+                return;
+            }
+
             float dt = (float)delta;
 
             if (!_body.IsOnFloor())
@@ -62,6 +75,7 @@ namespace Game.Components
         public void Move(Vector3 direction)
         {
             if (_body == null) return;
+            if (IsPhysicsLocked) return;
 
             direction.Y = 0f;
 
@@ -89,10 +103,22 @@ namespace Game.Components
                 Vector3.Zero,
                 _friction * dt
             );
+
+            if (IsPhysicsLocked)
+            {
+                _horizontalVelocity = Vector3.Zero;
+                _knockbackVelocity = Vector3.Zero;
+                _verticalVelocity = 0f;
+
+                if (_body != null)
+                    _body.Velocity = Vector3.Zero;
+            }
         }
 
         public void ApplyKnockback(Vector3 force)
         {
+            if (IsPhysicsLocked) return;
+
             _knockbackVelocity += force;
         }
 
@@ -105,5 +131,18 @@ namespace Game.Components
         {
             _speedMultiplier = 1f;
         }
+
+        public void SetPhysicsLocked(bool locked)
+        {
+            IsPhysicsLocked = locked;
+
+            _horizontalVelocity = Vector3.Zero;
+            _knockbackVelocity = Vector3.Zero;
+            _verticalVelocity = 0f;
+
+            if (_body != null)
+                _body.Velocity = Vector3.Zero;
+        }
+
     }
 }

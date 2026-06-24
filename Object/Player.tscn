@@ -17,8 +17,10 @@
 [ext_resource type="Script" uid="uid://c1iv2wg3b04rb" path="res://Spin/SpinPowerComponent.cs" id="15_16ymb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_62nw6"]
+size = Vector3(1, 1.9949951, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_jkgat"]
+size = Vector3(1, 2, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_l8tau"]
 
@@ -43,15 +45,19 @@ GroundAlignment = NodePath("../GroundAlign")
 Health = NodePath("../HealthComponent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerBody" unique_id=1285463699]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49749756, 0)
 shape = SubResource("BoxShape3D_62nw6")
 
 [node name="VisualNode" type="Node3D" parent="PlayerBody" unique_id=47670187]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96736705, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerBody/VisualNode" unique_id=1318024319]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.49138618, 0)
 mesh = SubResource("BoxMesh_jkgat")
 surface_material_override/0 = ExtResource("2_e5oj2")
 
 [node name="TurretPivot" type="Node3D" parent="PlayerBody/VisualNode" unique_id=1225034893 node_paths=PackedStringArray("CameraPivot", "TurretPivot", "BarrelPivot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09539008, 0)
 script = ExtResource("3_4g26t")
 CameraPivot = NodePath("../../../CameraPivot")
 TurretPivot = NodePath(".")
@@ -74,6 +80,7 @@ surface_material_override/0 = ExtResource("3_rjotr")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
 
 [node name="GrabArea" type="Area3D" parent="PlayerBody" unique_id=380910616]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9208578, 0)
 collision_layer = 16
 collision_mask = 32
 
@@ -83,12 +90,13 @@ shape = SubResource("BoxShape3D_7ama1")
 
 [node name="DebugMesh" type="MeshInstance3D" parent="PlayerBody/GrabArea" unique_id=1472408158 node_paths=PackedStringArray("Movement")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.54179, 0, 0, 0.8931198)
+visible = false
 mesh = SubResource("BoxMesh_n0ld7")
 script = ExtResource("12_n0ld7")
 Movement = NodePath("../../../Move")
 
 [node name="HoldPoint" type="Node3D" parent="PlayerBody/GrabArea" unique_id=3659538]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.0469711)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.91566586, 1.0469711)
 
 [node name="SpinPivot" type="Node3D" parent="PlayerBody/GrabArea" unique_id=1027754758]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.0690511)
@@ -151,3 +159,4 @@ Step1DamageMultiplier = 1.0
 Step2DamageMultiplier = 1.25
 Step3DamageMultiplier = 1.5
 Step4DamageMultiplier = 2.0
+MinimumDamagePowerStep = 2

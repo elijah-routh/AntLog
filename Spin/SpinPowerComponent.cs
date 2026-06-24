@@ -27,6 +27,9 @@ public partial class SpinPowerComponent : Node
     [Export] public float Step3DamageMultiplier = 2.0f;
     [Export] public float Step4DamageMultiplier = 2.5f;
 
+    [ExportGroup("Spin Attack")]
+    [Export] public int MinimumDamagePowerStep = 1;
+
     [ExportGroup("Debug")]
     [Export] public bool PrintStepChanges = true;
 
@@ -124,5 +127,10 @@ public partial class SpinPowerComponent : Node
         {
             CurrentPowerStep = 0;
         }
+    }
+
+    public bool HasEnoughPowerForSpinDamage()
+    {
+        return GetThrowModifier().PowerStep >= MinimumDamagePowerStep;
     }
 }

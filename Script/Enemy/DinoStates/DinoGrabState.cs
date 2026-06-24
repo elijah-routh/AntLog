@@ -20,6 +20,7 @@ namespace Game.Enemy
 
             Enemy.Movement.ResetSpeedMultiplier();
             Enemy.Movement.Stop();
+            Enemy.Movement.SetPhysicsLocked(true);
 
             _dinoController.ResetChargeChain();
             _dinoController.Animations?.PlayIdle();
@@ -35,12 +36,12 @@ namespace Game.Enemy
             Enemy.Movement.ResetSpeedMultiplier();
             Enemy.Movement.Stop();
 
-            // Intentionally do not face the player.
-            // The player has control/opportunity while the tail is grabbed.
+            // Movement physics is locked, so no gravity or MoveAndSlide should happen.
         }
 
         public override void Exit()
         {
+            Enemy.Movement.SetPhysicsLocked(false);
             Enemy.Movement.ResetSpeedMultiplier();
             Enemy.Movement.Stop();
         }

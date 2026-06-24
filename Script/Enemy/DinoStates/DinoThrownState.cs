@@ -21,7 +21,8 @@ namespace Game.Enemy
             Enemy.Movement.ResetSpeedMultiplier();
             Enemy.Movement.Stop();
 
-            // Optional. Use Idle unless you later add a ragdoll/flail animation.
+            // ThrownProjectileComponent owns movement while thrown.
+            // The spin hitbox is allowed to remain active during this state.
             _dinoController.Animations?.PlayIdle();
 
             if (Enemy.NavigationAgent != null)
@@ -31,7 +32,6 @@ namespace Game.Enemy
         public override void PhysicsUpdate(double delta)
         {
             // Do not run normal AI movement here.
-            // ThrownProjectileComponent owns movement while thrown.
             Enemy.Movement.ResetSpeedMultiplier();
             Enemy.Movement.Stop();
         }
@@ -40,6 +40,20 @@ namespace Game.Enemy
         {
             Enemy.Movement.ResetSpeedMultiplier();
             Enemy.Movement.Stop();
+
+            // Throw is over, so the carried-spin damage should stop.
+            GetGrabbable()?.DisableHeldSpinHitbox();
+        }
+
+        private GrabbableComponent GetGrabbable()
+        {
+            foreach (Node child in Enemy.GetChildren())
+            {
+                if (child is GrabbableComponent grabbable)
+                    return grabbable;
+            }
+
+            return null;
         }
     }
 }

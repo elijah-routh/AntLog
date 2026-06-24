@@ -13,6 +13,7 @@ public partial class DiveGrabComponent : Node
 
     [ExportGroup("Rules")]
     [Export] public bool GrabOnlyOncePerDive = true;
+    [Export] public bool RequireSpinToThrow = true;
 
     public GrabbableComponent CurrentGrabbed { get; private set; }
 
@@ -122,6 +123,9 @@ public partial class DiveGrabComponent : Node
         if (CurrentGrabbed == null)
             return false;
 
+        if (Movement == null || !Movement.IsSpinning)
+            return false;
+
         Node3D player = GetParent<Node3D>();
 
         if (player == null)
@@ -137,9 +141,9 @@ public partial class DiveGrabComponent : Node
         throwDirection.Y = 0.05f;
         throwDirection = throwDirection.Normalized();
 
-        SpinThrowModifier spinModifier = Movement != null && Movement.SpinPower != null
-        ? Movement.SpinPower.GetThrowModifier()
-        : new SpinThrowModifier(0, 1.0f, 1.0f);
+        SpinThrowModifier spinModifier = Movement.SpinPower != null
+            ? Movement.SpinPower.GetThrowModifier()
+            : new SpinThrowModifier(0, 1.0f, 1.0f);
 
         float finalThrowSpeed = ThrowSpeed * spinModifier.ForceMultiplier;
 
@@ -151,7 +155,7 @@ public partial class DiveGrabComponent : Node
         CurrentGrabbed = null;
         _grabbedThisDive = false;
 
-        Movement?.SpinPower?.SetHoldingThrowable(false);
+        Movement.SpinPower?.SetHoldingThrowable(false);
 
         GD.Print(
             $"[DiveGrab] Threw held enemy. " +
@@ -161,5 +165,13 @@ public partial class DiveGrabComponent : Node
         );
 
         return true;
+    }
+
+    private bool IsSpinning()
+    {
+        if (Movement == null || Movement.SpinPower == null)
+            return false;
+
+        return Movement.IsSpinning;
     }
 }

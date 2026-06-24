@@ -11,18 +11,25 @@
 [ext_resource type="Script" uid="uid://dkssfsajrwonm" path="res://Spin/ThrownProjectileComponent.cs" id="10_6o4ei"]
 [ext_resource type="PackedScene" uid="uid://cbs0irwbbmb53" path="res://Assets/Animated Dinosaur Bundle-glb/parasaurolophus.tscn" id="10_y4bpy"]
 [ext_resource type="PackedScene" uid="uid://dj3utbkcft8us" path="res://Scene/EnemyHealthBar.tscn" id="11_y4bpy"]
+[ext_resource type="Script" uid="uid://bgtv3db0odt6x" path="res://Script/Enemy/Attacks/DamageHitboxComponent.cs" id="12_j8sah"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_m6twh"]
 size = Vector3(1.870982, 4.732422, 3.881836)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_y4bpy"]
-size = Vector3(1.5930023, 0.6586914, 6.255806)
+size = Vector3(2.0181236, 4.6025085, 6.9555397)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6o4ei"]
 size = Vector3(2.6433105, 5.0401154, 4.2226257)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_y4bpy"]
 viewport_path = NodePath("SubViewport")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j8sah"]
+size = Vector3(3.1041565, 4.4277344, 2.2138062)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_deoho"]
+size = Vector3(1, 5.2927246, 4.0717163)
 
 [node name="BallChain" type="CharacterBody3D" unique_id=1259955506]
 collision_layer = 8
@@ -42,7 +49,7 @@ script = ExtResource("2_jwmbq")
 script = ExtResource("3_rtf5a")
 MaxHealth = 25.0
 
-[node name="EnemyController" type="Node" parent="." unique_id=1245759659 node_paths=PackedStringArray("Animations", "EnemyHealthBar")]
+[node name="EnemyController" type="Node" parent="." unique_id=1245759659 node_paths=PackedStringArray("Animations", "ChargeHitbox", "EnemyHealthBar")]
 script = ExtResource("5_6o4ei")
 Animations = NodePath("../Parasaurolophus/DinoAnimationController")
 PathUpdateInterval = 0.5
@@ -59,15 +66,21 @@ ChargeCooldown = 6.0
 ChargesBeforeTired = 2
 TiredDuration = 6.0
 OrbitIdealDistance = 12.0
+ChargeAttemptCooldown = 8.0
 ChargeMinDistance = 6.5
 ChargeMaxDistance = 18.0
+ChargeHitbox = NodePath("../DamageHitboxComponent")
 EnemyHealthBar = NodePath("../EnemyHealthBar3D")
 
-[node name="GrabbableComponent" type="Node" parent="." unique_id=1444724679 node_paths=PackedStringArray("GrabRoot", "AttachPoint", "Projectile")]
+[node name="GrabbableComponent" type="Node" parent="." unique_id=1444724679 node_paths=PackedStringArray("GrabRoot", "AttachPoint", "Projectile", "CharacterBody", "CollisionObject", "CollisionShapes", "HeldSpinHitbox")]
 script = ExtResource("8_y7oyw")
 GrabRoot = NodePath("..")
 AttachPoint = NodePath("../TailGrabArea/HoldPoint")
 Projectile = NodePath("../ThrownProjectileComponent")
+CharacterBody = NodePath("..")
+CollisionObject = NodePath("..")
+CollisionShapes = []
+HeldSpinHitbox = NodePath("../HeldSpinHitbox")
 
 [node name="EdgeCheckComponent" type="Node3D" parent="." unique_id=1122249001]
 script = ExtResource("7_y4bpy")
@@ -82,7 +95,7 @@ script = ExtResource("9_6o4ei")
 Grabbable = NodePath("../GrabbableComponent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TailGrabArea" unique_id=1274541447]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012245178, 2.8312073, -4.3597527)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06421852, 1.8913116, -4.7096195)
 shape = SubResource("BoxShape3D_y4bpy")
 
 [node name="HoldPoint" type="Node3D" parent="TailGrabArea" unique_id=1487102562]
@@ -171,6 +184,40 @@ target_desired_distance = 3.0
 path_max_distance = 20.01
 avoidance_enabled = true
 neighbor_distance = 6.0
+
+[node name="DamageHitboxComponent" type="Area3D" parent="." unique_id=1865023774]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("12_j8sah")
+Damage = 15.0
+PlayerGroupName = "player"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DamageHitboxComponent" unique_id=1737500355]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.020492554, 3.1401978, 3.0504456)
+shape = SubResource("BoxShape3D_j8sah")
+debug_color = Color(0.98010176, 0.14220107, 3.85046e-07, 0.41960785)
+
+[node name="HeldSpinHitbox" type="Area3D" parent="." unique_id=47522650 node_paths=PackedStringArray("KnockbackSource")]
+collision_layer = 2
+collision_mask = 8
+monitoring = false
+monitorable = false
+script = ExtResource("12_j8sah")
+Damage = 2.0
+OnlyTargetPlayer = false
+ExcludePlayer = true
+PlayerGroupName = "player"
+HitOncePerActivation = false
+HitCooldown = 0.5
+ApplyKnockback = true
+KnockbackForce = 160.0
+UpwardKnockback = 1.0
+KnockbackSource = NodePath("../TailGrabArea/HoldPoint")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HeldSpinHitbox" unique_id=899888909]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.020492554, 3.1727905, 2.257141)
+shape = SubResource("BoxShape3D_deoho")
+debug_color = Color(0.6778497, 0.398398, 0.801054, 0.41960785)
 
 [editable path="EnemyHealthBar3D"]
 [editable path="EnemyHealthBar3D/SubViewport/HealthBar"]

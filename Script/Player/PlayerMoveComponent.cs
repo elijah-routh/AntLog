@@ -65,12 +65,13 @@ public partial class PlayerMoveComponent : Node
             return;
         }
 
+        UpdateSpinState(delta);
+        UpdateHeldSpinWeapon();
+
         TryStartDive(body, cameraPivot);
 
         if (IsDiving)
             return;
-
-        UpdateSpinState(delta);
 
         Vector2 input = PlayerInput.Movement;
         Vector3 direction = GetCameraRelativeDirection(input, cameraPivot);
@@ -181,6 +182,9 @@ public partial class PlayerMoveComponent : Node
         if (!PlayerInput.GrabPressed)
             return;
 
+        // Only returns true if the held object is actually thrown.
+        // If not spinning, TryThrowHeld should return false,
+        // then the player continues into the dive.
         if (DiveGrab != null && DiveGrab.TryThrowHeld())
             return;
 
@@ -301,5 +305,27 @@ public partial class PlayerMoveComponent : Node
         Vector3 rotation = player.Rotation;
         rotation.Y = Mathf.Atan2(direction.X, direction.Z);
         player.Rotation = rotation;
+    }
+
+    private void UpdateHeldSpinWeapon()
+    {
+        if (DiveGrab == null || DiveGrab.CurrentGrabbed == null)
+            return;
+
+        bool hasEnoughPower =
+            SpinPower != null &&
+            SpinPower.HasEnoughPowerForSpinDamage();
+
+        bool shouldBeActive =
+            IsSpinning &&
+            hasEnoughPower;
+
+        DiveGrab.CurrentGrabbed.SetHeldSpinHitboxActive(shouldBeActive);
+
+        GD.Print(
+            $"[HeldSpinWeapon] Holding: {DiveGrab?.CurrentGrabbed != null}, " +
+            $"Spinning: {IsSpinning}, " +
+            $"EnoughPower: {SpinPower?.HasEnoughPowerForSpinDamage()}"
+        );
     }
 }

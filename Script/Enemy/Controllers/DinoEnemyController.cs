@@ -52,11 +52,22 @@ namespace Game.Enemy
         [Export] public float OrbitSpeedMultiplier { get; set; } = 0.85f;
         [Export] public float OrbitDirectionChangeChance { get; set; } = 0.15f;
 
+        [ExportGroup("Orbit Spacing")]
+        [Export] public float BackUpDistance { get; set; } = 6.5f;
+        [Export] public float BackUpStrength { get; set; } = 5.0f;
+        [Export] public float OrbitSideOffset { get; set; } = 4.0f;
+
+        [ExportGroup("Charge Timing")]
+        [Export] public float ChargeAttemptCooldown { get; set; } = 2.0f;
+
         [ExportGroup("Charge Intent")]
         [Export] public float ChaseChargeMinDelay { get; set; } = 1.0f;
         [Export] public float ChaseChargeMaxDelay { get; set; } = 3.0f;
         [Export] public float ChargeMinDistance { get; set; } = 5.5f;
         [Export] public float ChargeMaxDistance { get; set; } = 11f;
+
+        [ExportGroup("Attack Hitboxes")]
+        [Export] public DamageHitboxComponent ChargeHitbox { get; set; }
 
         public bool CanCharge { get; private set; } = true;
 
