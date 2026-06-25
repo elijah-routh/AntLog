@@ -45,6 +45,8 @@ public partial class DiveGrabComponent : Node
         if (DiveGrabArea == null)
             return;
 
+        
+
         //foreach (Area3D area in DiveGrabArea.GetOverlappingAreas())
         //{
         //    if (area is GrabWeakSpot)
@@ -134,11 +136,10 @@ public partial class DiveGrabComponent : Node
         Vector3 throwDirection;
 
         if (ThrowDirectionSource != null)
-            throwDirection = ThrowDirectionSource.GlobalBasis.Z;
+            throwDirection = ThrowDirectionSource.GlobalBasis.Z.Normalized();
         else
-            throwDirection = -player.GlobalBasis.Z;
+            throwDirection = -player.GlobalBasis.Z.Normalized();
 
-        throwDirection.Y = 0.05f;
         throwDirection = throwDirection.Normalized();
 
         SpinThrowModifier spinModifier = Movement.SpinPower != null
@@ -153,7 +154,7 @@ public partial class DiveGrabComponent : Node
         );
 
         CurrentGrabbed = null;
-        _grabbedThisDive = false;
+        _grabbedThisDive = true;
 
         Movement.SpinPower?.SetHoldingThrowable(false);
 
@@ -173,5 +174,19 @@ public partial class DiveGrabComponent : Node
             return false;
 
         return Movement.IsSpinning;
+    }
+
+    private void CheckExistingGrabOverlaps()
+    {
+        foreach (Area3D area in DiveGrabArea.GetOverlappingAreas())
+        {
+            if (area is not GrabWeakSpot grabSpot)
+                continue;
+
+            TryGrabSpot(grabSpot);
+
+            if (CurrentGrabbed != null)
+                return;
+        }
     }
 }

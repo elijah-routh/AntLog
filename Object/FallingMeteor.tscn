@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://drit5xloqxli3"]
+
+[ext_resource type="Script" uid="uid://bn2c548dd31ao" path="res://Script/Enemy/Controllers/MeteorController.cs" id="1_wo8ug"]
+[ext_resource type="Script" uid="uid://cgiws4dpe64rt" path="res://Script/Entity/HealthComponent.cs" id="2_fml3f"]
+[ext_resource type="PackedScene" uid="uid://cpvegvq27bl4h" path="res://Assets/CompleteModels/asteroid.tscn" id="3_r0tl1"]
+[ext_resource type="Script" uid="uid://bgtv3db0odt6x" path="res://Script/Enemy/Attacks/DamageHitboxComponent.cs" id="4_f0cot"]
+[ext_resource type="Script" uid="uid://bhqsmb1hktkdg" path="res://Script/Enemy/Attacks/HurtboxComponent.cs" id="5_celqo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f0cot"]
+size = Vector3(4.807678, 5.4683228, 4.8259277)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_celqo"]
+size = Vector3(4.7530518, 5.4866943, 4.807602)
+
+[node name="FallingMeteor" type="Node3D" unique_id=950269902 node_paths=PackedStringArray("Health")]
+transform = Transform3D(150, 0, 0, 0, 150, 0, 0, 0, 150, 0, 0, 0)
+script = ExtResource("1_wo8ug")
+FallSpeed = 800.0
+RotateSpeed = 20.0
+Health = NodePath("HealthComponent")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1306898699]
+script = ExtResource("2_fml3f")
+MaxHealth = 10.0
+DestroyOwnerOnDeath = true
+
+[node name="Asteroid" parent="." unique_id=664137995 instance=ExtResource("3_r0tl1")]
+
+[node name="DamageHitboxComponent" type="Area3D" parent="." unique_id=1952130282 node_paths=PackedStringArray("KnockbackSource")]
+collision_layer = 8
+collision_mask = 11
+script = ExtResource("4_f0cot")
+Damage = 7.0
+PlayerGroupName = "player"
+ApplyKnockback = true
+UpwardKnockback = 0.25
+KnockbackSource = NodePath(".")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DamageHitboxComponent" unique_id=422993912]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0640564, -0.04598999, -0.16521454)
+shape = SubResource("BoxShape3D_f0cot")
+debug_color = Color(0.7083074, 0.3820604, 0.77896917, 0.41960785)
+
+[node name="HurtboxComponent" type="Area3D" parent="." unique_id=714226973]
+collision_layer = 8
+collision_mask = 72
+script = ExtResource("5_celqo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtboxComponent" unique_id=653070146]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07330322, -0.03656006, -0.17436981)
+shape = SubResource("BoxShape3D_celqo")
+debug_color = Color(0.75467634, 0.4353082, 0.38274106, 0.41960785)

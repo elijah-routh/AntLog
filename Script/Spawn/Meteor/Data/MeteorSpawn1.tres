@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MeteorSpawnEntryData" format=3 uid="uid://dufmnjrmjb6qs"]
+
+[ext_resource type="Script" uid="uid://buvtxv8jhijws" path="res://Script/Spawn/Meteor/MeteorSpawnEntryData.cs" id="1_fhtwc"]
+[ext_resource type="PackedScene" uid="uid://cpvegvq27bl4h" path="res://Assets/CompleteModels/asteroid.tscn" id="1_tc4oa"]
+
+[resource]
+script = ExtResource("1_fhtwc")
+MeteorScene = ExtResource("1_tc4oa")
+Count = 10
+metadata/_custom_type_script = "uid://buvtxv8jhijws"

@@ -291,7 +291,7 @@ public partial class GrabbableComponent : Node
             return;
         }
 
-        GD.Print($"[Grabbable] SetHeldSpinHitboxActive: {active}");
+        //GD.Print($"[Grabbable] SetHeldSpinHitboxActive: {active}");
 
         if (active)
             HeldSpinHitbox.EnableHitbox();

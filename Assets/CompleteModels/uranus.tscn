@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://dabj11yv76de7"]
+
+[ext_resource type="PackedScene" uid="uid://bburavya115dm" path="res://Assets/Ultimate Space Kit-glb/Planet-pHZz4EMvVM.glb" id="1_chkqy"]
+
+[node name="Uranus" unique_id=638418499 instance=ExtResource("1_chkqy")]

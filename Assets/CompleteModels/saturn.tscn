@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://b5510fathifim"]
+
+[ext_resource type="PackedScene" uid="uid://kwhnmmjkekg7" path="res://Assets/Ultimate Space Kit-glb/Planet-9g1aIbfR9Y.glb" id="1_pc62b"]
+
+[node name="Saturn" unique_id=27352453 instance=ExtResource("1_pc62b")]

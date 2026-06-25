@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://by2i1qjlk0p0n"]
+
+[ext_resource type="PackedScene" uid="uid://dy8i064ua3a46" path="res://Assets/Ultimate Space Kit-glb/Planet-4NxxeyYMPJ.glb" id="1_tjnsl"]
+
+[node name="Moon" unique_id=589897614 instance=ExtResource("1_tjnsl")]

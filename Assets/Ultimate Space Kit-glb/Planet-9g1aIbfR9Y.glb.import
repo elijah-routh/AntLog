@@ -14,7 +14,7 @@ dest_files=["res://.godot/imported/Planet-9g1aIbfR9Y.glb-a2a86fd22bb13efc12fea55
 [params]
 
 nodes/root_type=""
-nodes/root_name=""
+nodes/root_name="Saturn"
 nodes/root_script=null
 nodes/apply_root_scale=true
 nodes/root_scale=1.0

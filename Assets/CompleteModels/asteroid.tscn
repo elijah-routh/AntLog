@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://cpvegvq27bl4h"]
+
+[ext_resource type="PackedScene" uid="uid://b3enjkhw81gyl" path="res://Assets/Ultimate Space Kit-glb/Planet-18Uxrb2dIc.glb" id="1_lo51w"]
+
+[node name="Asteroid" unique_id=664137995 instance=ExtResource("1_lo51w")]

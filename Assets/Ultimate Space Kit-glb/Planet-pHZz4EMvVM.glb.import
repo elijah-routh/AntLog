@@ -14,7 +14,7 @@ dest_files=["res://.godot/imported/Planet-pHZz4EMvVM.glb-5a854e7ef1316bdbb62a99b
 [params]
 
 nodes/root_type=""
-nodes/root_name=""
+nodes/root_name="Uranus"
 nodes/root_script=null
 nodes/apply_root_scale=true
 nodes/root_scale=1.0

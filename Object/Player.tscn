@@ -235,7 +235,7 @@ script = ExtResource("12_mgt8x")
 Movement = NodePath("../Move")
 DiveGrabArea = NodePath("../PlayerBody/GrabArea")
 HoldPoint = NodePath("../PlayerBody/GrabArea/HoldPoint")
-ThrowSpeed = 15.0
+ThrowSpeed = 30.0
 ThrowDirectionSource = NodePath("../PlayerBody/VisualNode/TurretPivot/MeshInstance3D/BarrelPivot/MeshInstance3D/Barrel")
 
 [node name="SpinPowerComponent" type="Node" parent="." unique_id=1486777677]

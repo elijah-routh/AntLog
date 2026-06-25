@@ -14,7 +14,7 @@ dest_files=["res://.godot/imported/Planet-18Uxrb2dIc.glb-81d0d879ab31d22bf341a4c
 [params]
 
 nodes/root_type=""
-nodes/root_name=""
+nodes/root_name="Asteroid"
 nodes/root_script=null
 nodes/apply_root_scale=true
 nodes/root_scale=1.0

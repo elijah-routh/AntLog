@@ -12,11 +12,30 @@ public partial class ThrownProjectileComponent : Area3D
     [Export] public float BaseDamage = 25.0f;
     [Export] public bool StopOnHit = true;
 
+    [ExportGroup("World Collision")]
+    [Export(PropertyHint.Layers3DPhysics)]
+    public uint WorldCollisionMask = 1;
+
+    [Export] public float WallCollisionSkin = 1.0f;
+    [Export] public float FloorCollisionSkin = 0.1f;
+    [Export] public float FloorNormalYThreshold = 0.6f;
+    [Export] public float FloorSlideFriction = 0.98f;
+    [Export] public bool StopOnNonFloorHit = true;
+
+    [ExportGroup("Launch Recovery")]
+    [Export] public int LaunchRecoveryFrames = 2;
+    [Export] public float FloorRecoveryStep = 0.15f;
+    [Export] public int MaxFloorRecoverySteps = 8;
+
+    [ExportGroup("Debug")]
+    [Export] public bool PrintDebug = true;
+
     public bool IsActive { get; private set; }
 
     private Vector3 _velocity;
     private float _timer;
     private float _currentDamage;
+    private int _launchRecoveryFramesRemaining;
 
     public override void _Ready()
     {
@@ -31,7 +50,7 @@ public partial class ThrownProjectileComponent : Area3D
 
         _currentDamage = BaseDamage;
 
-        GD.Print($"[ThrownProjectile] Ready. Root: {ProjectileRoot?.Name}");
+        DebugPrint($"Ready. Root: {ProjectileRoot?.Name}");
     }
 
     public override void _PhysicsProcess(double delta)
@@ -49,7 +68,13 @@ public partial class ThrownProjectileComponent : Area3D
             return;
         }
 
-        ProjectileRoot.GlobalPosition += _velocity * dt;
+        if (_launchRecoveryFramesRemaining > 0)
+        {
+            TryRecoverFromLaunchOverlap();
+            _launchRecoveryFramesRemaining--;
+        }
+
+        MoveProjectile(dt);
     }
 
     public void Launch(Vector3 velocity)
@@ -64,13 +89,16 @@ public partial class ThrownProjectileComponent : Area3D
         _velocity = velocity;
         _timer = Lifetime;
         _currentDamage = BaseDamage * damageMultiplier;
+        _launchRecoveryFramesRemaining = LaunchRecoveryFrames;
 
         IsActive = true;
         Monitoring = true;
         Monitorable = true;
 
-        GD.Print(
-            $"[ThrownProjectile] Launched. " +
+        DebugPrintLaunch(_velocity);
+
+        DebugPrint(
+            $"Launched. " +
             $"Velocity: {_velocity}, " +
             $"Timer: {_timer}, " +
             $"Damage: {_currentDamage}, " +
@@ -99,29 +127,196 @@ public partial class ThrownProjectileComponent : Area3D
         IsActive = false;
         _velocity = Vector3.Zero;
         _timer = 0.0f;
+        _currentDamage = BaseDamage;
+        _launchRecoveryFramesRemaining = 0;
+
         Monitoring = false;
         Monitorable = false;
-        _currentDamage = BaseDamage;
 
         if (notifyThrowFinished)
             NotifyThrowFinished();
 
-        GD.Print(
+        DebugPrint(
             notifyThrowFinished
-                ? "[ThrownProjectile] Stopped."
-                : "[ThrownProjectile] Cancelled."
+                ? "Stopped."
+                : "Cancelled."
         );
+    }
+
+    private void MoveProjectile(float dt)
+    {
+        Vector3 from = ProjectileRoot.GlobalPosition;
+        Vector3 motion = _velocity * dt;
+        Vector3 to = from + motion;
+
+        if (CheckProjectileCollision(
+            from,
+            to,
+            out Vector3 hitPosition,
+            out Vector3 hitNormal,
+            out Node collider))
+        {
+            HandleWorldCollision(hitPosition, hitNormal, collider);
+            return;
+        }
+
+        ProjectileRoot.GlobalPosition = to;
+    }
+
+    private void HandleWorldCollision(
+        Vector3 hitPosition,
+        Vector3 hitNormal,
+        Node collider)
+    {
+        bool hitFloor = IsFloorNormal(hitNormal);
+
+        float skin = hitFloor
+            ? FloorCollisionSkin
+            : WallCollisionSkin;
+
+        ProjectileRoot.GlobalPosition = hitPosition + hitNormal * skin;
+
+        DebugPrint(
+            $"Hit world collision: {collider.Name} | " +
+            $"Floor: {hitFloor} | " +
+            $"Hit Pos: {hitPosition} | " +
+            $"Placed Pos: {ProjectileRoot.GlobalPosition} | " +
+            $"Normal: {hitNormal}"
+        );
+
+        if (hitFloor)
+        {
+            GlideAlongSurface(hitNormal);
+            return;
+        }
+
+        if (StopOnNonFloorHit)
+        {
+            StopProjectile();
+            return;
+        }
+
+        GlideAlongSurface(hitNormal);
+    }
+
+    private void GlideAlongSurface(Vector3 surfaceNormal)
+    {
+        _velocity = _velocity.Slide(surfaceNormal);
+        _velocity *= FloorSlideFriction;
+
+        DebugPrint(
+            $"Gliding along surface. " +
+            $"New Velocity: {_velocity} | " +
+            $"Speed: {_velocity.Length():0.00}"
+        );
+
+        if (_velocity.LengthSquared() <= 0.1f)
+        {
+            StopProjectile();
+        }
+    }
+
+    private bool CheckProjectileCollision(
+        Vector3 from,
+        Vector3 to,
+        out Vector3 hitPosition,
+        out Vector3 hitNormal,
+        out Node collider)
+    {
+        hitPosition = Vector3.Zero;
+        hitNormal = Vector3.Zero;
+        collider = null;
+
+        PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
+
+        PhysicsRayQueryParameters3D query =
+            PhysicsRayQueryParameters3D.Create(from, to);
+
+        query.CollideWithBodies = true;
+        query.CollideWithAreas = false;
+        query.CollisionMask = WorldCollisionMask;
+
+        if (ProjectileRoot is CollisionObject3D collisionObject)
+        {
+            query.Exclude = new Godot.Collections.Array<Rid>
+            {
+                collisionObject.GetRid()
+            };
+        }
+
+        Godot.Collections.Dictionary result = spaceState.IntersectRay(query);
+
+        if (result.Count == 0)
+            return false;
+
+        hitPosition = (Vector3)result["position"];
+        hitNormal = (Vector3)result["normal"];
+        collider = result["collider"].As<Node>();
+
+        return true;
+    }
+
+    private bool TryRecoverFromLaunchOverlap()
+    {
+        if (!IsAlreadyTouchingWorld(out Node overlappingWorld))
+            return false;
+
+        DebugPrint($"Launch overlap with world: {overlappingWorld.Name}");
+
+        for (int i = 0; i < MaxFloorRecoverySteps; i++)
+        {
+            ProjectileRoot.GlobalPosition += Vector3.Up * FloorRecoveryStep;
+
+            if (!IsAlreadyTouchingWorld(out overlappingWorld))
+            {
+                DebugPrint(
+                    $"Launch overlap recovered. " +
+                    $"Steps: {i + 1} | " +
+                    $"New Position: {ProjectileRoot.GlobalPosition}"
+                );
+
+                return true;
+            }
+        }
+
+        DebugPrint("Launch overlap recovery incomplete.");
+        return false;
+    }
+
+    private bool IsAlreadyTouchingWorld(out Node worldBody)
+    {
+        worldBody = null;
+
+        foreach (Node3D body in GetOverlappingBodies())
+        {
+            if (ShouldIgnoreCollisionTarget(body))
+                continue;
+
+            if (body is CollisionObject3D collisionObject)
+            {
+                bool isOnWorldLayer =
+                    ((uint)collisionObject.CollisionLayer & WorldCollisionMask) != 0;
+
+                if (!isOnWorldLayer)
+                    continue;
+            }
+
+            worldBody = body;
+            return true;
+        }
+
+        return false;
     }
 
     private void OnBodyEntered(Node3D body)
     {
-        GD.Print($"[ThrownProjectile] Hit body: {body.Name}");
+        DebugPrint($"Hit body: {body.Name}");
         Hit(body);
     }
 
     private void OnAreaEntered(Area3D area)
     {
-        GD.Print($"[ThrownProjectile] Hit area: {area.Name}");
+        DebugPrint($"Hit area: {area.Name}");
         Hit(area);
     }
 
@@ -130,29 +325,40 @@ public partial class ThrownProjectileComponent : Area3D
         if (!IsActive)
             return;
 
-        if (ProjectileRoot != null)
-        {
-            if (target == ProjectileRoot)
-                return;
-
-            if (ProjectileRoot.IsAncestorOf(target))
-                return;
-
-            if (target.IsAncestorOf(ProjectileRoot))
-                return;
-        }
+        if (target is Node3D node3D && ShouldIgnoreCollisionTarget(node3D))
+            return;
 
         if (target is IDamageable damageable)
         {
             damageable.TakeDamage(_currentDamage);
 
-            GD.Print(
-                $"[ThrownProjectile] Damaged {target.Name} for {_currentDamage}"
-            );
+            DebugPrint($"Damaged {target.Name} for {_currentDamage}");
 
             if (StopOnHit)
                 StopProjectile();
         }
+    }
+
+    private bool ShouldIgnoreCollisionTarget(Node3D target)
+    {
+        if (ProjectileRoot == null || target == null)
+            return false;
+
+        if (target == ProjectileRoot)
+            return true;
+
+        if (ProjectileRoot.IsAncestorOf(target))
+            return true;
+
+        if (target.IsAncestorOf(ProjectileRoot))
+            return true;
+
+        return false;
+    }
+
+    private bool IsFloorNormal(Vector3 normal)
+    {
+        return normal.Y >= FloorNormalYThreshold;
     }
 
     private void NotifyThrowFinished()
@@ -168,9 +374,51 @@ public partial class ThrownProjectileComponent : Area3D
             return;
         }
 
-        GD.Print(
-            $"[ThrownProjectile] No IGrabStateReceiver found on " +
+        DebugPrint(
+            $"No IGrabStateReceiver found on " +
             $"{ProjectileRoot.Name}/EnemyController."
         );
+    }
+
+    private void DebugPrintLaunch(Vector3 velocity)
+    {
+        if (!PrintDebug)
+            return;
+
+        float speed = velocity.Length();
+
+        Vector3 horizontalVelocity = new Vector3(
+            velocity.X,
+            0f,
+            velocity.Z
+        );
+
+        float horizontalSpeed = horizontalVelocity.Length();
+
+        float angleDegrees = 0f;
+
+        if (speed > 0.001f)
+        {
+            angleDegrees = Mathf.RadToDeg(
+                Mathf.Atan2(velocity.Y, horizontalSpeed)
+            );
+        }
+
+        GD.Print(
+            $"[ThrownProjectile] Launch Debug | " +
+            $"Velocity: {velocity} | " +
+            $"Speed: {speed:0.00} | " +
+            $"Horizontal Speed: {horizontalSpeed:0.00} | " +
+            $"Vertical Speed: {velocity.Y:0.00} | " +
+            $"Angle: {angleDegrees:0.00} degrees"
+        );
+    }
+
+    private void DebugPrint(string message)
+    {
+        if (!PrintDebug)
+            return;
+
+        GD.Print($"[ThrownProjectile] {message}");
     }
 }

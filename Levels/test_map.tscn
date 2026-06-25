@@ -5,16 +5,20 @@
 [ext_resource type="Resource" uid="uid://cmylwk71tnb24" path="res://Trenchbroom/tankdev_settings.tres" id="2_w2mix"]
 [ext_resource type="Material" uid="uid://ldk3nf4cm0g2" path="res://Trenchbroom/textures/kenney_prototypeTextures/PNG/Dark/texture_07.tres" id="10_wvnm0"]
 [ext_resource type="PackedScene" uid="uid://dhsq1cio25516" path="res://Object/Player.tscn" id="13_ywusi"]
+[ext_resource type="Script" uid="uid://dwygeplpwjngp" path="res://Script/Spawn/Meteor/MeteorSpawner3D.cs" id="15_jm65e"]
+[ext_resource type="Script" uid="uid://dj7slxydmsiwf" path="res://Script/Spawn/Meteor/MeteorSpawnWaveData.cs" id="16_hsq0f"]
+[ext_resource type="Script" uid="uid://blcyqq17cv88s" path="res://Script/Spawn/Meteor/MeteorSpawnPoint3D.cs" id="16_u0g6g"]
 [ext_resource type="Script" uid="uid://ctmw0nlu8i38p" path="res://Script/Spawn/EnemySpawner3D.cs" id="16_wvnm0"]
 [ext_resource type="Script" uid="uid://d15iailfhkf8g" path="res://Script/Spawn/EnemySpawnPoint3D.cs" id="17_hsq0f"]
+[ext_resource type="Resource" uid="uid://0sfmwmwpe0bb" path="res://Script/Spawn/Meteor/Data/MeteorWave1.tres" id="17_ixerh"]
 [ext_resource type="Script" uid="uid://d3x85txodqmxf" path="res://Script/Spawn/EnemySpawnWaveData.cs" id="17_rkjth"]
+[ext_resource type="Script" uid="uid://cx4e6b6ggldgo" path="res://Script/Spawn/Meteor/MeteorTargetPoint3D.cs" id="17_u0g6g"]
 [ext_resource type="PackedScene" uid="uid://bk6vsvvvq2041" path="res://Scene/Menu/hud.tscn" id="17_wvnm0"]
 [ext_resource type="PackedScene" uid="uid://bbdhynmtewp4j" path="res://Scene/Menu/menu_pause.tscn" id="18_hsq0f"]
 [ext_resource type="Resource" uid="uid://4fo2ag0cgm4x" path="res://Script/Spawn/Data/Wave1.tres" id="18_ixerh"]
 [ext_resource type="PackedScene" uid="uid://dxsevhhuvx4u" path="res://Object/enemy.tscn" id="22_xjovg"]
 [ext_resource type="Sky" uid="uid://rwxaax84eqt8" path="res://Art/Shaders/MainSky.tres" id="25_hcl6m"]
 [ext_resource type="PackedScene" uid="uid://dnjsnuj1qgiqa" path="res://Scene/Water/WaterPlane.tscn" id="26_h2ovn"]
-[ext_resource type="Script" uid="uid://bggrrldtmrpbi" path="res://Spin/SpinCenter.cs" id="28_br6c7"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_hsq0f"]
 vertices = PackedVector3Array(59, 1.2812498, 11, 59, 1.2812498, -4, 51, 1.2812498, -19, 35, 1.2812498, -26.75, -65.75, 1.2812498, -4.5, -65.75, 1.2812498, 11.5, -58, 1.2812498, 26, -41.5, 1.2812498, 34, -42, 1.2812498, -26.75, -57.5, 1.2812498, -19.5, 34.5, 1.2812498, 34, 50.5, 1.2812498, 26.5)
@@ -84,18 +88,6 @@ reflected_light_source = 2
 
 [node name="TestMap" type="Node3D" unique_id=169326231]
 script = ExtResource("1_un31r")
-
-[node name="SpinPivot" type="Node3D" parent="." unique_id=1496295234]
-visible = false
-script = ExtResource("28_br6c7")
-SpinAxis = Vector3(1, 0, 0)
-SpinSpeed = 20.0
-
-[node name="Spinner" type="Node3D" parent="SpinPivot" unique_id=124347861]
-script = ExtResource("1_g0xle")
-local_map_file = "uid://c55i50fhwik30"
-map_settings = ExtResource("2_w2mix")
-metadata/_custom_type_script = "uid://cwu5cf7a0awcd"
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=983942905]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -207,6 +199,29 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 10, 1)
 [node name="PlayerBody" parent="PlayerRoot" index="0" unique_id=750631945 node_paths=PackedStringArray("HealthBar")]
 HealthBar = NodePath("../../HUD/HealthBar")
 
+[node name="Meteors" type="Node" parent="." unique_id=395458234]
+
+[node name="MeteorManager" type="Node3D" parent="Meteors" unique_id=824319731 node_paths=PackedStringArray("SpawnParent", "SpawnPoints", "TargetPoints")]
+script = ExtResource("15_jm65e")
+SpawnParent = NodePath("..")
+SpawnPoints = [NodePath("../MeteorSpawn"), NodePath("../MeteorSpawn2")]
+TargetPoints = [NodePath("../MeteorTarget")]
+Waves = Array[ExtResource("16_hsq0f")]([ExtResource("17_ixerh")])
+
+[node name="MeteorSpawn" type="Node3D" parent="Meteors" unique_id=1865372207]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 69, 145)
+script = ExtResource("16_u0g6g")
+Radius = 200.0
+
+[node name="MeteorTarget" type="Node3D" parent="Meteors" unique_id=1837848675]
+script = ExtResource("17_u0g6g")
+
+[node name="MeteorSpawn2" type="Node3D" parent="Meteors" unique_id=660408453]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 69, -262)
+script = ExtResource("16_u0g6g")
+Radius = 200.0
+
 [editable path="HUD"]
 [editable path="HUD/SpinPowerBarUI"]
 [editable path="PlayerRoot"]
+[editable path="PlayerRoot/PlayerBody/Hunter"]

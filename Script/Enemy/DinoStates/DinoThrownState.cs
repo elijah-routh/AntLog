@@ -18,11 +18,10 @@ namespace Game.Enemy
         {
             GD.Print($"{Enemy.Name}: Enter Dino Thrown");
 
+            Enemy.Movement.SetPhysicsLocked(true);
             Enemy.Movement.ResetSpeedMultiplier();
-            Enemy.Movement.Stop();
 
             // ThrownProjectileComponent owns movement while thrown.
-            // The spin hitbox is allowed to remain active during this state.
             _dinoController.Animations?.PlayIdle();
 
             if (Enemy.NavigationAgent != null)
@@ -31,17 +30,17 @@ namespace Game.Enemy
 
         public override void PhysicsUpdate(double delta)
         {
-            // Do not run normal AI movement here.
-            Enemy.Movement.ResetSpeedMultiplier();
-            Enemy.Movement.Stop();
+            // Do nothing.
+            // MoveComponent is physics-locked.
+            // ThrownProjectileComponent owns movement.
         }
 
         public override void Exit()
         {
             Enemy.Movement.ResetSpeedMultiplier();
             Enemy.Movement.Stop();
+            Enemy.Movement.SetPhysicsLocked(false);
 
-            // Throw is over, so the carried-spin damage should stop.
             GetGrabbable()?.DisableHeldSpinHitbox();
             GetGrabbable()?.Projectile.CancelProjectile();
         }

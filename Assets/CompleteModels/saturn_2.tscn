@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://d1r5jnsw8xo0r"]
+
+[ext_resource type="PackedScene" uid="uid://xbwk2b0704xg" path="res://Assets/Ultimate Space Kit-glb/Planet-hKZtOOMadH.glb" id="1_i8cvt"]
+
+[node name="Saturn2" unique_id=1806479770 instance=ExtResource("1_i8cvt")]

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MeteorSpawnWaveData" format=3 uid="uid://0sfmwmwpe0bb"]
+
+[ext_resource type="Script" uid="uid://buvtxv8jhijws" path="res://Script/Spawn/Meteor/MeteorSpawnEntryData.cs" id="1_tcoqy"]
+[ext_resource type="Resource" uid="uid://dufmnjrmjb6qs" path="res://Script/Spawn/Meteor/Data/MeteorSpawn1.tres" id="2_m2kji"]
+[ext_resource type="Script" uid="uid://dj7slxydmsiwf" path="res://Script/Spawn/Meteor/MeteorSpawnWaveData.cs" id="2_phd1m"]
+
+[resource]
+script = ExtResource("2_phd1m")
+DelayBetweenSpawns = 15.0
+MaxAlive = 6
+Meteors = Array[ExtResource("1_tcoqy")]([ExtResource("2_m2kji")])
+metadata/_custom_type_script = "uid://dj7slxydmsiwf"
