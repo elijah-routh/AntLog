@@ -1,4 +1,5 @@
 using Game.Components;
+using Game.Enemy;
 using Game.Entity;
 using Godot;
 
@@ -19,6 +20,9 @@ public partial class PlayerController : CharacterBody3D, IDamageable, IHealable,
 
     [ExportGroup("Debug")]
     [Export] public float DebugDamageAmount = 10f;
+
+    [ExportGroup("Animation")]
+    [Export] public PlayerAnimationController Animations { get; set; }
 
 
     public override void _Ready()

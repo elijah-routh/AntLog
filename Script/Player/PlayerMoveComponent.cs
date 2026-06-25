@@ -1,3 +1,4 @@
+using Game.Enemy;
 using Godot;
 
 public partial class PlayerMoveComponent : Node
@@ -39,6 +40,9 @@ public partial class PlayerMoveComponent : Node
 
     [ExportGroup("Debug")]
     [Export] public bool DebugHeldSpinWeapon = false;
+
+    [ExportGroup("Animation")]
+    [Export] public PlayerAnimationController Animations;
 
     public bool IsDiving { get; private set; }
     public bool IsSpinning { get; private set; }
@@ -172,6 +176,8 @@ public partial class PlayerMoveComponent : Node
 
         if (hasInput)
         {
+            Animations?.PlayRun();
+
             Vector3 targetVelocity = direction * currentMoveSpeed;
 
             float accelerationToUse = Acceleration;
@@ -193,6 +199,8 @@ public partial class PlayerMoveComponent : Node
         }
         else
         {
+            Animations?.PlayIdle();
+
             horizontalVelocity = horizontalVelocity.MoveToward(
                 Vector3.Zero,
                 GroundFriction * delta

@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://dl7py0e3e5v0x" path="res://Spin/GrabbableComponent.cs" id="8_y7oyw"]
 [ext_resource type="Script" uid="uid://bqxfphr3nhom" path="res://Spin/GrabWeakSpot.cs" id="9_6o4ei"]
 [ext_resource type="Script" uid="uid://dkssfsajrwonm" path="res://Spin/ThrownProjectileComponent.cs" id="10_6o4ei"]
-[ext_resource type="PackedScene" uid="uid://cbs0irwbbmb53" path="res://Assets/Animated Dinosaur Bundle-glb/parasaurolophus.tscn" id="10_y4bpy"]
+[ext_resource type="PackedScene" uid="uid://cbs0irwbbmb53" path="res://Assets/CompleteModels/parasaurolophus.tscn" id="10_y4bpy"]
 [ext_resource type="PackedScene" uid="uid://dj3utbkcft8us" path="res://Scene/EnemyHealthBar.tscn" id="11_y4bpy"]
 [ext_resource type="Script" uid="uid://bgtv3db0odt6x" path="res://Script/Enemy/Attacks/DamageHitboxComponent.cs" id="12_j8sah"]
 
@@ -22,7 +22,7 @@ size = Vector3(2.0181236, 4.6025085, 6.9555397)
 [sub_resource type="BoxShape3D" id="BoxShape3D_6o4ei"]
 size = Vector3(3.1310577, 5.0401154, 5.9716644)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_y4bpy"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_j8sah"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j8sah"]
@@ -120,69 +120,69 @@ shape = SubResource("BoxShape3D_6o4ei")
 
 [node name="EnemyHealthBar3D" parent="." unique_id=868444524 instance=ExtResource("11_y4bpy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1972046, 0)
-texture = SubResource("ViewportTexture_y4bpy")
+texture = SubResource("ViewportTexture_j8sah")
 
 [node name="Parasaurolophus" parent="." unique_id=314007657 instance=ExtResource("10_y4bpy")]
 
 [node name="Skeleton3D" parent="Parasaurolophus/RootNode/Armature" parent_id_path=PackedInt32Array(314007657, 1205494857) index="0" unique_id=1684471445]
 bones/1/position = Vector3(0.00030816198, 0.042510204, 0.010428664)
-bones/1/rotation = Quaternion(0.011015082, -1.61575e-27, 2.4458395e-18, 0.9999393)
-bones/2/position = Vector3(-0.0018904338, -0.012997556, 0.009233219)
+bones/1/rotation = Quaternion(0.011015083, -4.8470557e-27, 2.4458397e-18, 0.9999393)
+bones/2/position = Vector3(-0.0018904328, -0.01237343, 0.007285638)
 bones/2/rotation = Quaternion(0.11848704, -0.1184833, 0.69711125, 0.6971072)
-bones/4/rotation = Quaternion(-0.336778, -0.037115596, -0.10504649, 0.93496966)
-bones/5/rotation = Quaternion(0.37484276, 0.040519737, 0.079202026, 0.9228099)
+bones/3/rotation = Quaternion(-0.6466712, 0.6727994, 0.24087685, -0.2667128)
+bones/4/rotation = Quaternion(-0.3085572, -0.035386823, -0.105637476, 0.9446592)
+bones/5/rotation = Quaternion(0.37484267, 0.040519726, 0.079202026, 0.92280996)
 bones/6/position = Vector3(-0.0020940627, -0.01416891, -0.01073396)
-bones/6/rotation = Quaternion(0.06818844, -0.06818874, 0.7038113, 0.7038113)
-bones/7/rotation = Quaternion(0.721204, -0.67833924, 0.09061053, -0.107287176)
-bones/8/rotation = Quaternion(-0.33763045, 0.0051714373, 0.032718837, 0.94069576)
-bones/9/position = Vector3(0.0012741094, -0.012997556, 0.009233219)
+bones/6/rotation = Quaternion(0.07269046, -0.07269078, 0.7033606, 0.7033605)
+bones/7/rotation = Quaternion(0.72122824, -0.67831343, 0.09061417, -0.10728381)
+bones/8/rotation = Quaternion(-0.1966, 0.009895265, 0.031612504, 0.9799241)
+bones/9/position = Vector3(0.0012741099, -0.012965383, 0.008904032)
 bones/9/rotation = Quaternion(0.6992546, 0.6992505, 0.10509734, -0.1051016)
-bones/10/rotation = Quaternion(-0.0990632, -0.16306949, 0.6831978, 0.70486563)
-bones/11/rotation = Quaternion(-0.35199383, 0.06916642, 0.11639242, 0.92615825)
-bones/12/rotation = Quaternion(0.3748429, -0.040522214, -0.079202555, 0.9228097)
-bones/13/position = Vector3(0.0014777381, -0.014262929, -0.010744726)
-bones/13/rotation = Quaternion(0.70350266, 0.70350343, 0.07129846, -0.07129888)
-bones/14/rotation = Quaternion(0.09771853, 0.100610904, 0.720274, 0.679363)
-bones/15/rotation = Quaternion(-0.34397307, 0.004283353, -0.029364813, 0.9385105)
+bones/10/rotation = Quaternion(-0.22332177, -0.29327264, 0.6529228, 0.6616725)
+bones/11/rotation = Quaternion(-0.31962073, 0.06758696, 0.11606034, 0.937979)
+bones/12/rotation = Quaternion(0.49097016, -0.050418988, -0.073301055, 0.86662173)
+bones/13/position = Vector3(0.0014777387, -0.01526578, -0.009225724)
+bones/13/rotation = Quaternion(0.70472443, 0.7047253, 0.057989806, -0.057990078)
+bones/14/rotation = Quaternion(0.09771155, 0.100617684, 0.7202266, 0.6794132)
+bones/15/rotation = Quaternion(-0.4939538, 0.009064681, -0.028257238, 0.8689816)
 bones/16/position = Vector3(0.0047419094, -0.017769923, -0.009562408)
-bones/17/rotation = Quaternion(-0.093845166, -0.0032446464, 0.008580761, 0.99554455)
-bones/18/rotation = Quaternion(-0.026911203, -0.00090882496, -0.000545011, 0.99963737)
-bones/19/rotation = Quaternion(0.124794796, -0.00081305386, -0.00049978937, 0.99218214)
-bones/20/rotation = Quaternion(0.19654188, -0.001641989, -0.0010293133, 0.9804936)
-bones/21/rotation = Quaternion(-0.017150939, -0.0022917765, -0.0011655253, 0.9998496)
+bones/17/rotation = Quaternion(0.063501604, -7.138124e-07, 4.5419547e-08, 0.9979817)
+bones/18/rotation = Quaternion(-0.07057303, 1.1891205e-07, -8.412961e-09, 0.9975066)
+bones/19/rotation = Quaternion(0.088828005, -1.18739734e-07, 1.0599008e-08, 0.99604696)
+bones/20/rotation = Quaternion(0.19242527, 9.537035e-13, -2.8453512e-11, 0.9813116)
+bones/21/rotation = Quaternion(0.08505543, 1.1877501e-07, 1.0147695e-08, 0.9963762)
 bones/22/rotation = Quaternion(1.788947e-07, 0.7353139, 0.6777267, 2.6755868e-07)
-bones/23/rotation = Quaternion(0.15256758, -0.000271432, -0.025211288, 0.9879714)
-bones/24/rotation = Quaternion(0.36932823, 0.041306973, 0.049212657, 0.9270753)
+bones/23/rotation = Quaternion(0.15254433, 0.000277781, -0.038334522, 0.9875528)
+bones/24/rotation = Quaternion(0.36947507, 0.038968302, 0.051130366, 0.9270142)
 bones/25/position = Vector3(-2.0489097e-10, 0.008165186, 7.543713e-10)
-bones/25/rotation = Quaternion(-0.25384623, -0.036065582, -0.035705272, 0.9659122)
-bones/26/rotation = Quaternion(-0.28141215, -0.23357993, 0.048570905, 0.92945606)
-bones/27/position = Vector3(-0.0074793356, 0.00086170435, -0.008267542)
+bones/26/rotation = Quaternion(-0.5415976, -0.21526961, 0.14458422, 0.79964143)
+bones/27/position = Vector3(-0.0074793356, 0.00086170435, -0.011598519)
 bones/27/rotation = Quaternion(0.7071068, -8.066304e-07, -1.1096483e-06, 0.7071067)
-bones/28/position = Vector3(0.0074793375, 0.00086170435, -0.008397221)
+bones/28/position = Vector3(0.0074793375, 0.00086170435, -0.002756152)
 
 [node name="FrontFoot_R" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="0" unique_id=729972338]
-transform = Transform3D(0.99999946, -0.0008791229, 0.0004881136, -0.00042631011, 0.06900391, 0.9976163, -0.0009108996, -0.99761575, 0.06900349, -0.0050143898, -0.024085937, 0.017168013)
+transform = Transform3D(0.9999847, -0.0018334743, 0.005221622, -0.0055044703, -0.23185849, 0.97273374, -0.00057276525, -0.9727477, -0.23186508, -0.005047257, -0.02595427, 0.01989858)
 
 [node name="BackLowLeg_R" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="1" unique_id=33389945]
-transform = Transform3D(0.99999905, -0.001063507, -0.0008732695, 0.00065300055, -0.19187751, 0.98141885, -0.0012114402, -0.98141885, -0.19187668, -0.007468507, 0.010110814, 0.010867719)
+transform = Transform3D(0.9999991, -0.0012043696, -0.0005011689, 0.0006337166, 0.11267698, 0.9936316, -0.0011403253, -0.9936314, 0.112677574, -0.0074670636, 0.0103367, 0.010992227)
 
 [node name="FrontFoot_L" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="2" unique_id=1595813476]
-transform = Transform3D(0.99999976, 0.00030840468, -0.00017308723, 0.0001760507, -0.009676576, 0.99995303, 0.0003066631, -0.99995315, -0.009676814, 0.0050099907, -0.02475255, 0.017548617)
+transform = Transform3D(0.9999856, 0.00021960773, -0.005324935, 0.0053288, -0.057052553, 0.9983568, -8.464977e-05, -0.9983712, -0.05705291, 0.005045689, -0.028167695, 0.019905604)
 
 [node name="BackLowLeg_L" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="3" unique_id=1872417807]
-transform = Transform3D(0.9999993, 0.0010546697, 0.0008920245, -0.00066825, -0.19578454, 0.980647, 0.0012088083, -0.9806466, -0.19578362, 0.00746861, 0.010280338, 0.010859868)
+transform = Transform3D(0.9999989, 0.0007787412, 0.00130649, -0.00068508927, -0.5362696, 0.8440467, 0.0013580448, -0.8440466, -0.53626823, 0.007471425, 0.008110666, 0.009467168)
 
 [node name="Tail5" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="4" unique_id=1267553973]
-transform = Transform3D(0.9998448, -0.0143159395, -0.0102639925, 0.0066761645, 0.84717464, -0.531272, 0.016301058, 0.531121, 0.8471389, 0.0040455847, 0.06792012, 0.036809422)
+transform = Transform3D(1, 1.9433179e-11, 2.3840552e-07, 1.8842174e-07, 0.61260134, -0.7903918, -1.4606285e-07, 0.79039174, 0.6126014, 0.0050500715, 0.06502176, 0.04928393)
 
 [node name="Head" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="5" unique_id=629382449]
-transform = Transform3D(-0.8902129, -0.06371422, 0.4510669, 0.07107918, -0.9974705, -0.00061506033, 0.44996515, 0.03151381, 0.8924898, -0.0007078104, -0.034913387, 0.047229197)
+transform = Transform3D(-0.8701107, -0.050166607, 0.49029627, 0.053756543, -0.9985312, -0.006768793, 0.4899157, 0.020466924, 0.8715294, -0.0012321286, -0.031751007, 0.049661294)
 
 [node name="BackFoot_R" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="6" unique_id=967061085]
-transform = Transform3D(1, 4.2853185e-07, -2.7100273e-06, 4.285326e-07, -0.9999999, 2.3841856e-07, -2.710027e-06, -2.3841856e-07, -0.9999999, -0.0074793356, 0.008154545, 0.0008617053)
+transform = Transform3D(1, 4.2853185e-07, -2.7100273e-06, 4.285326e-07, -0.9999999, 2.3841856e-07, -2.710027e-06, -2.3841856e-07, -0.9999999, -0.0074793356, 0.011485522, 0.0008617057)
 
 [node name="BackFoot_L" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="7" unique_id=1249991401]
-transform = Transform3D(1, -6.82121e-13, -3.663702e-06, 4.3674732e-13, -0.9999999, 2.3841856e-07, -3.6637018e-06, -2.3841856e-07, -0.9999999, 0.0074793375, 0.008284223, 0.0008617053)
+transform = Transform3D(1, -6.82121e-13, -3.663702e-06, 4.3674732e-13, -0.9999999, 2.3841856e-07, -3.6637018e-06, -2.3841856e-07, -0.9999999, 0.0074793375, 0.0026431556, 0.00086170464)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1943428122]
 path_desired_distance = 1.5
