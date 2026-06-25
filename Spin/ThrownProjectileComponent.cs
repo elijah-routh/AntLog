@@ -22,7 +22,9 @@ public partial class ThrownProjectileComponent : Area3D
     {
         BodyEntered += OnBodyEntered;
         AreaEntered += OnAreaEntered;
+
         Monitoring = false;
+        Monitorable = false;
 
         if (ProjectileRoot == null)
             ProjectileRoot = GetParent<Node3D>();
@@ -65,12 +67,49 @@ public partial class ThrownProjectileComponent : Area3D
 
         IsActive = true;
         Monitoring = true;
+        Monitorable = true;
 
         GD.Print(
             $"[ThrownProjectile] Launched. " +
             $"Velocity: {_velocity}, " +
+            $"Timer: {_timer}, " +
             $"Damage: {_currentDamage}, " +
             $"Damage Multiplier: {damageMultiplier}"
+        );
+    }
+
+    public void StopProjectile()
+    {
+        if (!IsActive)
+            return;
+
+        EndProjectile(notifyThrowFinished: true);
+    }
+
+    public void CancelProjectile()
+    {
+        if (!IsActive)
+            return;
+
+        EndProjectile(notifyThrowFinished: false);
+    }
+
+    private void EndProjectile(bool notifyThrowFinished)
+    {
+        IsActive = false;
+        _velocity = Vector3.Zero;
+        _timer = 0.0f;
+        Monitoring = false;
+        Monitorable = false;
+        _currentDamage = BaseDamage;
+
+        if (notifyThrowFinished)
+            NotifyThrowFinished();
+
+        GD.Print(
+            notifyThrowFinished
+                ? "[ThrownProjectile] Stopped."
+                : "[ThrownProjectile] Cancelled."
         );
     }
 
@@ -106,26 +145,14 @@ public partial class ThrownProjectileComponent : Area3D
         if (target is IDamageable damageable)
         {
             damageable.TakeDamage(_currentDamage);
-            GD.Print($"[ThrownProjectile] Damaged {target.Name} for {_currentDamage}");
+
+            GD.Print(
+                $"[ThrownProjectile] Damaged {target.Name} for {_currentDamage}"
+            );
 
             if (StopOnHit)
                 StopProjectile();
         }
-    }
-
-    public void StopProjectile()
-    {
-        if (!IsActive)
-            return;
-
-        IsActive = false;
-        _velocity = Vector3.Zero;
-        Monitoring = false;
-        _currentDamage = BaseDamage;
-
-        NotifyThrowFinished();
-
-        GD.Print("[ThrownProjectile] Stopped.");
     }
 
     private void NotifyThrowFinished()
@@ -141,6 +168,9 @@ public partial class ThrownProjectileComponent : Area3D
             return;
         }
 
-        GD.Print($"[ThrownProjectile] No IGrabStateReceiver found on {ProjectileRoot.Name}/EnemyController.");
+        GD.Print(
+            $"[ThrownProjectile] No IGrabStateReceiver found on " +
+            $"{ProjectileRoot.Name}/EnemyController."
+        );
     }
 }

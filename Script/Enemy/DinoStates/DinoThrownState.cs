@@ -43,6 +43,7 @@ namespace Game.Enemy
 
             // Throw is over, so the carried-spin damage should stop.
             GetGrabbable()?.DisableHeldSpinHitbox();
+            GetGrabbable()?.Projectile.CancelProjectile();
         }
 
         private GrabbableComponent GetGrabbable()

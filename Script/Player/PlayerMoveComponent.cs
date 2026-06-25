@@ -3,11 +3,19 @@ using Godot;
 public partial class PlayerMoveComponent : Node
 {
     [ExportGroup("Movement")]
-    [Export] public float MoveSpeed = 12.0f;
-    [Export] public float Acceleration = 10.0f;
-    [Export] public float Deceleration = 16.0f;
-    [Export] public float JumpVelocity = 8.5f;
-    [Export] public float RotationSpeed = 12.0f;
+    [Export] public float MoveSpeed = 10.0f;
+    [Export] public float Acceleration = 35.0f;
+    [Export] public float GroundFriction = 65.0f;
+    [Export] public float TurnAcceleration = 75.0f;
+    [Export] public float JumpVelocity = 8.0f;
+    [Export] public float RotationSpeed = 18.0f;
+
+    [ExportGroup("Air")]
+    [Export] public float AirAcceleration = 8.0f;
+    [Export] public float AirFriction = 1.5f;
+    [Export] public float GravityMultiplier = 1.8f;
+    [Export] public float FallGravityMultiplier = 2.6f;
+    [Export] public float MaxFallSpeed = 45.0f;
 
     [ExportGroup("Spin")]
     [Export] public SpinPowerComponent SpinPower;
@@ -22,8 +30,15 @@ public partial class PlayerMoveComponent : Node
     [Export] public float DiveSpeed = 24.0f;
     [Export] public float DiveDuration = 0.25f;
     [Export] public float DiveCooldown = 0.35f;
-    [Export] public float DiveEndDrag = 20.0f;
+    [Export] public float DiveEndDrag = 35.0f;
     [Export] public bool CanDiveInAir = false;
+
+    [ExportGroup("Knockback")]
+    [Export] public float KnockbackFriction = 22.0f;
+    [Export] public float MaxKnockbackSpeed = 35.0f;
+
+    [ExportGroup("Debug")]
+    [Export] public bool DebugHeldSpinWeapon = false;
 
     public bool IsDiving { get; private set; }
     public bool IsSpinning { get; private set; }
@@ -31,37 +46,65 @@ public partial class PlayerMoveComponent : Node
     private float _currentSpinSpeed;
     private int _spinDirection = 1;
 
+    private Vector3 _knockbackVelocity = Vector3.Zero;
+
     private float _diveTimer;
     private float _diveCooldownTimer;
     private Vector3 _diveDirection = Vector3.Zero;
 
     public void ApplyGravity(CharacterBody3D body, float delta)
     {
-        if (!body.IsOnFloor())
-            body.Velocity += body.GetGravity() * delta;
+        if (body == null)
+            return;
+
+        if (body.IsOnFloor())
+            return;
+
+        Vector3 velocity = body.Velocity;
+
+        float gravityMultiplier = velocity.Y < 0.0f
+            ? FallGravityMultiplier
+            : GravityMultiplier;
+
+        velocity += body.GetGravity() * gravityMultiplier * delta;
+
+        if (velocity.Y < -MaxFallSpeed)
+            velocity.Y = -MaxFallSpeed;
+
+        body.Velocity = velocity;
     }
 
     public void HandleJump(CharacterBody3D body)
     {
+        if (body == null)
+            return;
+
         if (IsDiving)
             return;
 
-        if (PlayerInput.JumpPressed && body.IsOnFloor())
-        {
-            Vector3 velocity = body.Velocity;
-            velocity.Y = JumpVelocity;
-            body.Velocity = velocity;
-        }
+        if (!PlayerInput.JumpPressed)
+            return;
+
+        if (!body.IsOnFloor())
+            return;
+
+        Vector3 velocity = body.Velocity;
+        velocity.Y = JumpVelocity;
+        body.Velocity = velocity;
     }
 
     public void HandleMovement(CharacterBody3D body, Node3D cameraPivot, float delta)
     {
+        if (body == null)
+            return;
+
         UpdateDiveCooldown(delta);
 
         if (IsDiving)
         {
             StopSpin(delta);
             HandleDive(body, delta);
+            ApplyKnockback(body, delta);
             return;
         }
 
@@ -76,44 +119,32 @@ public partial class PlayerMoveComponent : Node
         Vector2 input = PlayerInput.Movement;
         Vector3 direction = GetCameraRelativeDirection(input, cameraPivot);
 
-        float currentMoveSpeed = IsSpinning
-            ? MoveSpeed * SpinningMoveSpeedMultiplier
-            : MoveSpeed;
+        float currentMoveSpeed = GetCurrentMoveSpeed();
 
         Vector3 velocity = body.Velocity;
 
-        if (direction != Vector3.Zero)
+        if (body.IsOnFloor())
         {
-            Vector3 targetVelocity = direction * currentMoveSpeed;
-
-            velocity.X = Mathf.MoveToward(
-                velocity.X,
-                targetVelocity.X,
-                Acceleration * delta
-            );
-
-            velocity.Z = Mathf.MoveToward(
-                velocity.Z,
-                targetVelocity.Z,
-                Acceleration * delta
+            velocity = ApplyGroundMovement(
+                velocity,
+                direction,
+                currentMoveSpeed,
+                delta
             );
         }
         else
         {
-            velocity.X = Mathf.MoveToward(
-                velocity.X,
-                0.0f,
-                Deceleration * delta
-            );
-
-            velocity.Z = Mathf.MoveToward(
-                velocity.Z,
-                0.0f,
-                Deceleration * delta
+            velocity = ApplyAirMovement(
+                velocity,
+                direction,
+                currentMoveSpeed,
+                delta
             );
         }
 
         body.Velocity = velocity;
+
+        ApplyKnockback(body, delta);
 
         if (IsSpinning)
         {
@@ -123,6 +154,100 @@ public partial class PlayerMoveComponent : Node
         {
             RotateTowards(body, direction, delta);
         }
+    }
+
+    private Vector3 ApplyGroundMovement(
+        Vector3 velocity,
+        Vector3 direction,
+        float currentMoveSpeed,
+        float delta)
+    {
+        Vector3 horizontalVelocity = new Vector3(
+            velocity.X,
+            0.0f,
+            velocity.Z
+        );
+
+        bool hasInput = direction != Vector3.Zero;
+
+        if (hasInput)
+        {
+            Vector3 targetVelocity = direction * currentMoveSpeed;
+
+            float accelerationToUse = Acceleration;
+
+            if (horizontalVelocity.LengthSquared() > 0.01f)
+            {
+                float alignment = horizontalVelocity.Normalized().Dot(direction);
+
+                // Lower alignment means the player is trying to turn around
+                // or move sharply away from their current velocity.
+                if (alignment < 0.25f)
+                    accelerationToUse = TurnAcceleration;
+            }
+
+            horizontalVelocity = horizontalVelocity.MoveToward(
+                targetVelocity,
+                accelerationToUse * delta
+            );
+        }
+        else
+        {
+            horizontalVelocity = horizontalVelocity.MoveToward(
+                Vector3.Zero,
+                GroundFriction * delta
+            );
+        }
+
+        velocity.X = horizontalVelocity.X;
+        velocity.Z = horizontalVelocity.Z;
+
+        return velocity;
+    }
+
+    private Vector3 ApplyAirMovement(
+        Vector3 velocity,
+        Vector3 direction,
+        float currentMoveSpeed,
+        float delta)
+    {
+        Vector3 horizontalVelocity = new Vector3(
+            velocity.X,
+            0.0f,
+            velocity.Z
+        );
+
+        bool hasInput = direction != Vector3.Zero;
+
+        if (hasInput)
+        {
+            Vector3 targetVelocity = direction * currentMoveSpeed;
+
+            horizontalVelocity = horizontalVelocity.MoveToward(
+                targetVelocity,
+                AirAcceleration * delta
+            );
+        }
+        else
+        {
+            horizontalVelocity = horizontalVelocity.MoveToward(
+                Vector3.Zero,
+                AirFriction * delta
+            );
+        }
+
+        velocity.X = horizontalVelocity.X;
+        velocity.Z = horizontalVelocity.Z;
+
+        return velocity;
+    }
+
+    private float GetCurrentMoveSpeed()
+    {
+        if (IsSpinning)
+            return MoveSpeed * SpinningMoveSpeedMultiplier;
+
+        return MoveSpeed;
     }
 
     private void UpdateSpinState(float delta)
@@ -172,7 +297,13 @@ public partial class PlayerMoveComponent : Node
 
     private void Spin(Node3D player, float delta)
     {
-        float spinRadians = Mathf.DegToRad(_currentSpinSpeed) * _spinDirection * delta;
+        if (player == null)
+            return;
+
+        float spinRadians =
+            Mathf.DegToRad(_currentSpinSpeed) *
+            _spinDirection *
+            delta;
 
         player.RotateY(spinRadians);
     }
@@ -182,9 +313,7 @@ public partial class PlayerMoveComponent : Node
         if (!PlayerInput.GrabPressed)
             return;
 
-        // Only returns true if the held object is actually thrown.
-        // If not spinning, TryThrowHeld should return false,
-        // then the player continues into the dive.
+        // If holding an object and spinning, this can throw instead of diving.
         if (DiveGrab != null && DiveGrab.TryThrowHeld())
             return;
 
@@ -239,9 +368,7 @@ public partial class PlayerMoveComponent : Node
         body.Velocity = velocity;
 
         if (_diveTimer <= 0.0f)
-        {
             EndDive(body);
-        }
     }
 
     private void EndDive(CharacterBody3D body)
@@ -251,16 +378,49 @@ public partial class PlayerMoveComponent : Node
 
         Vector3 velocity = body.Velocity;
 
-        velocity.X = Mathf.MoveToward(velocity.X, 0.0f, DiveEndDrag);
-        velocity.Z = Mathf.MoveToward(velocity.Z, 0.0f, DiveEndDrag);
+        velocity.X = Mathf.MoveToward(
+            velocity.X,
+            0.0f,
+            DiveEndDrag
+        );
+
+        velocity.Z = Mathf.MoveToward(
+            velocity.Z,
+            0.0f,
+            DiveEndDrag
+        );
 
         body.Velocity = velocity;
     }
 
     private void UpdateDiveCooldown(float delta)
     {
-        if (_diveCooldownTimer > 0.0f)
-            _diveCooldownTimer -= delta;
+        if (_diveCooldownTimer <= 0.0f)
+            return;
+
+        _diveCooldownTimer -= delta;
+
+        if (_diveCooldownTimer < 0.0f)
+            _diveCooldownTimer = 0.0f;
+    }
+
+    private void ApplyKnockback(CharacterBody3D body, float delta)
+    {
+        if (_knockbackVelocity == Vector3.Zero)
+            return;
+
+        Vector3 velocity = body.Velocity;
+
+        velocity.X += _knockbackVelocity.X;
+        velocity.Z += _knockbackVelocity.Z;
+        velocity.Y += _knockbackVelocity.Y;
+
+        body.Velocity = velocity;
+
+        _knockbackVelocity = _knockbackVelocity.MoveToward(
+            Vector3.Zero,
+            KnockbackFriction * delta
+        );
     }
 
     private Vector3 GetCameraRelativeDirection(Vector2 input, Node3D cameraPivot)
@@ -287,6 +447,9 @@ public partial class PlayerMoveComponent : Node
 
     private void RotateTowards(Node3D player, Vector3 direction, float delta)
     {
+        if (player == null)
+            return;
+
         float targetRotation = Mathf.Atan2(direction.X, direction.Z);
 
         Vector3 rotation = player.Rotation;
@@ -302,6 +465,9 @@ public partial class PlayerMoveComponent : Node
 
     private void RotateInstantlyTowards(Node3D player, Vector3 direction)
     {
+        if (player == null)
+            return;
+
         Vector3 rotation = player.Rotation;
         rotation.Y = Mathf.Atan2(direction.X, direction.Z);
         player.Rotation = rotation;
@@ -322,10 +488,38 @@ public partial class PlayerMoveComponent : Node
 
         DiveGrab.CurrentGrabbed.SetHeldSpinHitboxActive(shouldBeActive);
 
-        GD.Print(
-            $"[HeldSpinWeapon] Holding: {DiveGrab?.CurrentGrabbed != null}, " +
-            $"Spinning: {IsSpinning}, " +
-            $"EnoughPower: {SpinPower?.HasEnoughPowerForSpinDamage()}"
+        if (DebugHeldSpinWeapon)
+        {
+            GD.Print(
+                $"[HeldSpinWeapon] Holding: {DiveGrab.CurrentGrabbed != null}, " +
+                $"Spinning: {IsSpinning}, " +
+                $"EnoughPower: {hasEnoughPower}"
+            );
+        }
+    }
+
+    public void ApplyKnockback(Vector3 force)
+    {
+        _knockbackVelocity += force;
+
+        Vector3 horizontal = new Vector3(
+            _knockbackVelocity.X,
+            0.0f,
+            _knockbackVelocity.Z
+        );
+
+        if (horizontal.Length() > MaxKnockbackSpeed)
+        {
+            horizontal = horizontal.Normalized() * MaxKnockbackSpeed;
+
+            _knockbackVelocity.X = horizontal.X;
+            _knockbackVelocity.Z = horizontal.Z;
+        }
+
+        _knockbackVelocity.Y = Mathf.Clamp(
+            _knockbackVelocity.Y,
+            -MaxKnockbackSpeed,
+            MaxKnockbackSpeed
         );
     }
 }

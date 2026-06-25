@@ -2,7 +2,7 @@ using Game.Components;
 using Game.Entity;
 using Godot;
 
-public partial class PlayerController : CharacterBody3D, IDamageable, IHealable, IKillable
+public partial class PlayerController : CharacterBody3D, IDamageable, IHealable, IKillable, IKnockable
 {
     [Export] public Node3D CameraPivot;
     [Export] public PlayerMoveComponent Movement;
@@ -12,6 +12,10 @@ public partial class PlayerController : CharacterBody3D, IDamageable, IHealable,
     [Export] public float StartingHealth = 100f;
     [Export] public HealthComponent Health;
     [Export] public HealthBar HealthBar;
+
+    [ExportGroup("Knockback")]
+    [Export] public float KnockbackResistance = 1.0f;
+    [Export] public float MaxKnockbackSpeed = 35.0f;
 
     [ExportGroup("Debug")]
     [Export] public float DebugDamageAmount = 10f;
@@ -55,6 +59,29 @@ public partial class PlayerController : CharacterBody3D, IDamageable, IHealable,
         {
             Health?.TakeDamage(DebugDamageAmount);
         }
+    }
+
+    public void ApplyKnockback(Vector3 force)
+    {
+        if (Movement != null)
+        {
+            Movement.ApplyKnockback(force / Mathf.Max(KnockbackResistance, 0.01f));
+            return;
+        }
+
+        Vector3 velocity = Velocity;
+        velocity += force / Mathf.Max(KnockbackResistance, 0.01f);
+
+        Vector3 horizontal = new Vector3(velocity.X, 0f, velocity.Z);
+
+        if (horizontal.Length() > MaxKnockbackSpeed)
+        {
+            horizontal = horizontal.Normalized() * MaxKnockbackSpeed;
+            velocity.X = horizontal.X;
+            velocity.Z = horizontal.Z;
+        }
+
+        Velocity = velocity;
     }
 
     private void OnHealthChanged(float currentHealth, float maxHealth)

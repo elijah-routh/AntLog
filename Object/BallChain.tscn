@@ -20,7 +20,7 @@ size = Vector3(1.870982, 4.732422, 3.881836)
 size = Vector3(2.0181236, 4.6025085, 6.9555397)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6o4ei"]
-size = Vector3(2.6433105, 5.0401154, 4.2226257)
+size = Vector3(3.1310577, 5.0401154, 5.9716644)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_y4bpy"]
 viewport_path = NodePath("SubViewport")
@@ -56,8 +56,8 @@ PathUpdateInterval = 0.5
 DetectionRange = 40.0
 LoseTargetRange = 70.0
 TiredRotationSpeed = 0.4
-ChargeStartDistance = 20.0
-ChargeHopDuration = 0.65
+ChargeStartDistance = 25.0
+ChargeHopDuration = 1.0
 HopInPlaceChance = 1.0
 ChargeSpeedMultiplier = 5.0
 ChargeMinDuration = 0.7
@@ -65,10 +65,15 @@ ChargeMaxDuration = 1.2
 ChargeCooldown = 6.0
 ChargesBeforeTired = 2
 TiredDuration = 6.0
-OrbitIdealDistance = 12.0
+OrbitEnterDistance = 20.0
+OrbitIdealDistance = 16.0
+OrbitDistanceTolerance = 2.5
+OrbitDirectionChangeChance = 0.25
+BackUpDistance = 10.0
+BackUpStrength = 7.0
 ChargeAttemptCooldown = 8.0
-ChargeMinDistance = 6.5
-ChargeMaxDistance = 18.0
+ChargeMinDistance = 10.0
+ChargeMaxDistance = 20.0
 ChargeHitbox = NodePath("../DamageHitboxComponent")
 EnemyHealthBar = NodePath("../EnemyHealthBar3D")
 
@@ -107,9 +112,10 @@ collision_layer = 64
 collision_mask = 8
 script = ExtResource("10_6o4ei")
 ProjectileRoot = NodePath("..")
+Lifetime = 4.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ThrownProjectileComponent" unique_id=1660075174]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0076904297, 1.8628922, -0.9834442)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05921173, 1.8628922, -1.8579636)
 shape = SubResource("BoxShape3D_6o4ei")
 
 [node name="EnemyHealthBar3D" parent="." unique_id=868444524 instance=ExtResource("11_y4bpy")]
@@ -185,12 +191,15 @@ path_max_distance = 20.01
 avoidance_enabled = true
 neighbor_distance = 6.0
 
-[node name="DamageHitboxComponent" type="Area3D" parent="." unique_id=1865023774]
+[node name="DamageHitboxComponent" type="Area3D" parent="." unique_id=1865023774 node_paths=PackedStringArray("KnockbackSource")]
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("12_j8sah")
-Damage = 15.0
+Damage = 7.0
 PlayerGroupName = "player"
+ApplyKnockback = true
+UpwardKnockback = 0.25
+KnockbackSource = NodePath(".")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DamageHitboxComponent" unique_id=1737500355]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.020492554, 3.1401978, 3.0504456)

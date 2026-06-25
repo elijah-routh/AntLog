@@ -69,6 +69,9 @@ namespace Game.Enemy
         [ExportGroup("Attack Hitboxes")]
         [Export] public DamageHitboxComponent ChargeHitbox { get; set; }
 
+        [ExportGroup("Feedback")]
+        [Export] public AttackFeedbackComponent AttackFeedback;
+
         public bool CanCharge { get; private set; } = true;
 
         private float _chargeCooldownTimer;

@@ -113,7 +113,7 @@ MinSpringLength = 5.0
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=2023088979]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
-collision_mask = 14
+collision_mask = 13
 shape = SubResource("SphereShape3D_l8tau")
 spring_length = 8.0
 
@@ -130,11 +130,15 @@ Barrel = NodePath("../PlayerBody/VisualNode/TurretPivot/MeshInstance3D/BarrelPiv
 
 [node name="Move" type="Node" parent="." unique_id=1944470523 node_paths=PackedStringArray("SpinPower", "DiveGrab")]
 script = ExtResource("8_roeef")
-Acceleration = 20.0
-Deceleration = 36.0
+MoveSpeed = 20.0
 SpinPower = NodePath("../SpinPowerComponent")
+SpinAcceleration = 300.0
 DiveGrab = NodePath("../DiveGrabComponent")
+DiveSpeed = 35.0
+DiveDuration = 0.3
 CanDiveInAir = true
+KnockbackFriction = 150.0
+MaxKnockbackSpeed = 8.0
 
 [node name="GroundAlign" type="Node" parent="." unique_id=1418479131 node_paths=PackedStringArray("VisualRoot")]
 script = ExtResource("9_app8l")
