@@ -5,6 +5,8 @@
 [ext_resource type="Resource" uid="uid://cmylwk71tnb24" path="res://Trenchbroom/tankdev_settings.tres" id="2_w2mix"]
 [ext_resource type="Material" uid="uid://wjn06m1i1p6e" path="res://Trenchbroom/textures/SBS - Tiny Texture Pack - 256x256/256x256/Grass/Grass_02-256x256.tres" id="4_elxrv"]
 [ext_resource type="Script" uid="uid://b525wwiajqy7i" path="res://Script/Menu/ScoreManager.cs" id="7_jm65e"]
+[ext_resource type="Script" uid="uid://btwhek1fj7kfc" path="res://Script/Enemy/Targets/CircleRail3D.cs" id="9_u0g6g"]
+[ext_resource type="Script" uid="uid://b0ddttqi65nxe" path="res://Script/Enemy/Targets/TargetWaveSpawner3D.cs" id="10_wvnm0"]
 [ext_resource type="PackedScene" uid="uid://dhsq1cio25516" path="res://Object/Player.tscn" id="13_ywusi"]
 [ext_resource type="PackedScene" uid="uid://nr7wfdjtmf3l" path="res://Object/ThrowTarget.tscn" id="15_w6eyw"]
 [ext_resource type="Script" uid="uid://ctmw0nlu8i38p" path="res://Script/Spawn/EnemySpawner3D.cs" id="16_wvnm0"]
@@ -72,7 +74,8 @@ shape = SubResource("ConvexPolygonShape3D_jm65e")
 
 [node name="MenuStuff" type="Node" parent="." unique_id=150875263]
 
-[node name="HUD" parent="MenuStuff" unique_id=1896632546 instance=ExtResource("17_wvnm0")]
+[node name="HUD" parent="MenuStuff" unique_id=1896632546 node_paths=PackedStringArray("ScoreManager") instance=ExtResource("17_wvnm0")]
+ScoreManager = NodePath("../ScoreManager")
 
 [node name="Reticle" parent="MenuStuff/HUD" index="3" unique_id=2107039370 node_paths=PackedStringArray("Camera")]
 anchors_preset = 8
@@ -101,8 +104,25 @@ script = ExtResource("7_jm65e")
 [node name="ThrowTarget" parent="Targets" unique_id=1661693050 instance=ExtResource("15_w6eyw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 107.217896, 17.38071, 0)
 
-[node name="ThrowTarget2" parent="Targets" unique_id=2116426250 instance=ExtResource("15_w6eyw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 107.217896, 17.38071, 40.07151)
+[node name="IslandRail" type="Node3D" parent="Targets" unique_id=1315635127]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.098749, 0)
+script = ExtResource("9_u0g6g")
+Radius = 150.0
+
+[node name="IslandHighRail" type="Node3D" parent="Targets" unique_id=1130189868]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 41.219345, 0)
+script = ExtResource("9_u0g6g")
+Radius = 75.0
+DebugColor = Color(0.24313726, 1, 0.92941177, 1)
+
+[node name="TargetWaveSpawner3D" type="Node3D" parent="Targets" unique_id=844738347 node_paths=PackedStringArray("TargetParent", "Rails")]
+script = ExtResource("10_wvnm0")
+TargetScene = ExtResource("15_w6eyw")
+TargetParent = NodePath("..")
+Rails = [NodePath("../IslandRail"), NodePath("../IslandHighRail")]
+TargetsPerWave = 10
+SlowTargetRailSpeed = 0.01
+FastTargetRailSpeed = 0.05
 
 [node name="WorldEnvironment" type="Node" parent="." unique_id=1671059563]
 

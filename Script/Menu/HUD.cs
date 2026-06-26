@@ -6,19 +6,16 @@ public partial class HUD : CanvasLayer
     private Label _scoreLabel;
 
     private PlayerInventory _inventory;
-    private ScoreManager _scoreManager;
+    [Export] public ScoreManager ScoreManager;
 
     public override void _Ready()
     {
         _scoreLabel = GetNodeOrNull<Label>("ScoreCount");
 
-        _scoreManager = GetTree()
-            .GetFirstNodeInGroup("score_manager") as ScoreManager;
-
-        if (_scoreManager != null && _scoreLabel != null)
+        if (ScoreManager != null && _scoreLabel != null)
         {
-            _scoreManager.ScoreChanged += OnScoreChanged;
-            OnScoreChanged(_scoreManager.Score);
+            ScoreManager.ScoreChanged += OnScoreChanged;
+            OnScoreChanged(ScoreManager.Score);
         }
     }
 

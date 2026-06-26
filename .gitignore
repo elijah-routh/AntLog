@@ -82,7 +82,7 @@ Desktop.ini
 # Uncomment if desired
 
 # Builds
-# Builds/
+Builds/
 
 # Blender autosaves
 # *.blend1

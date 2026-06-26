@@ -2,8 +2,6 @@
 
 [ext_resource type="Script" uid="uid://c2n8a73vuglw" path="res://Script/Enemy/Targets/ThrowTarget3D.cs" id="1_6gds6"]
 [ext_resource type="Texture2D" uid="uid://6u3b6t24r7gc" path="res://icon.svg" id="2_nvdw4"]
-[ext_resource type="Texture2D" uid="uid://bjnjm0jttjaih" path="res://Assets/Images/FunTankTitle.png" id="3_21ap8"]
-[ext_resource type="Texture2D" uid="uid://b20mrjlr4nl0o" path="res://Assets/Images/FunnyFish.png" id="4_m28js"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6gds6"]
 
@@ -12,7 +10,7 @@ top_level = true
 script = ExtResource("1_6gds6")
 Sprite = NodePath("Sprite3D")
 HitArea = NodePath("Sprite3D/Area3D")
-FunnySprites = Array[Texture2D]([ExtResource("2_nvdw4"), ExtResource("3_21ap8"), ExtResource("4_m28js")])
+FunnySprites = Array[Texture2D]([ExtResource("2_nvdw4")])
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1571416494]
 transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)

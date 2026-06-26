@@ -55,6 +55,8 @@ namespace Game.Targets
 
         private bool _hasBeenHit;
 
+        private ScoreManager _scoreManager;
+
         public override void _Ready()
         {
             if (Sprite == null)
@@ -76,6 +78,9 @@ namespace Game.Targets
                 HitArea.BodyEntered += OnBodyEntered;
                 HitArea.Monitoring = true;
             }
+
+            _scoreManager = GetTree()
+                .GetFirstNodeInGroup("score_manager") as ScoreManager;
         }
 
         public void Setup(
@@ -152,6 +157,9 @@ namespace Game.Targets
             _hasBeenHit = true;
 
             PlayRandomHitSound();
+
+            if (_scoreManager != null)
+                _scoreManager.AddScore(PointValue);
 
             EmitSignal(nameof(TargetHit), this, PointValue);
 

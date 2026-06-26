@@ -34,8 +34,8 @@ seamless = true
 [resource]
 render_priority = 0
 shader = ExtResource("1_uxnik")
-shader_parameter/albedo = Color(0, 0.32156864, 0.43137255, 1)
-shader_parameter/albedo2 = Color(0, 0.4745098, 0.7647059, 1)
+shader_parameter/albedo = Color(0.827451, 0.5647059, 0.5137255, 1)
+shader_parameter/albedo2 = Color(0.6509804, 0.4745098, 0.72156864, 1)
 shader_parameter/metallic = 0.0
 shader_parameter/roughness = 0.02
 shader_parameter/wave = SubResource("NoiseTexture2D_aylcy")
