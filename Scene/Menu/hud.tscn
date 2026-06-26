@@ -48,12 +48,19 @@ script = ExtResource("3_11exn")
 [node name="HealthBar" parent="." unique_id=210072322 instance=ExtResource("4_id85m")]
 offset_left = 41.0
 offset_top = 129.0
-offset_right = -871.0
-offset_bottom = -509.0
+offset_right = -1639.0
+offset_bottom = -941.0
 scale = Vector2(0.75, 1)
 
 [node name="SpinPowerBarUI" parent="." unique_id=674463225 instance=ExtResource("5_bvxm0")]
-offset_left = 1078.0
-offset_top = 427.0
-offset_right = 1128.0
-offset_bottom = 627.0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -106.0
+offset_top = -254.0
+offset_right = -56.0
+offset_bottom = -54.0
+grow_horizontal = 0
+grow_vertical = 0

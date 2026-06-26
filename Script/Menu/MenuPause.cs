@@ -49,6 +49,6 @@ public partial class MenuPause : CanvasLayer
     {
         SetPaused(false);
         Input.MouseMode = Input.MouseModeEnum.Visible;
-        GetTree().ChangeSceneToFile("res://Scene/Menu/menu_title.tscn");
+        GetTree().ChangeSceneToFile("res://Scene/Menu/MainMenu.tscn");
     }
 }

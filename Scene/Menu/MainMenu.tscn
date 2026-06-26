@@ -1,15 +1,25 @@
 [gd_scene format=3 uid="uid://b1wthqyg02x3r"]
 
+[ext_resource type="Script" uid="uid://bd10uv5iedn61" path="res://Script/Menu/MenuTitle.cs" id="1_q7bsc"]
 [ext_resource type="Theme" uid="uid://i3xjdcnxdk4a" path="res://Art/DinoTheme.tres" id="1_v5mi7"]
 [ext_resource type="PackedScene" uid="uid://dy77io1kgn7hm" path="res://Scene/Menu/SpinningDino.tscn" id="2_60v5t"]
+[ext_resource type="PackedScene" uid="uid://dtc0psmclt2n1" path="res://Scene/ArenaPreview.tscn" id="4_rd8ru"]
 
-[node name="MainMenu" type="Control" unique_id=1556643241]
+[node name="MainMenu" type="Control" unique_id=1556643241 node_paths=PackedStringArray("playButton", "optionsButton", "exitButton", "mainPanel", "optionsPanel", "backButton", "fullscreenCheckBox")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_q7bsc")
+playButton = NodePath("MainPanel/VBoxContainer/PlayButton")
+optionsButton = NodePath("MainPanel/VBoxContainer/OptionsButton")
+exitButton = NodePath("MainPanel/VBoxContainer/ExitButton")
+mainPanel = NodePath("MainPanel")
+optionsPanel = NodePath("OptionsPanel")
+backButton = NodePath("OptionsPanel/VBoxContainer/BackButton")
+fullscreenCheckBox = NodePath("OptionsPanel/VBoxContainer/FullscreenCheckBox")
 
 [node name="Panel" type="Panel" parent="." unique_id=1455037833]
 layout_mode = 1
@@ -19,13 +29,33 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1601699543]
-layout_mode = 0
-offset_left = -87.0
-offset_top = 120.0
-offset_right = 613.0
-offset_bottom = 632.0
+[node name="BackgroundPreview" type="SubViewportContainer" parent="." unique_id=1232989553]
+z_index = -4
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="BackgroundPreview" unique_id=964207397]
+size = Vector2i(1152, 648)
+
+[node name="ArenaPreview" parent="BackgroundPreview/SubViewport" unique_id=534505466 instance=ExtResource("4_rd8ru")]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1601699543]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -256.0
+offset_right = 700.0
+offset_bottom = 256.0
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=2042183832]
 transparent_bg = true
@@ -34,8 +64,18 @@ size = Vector2i(700, 512)
 render_target_update_mode = 4
 
 [node name="SpinningDino" parent="SubViewportContainer/SubViewport" unique_id=1237302082 instance=ExtResource("2_60v5t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -277.809, 0)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1850708724]
+[node name="MainPanel" type="Control" parent="." unique_id=1812198190]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPanel" unique_id=1850708724]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -43,44 +83,84 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -139.5
-offset_top = -43.0
+offset_top = -49.0
 offset_right = 139.5
-offset_bottom = 217.5
+offset_bottom = 211.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 19
 
-[node name="Button" type="Button" parent="VBoxContainer" unique_id=327015736]
+[node name="PlayButton" type="Button" parent="MainPanel/VBoxContainer" unique_id=327015736]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_v5mi7")
 text = "Start Game
 "
 
-[node name="Button2" type="Button" parent="VBoxContainer" unique_id=2029273925]
+[node name="OptionsButton" type="Button" parent="MainPanel/VBoxContainer" unique_id=2029273925]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_v5mi7")
 text = "Options
 "
 
-[node name="Button3" type="Button" parent="VBoxContainer" unique_id=1027389537]
+[node name="ExitButton" type="Button" parent="MainPanel/VBoxContainer" unique_id=1027389537]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_v5mi7")
 text = "Exit
 "
 
+[node name="OptionsPanel" type="Control" parent="." unique_id=782539634]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsPanel" unique_id=1617808979]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -139.5
+offset_top = -130.25
+offset_right = 139.5
+offset_bottom = 130.25
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 19
+
+[node name="BackButton" type="Button" parent="OptionsPanel/VBoxContainer" unique_id=1754408494]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_v5mi7")
+text = "Back
+"
+
+[node name="FullscreenCheckBox" type="CheckBox" parent="OptionsPanel/VBoxContainer" unique_id=1375362963]
+layout_mode = 2
+text = "Fullscreen"
+
 [node name="Label" type="Label" parent="." unique_id=1971978837]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
+anchor_bottom = 0.5
 offset_left = -247.0
-offset_top = 79.0
+offset_top = -211.0
 offset_right = 247.0
-offset_bottom = 202.0
+offset_bottom = -88.0
 grow_horizontal = 2
+grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 10
 theme_override_constants/shadow_offset_y = 10

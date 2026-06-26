@@ -21,7 +21,6 @@
 [ext_resource type="PackedScene" uid="uid://bk6vsvvvq2041" path="res://Scene/Menu/hud.tscn" id="17_wvnm0"]
 [ext_resource type="PackedScene" uid="uid://bbdhynmtewp4j" path="res://Scene/Menu/menu_pause.tscn" id="18_hsq0f"]
 [ext_resource type="Resource" uid="uid://4fo2ag0cgm4x" path="res://Script/Spawn/Data/Wave1.tres" id="18_ixerh"]
-[ext_resource type="PackedScene" uid="uid://dxsevhhuvx4u" path="res://Object/enemy.tscn" id="22_xjovg"]
 [ext_resource type="Sky" uid="uid://rwxaax84eqt8" path="res://Art/Shaders/MainSky.tres" id="25_hcl6m"]
 [ext_resource type="PackedScene" uid="uid://dnjsnuj1qgiqa" path="res://Scene/Water/WaterPlane.tscn" id="26_h2ovn"]
 
@@ -502,22 +501,19 @@ SpawnPoints = [NodePath("../SpawnLocation"), NodePath("../SpawnLocation2"), Node
 Waves = Array[ExtResource("17_rkjth")]([ExtResource("18_ixerh")])
 
 [node name="SpawnLocation" type="Marker3D" parent="Enemies" unique_id=1085009787]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.79928, 10, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.26892, 10, -18.47949)
 script = ExtResource("17_hsq0f")
 SpawnRadius = 10.0
 
 [node name="SpawnLocation2" type="Marker3D" parent="Enemies" unique_id=264884920]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 10, -54.584343)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 10, -37.60826)
 script = ExtResource("17_hsq0f")
 SpawnRadius = 10.0
 
 [node name="SpawnLocation3" type="Marker3D" parent="Enemies" unique_id=1534636963]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.460655, 10, 44.072693)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.88495, 10, 24.545033)
 script = ExtResource("17_hsq0f")
 SpawnRadius = 10.0
-
-[node name="Kaiju" parent="Enemies" unique_id=773946387 instance=ExtResource("22_xjovg")]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -45.105583, 21.192207, -11.643333)
 
 [node name="PlayerRoot" parent="." unique_id=920046093 instance=ExtResource("13_ywusi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 10, 1)

@@ -2,4 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://xbwk2b0704xg" path="res://Assets/UsedGLB/Planet-hKZtOOMadH.glb" id="1_i8cvt"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i8cvt"]
+transparency = 1
+albedo_color = Color(0.28235295, 0.22352941, 0.27450982, 0.03529412)
+emission = Color(0.7414047, 0.23667291, 0.15618846, 1)
+emission_energy_multiplier = 16.0
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
 [node name="Saturn2" unique_id=1806479770 instance=ExtResource("1_i8cvt")]
+
+[node name="Planet_10" parent="RootNode" parent_id_path=PackedInt32Array(1178379240) index="0" unique_id=1160151694]
+material_overlay = SubResource("StandardMaterial3D_i8cvt")
