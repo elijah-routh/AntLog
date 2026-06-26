@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://wjn06m1i1p6e"]
+
+[ext_resource type="Texture2D" uid="uid://b3peytumpf86p" path="res://Trenchbroom/textures/SBS - Tiny Texture Pack - 256x256/256x256/Grass/Grass_02-256x256.png" id="1_lx486"]
+
+[resource]
+albedo_texture = ExtResource("1_lx486")
+metallic_specular = 0.0
+texture_filter = 2

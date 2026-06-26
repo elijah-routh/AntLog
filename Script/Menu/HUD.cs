@@ -3,25 +3,27 @@ using Godot;
 public partial class HUD : CanvasLayer
 {
     private Label _starLabel;
+    private Label _scoreLabel;
+
     private PlayerInventory _inventory;
+    private ScoreManager _scoreManager;
 
     public override void _Ready()
     {
-        _starLabel = GetNode<Label>("StarCount");
+        _scoreLabel = GetNodeOrNull<Label>("ScoreCount");
 
-        _inventory = GetTree()
-            .GetFirstNodeInGroup("player_inventory") as PlayerInventory;
+        _scoreManager = GetTree()
+            .GetFirstNodeInGroup("score_manager") as ScoreManager;
 
-        if (_inventory != null)
+        if (_scoreManager != null && _scoreLabel != null)
         {
-            _inventory.StarCountChanged += OnStarCountChanged;
-
-            OnStarCountChanged(_inventory.StarCount);
+            _scoreManager.ScoreChanged += OnScoreChanged;
+            OnScoreChanged(_scoreManager.Score);
         }
     }
 
-    private void OnStarCountChanged(int count)
+    private void OnScoreChanged(int score)
     {
-        _starLabel.Text = count.ToString();
+        _scoreLabel.Text = score.ToString();
     }
 }

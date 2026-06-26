@@ -148,6 +148,7 @@ grab={
 3d_physics/layer_5="grabbox"
 3d_physics/layer_6="grabspot"
 3d_physics/layer_7="projectile"
+3d_physics/layer_8="target"
 
 [physics]
 
