@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://dsliklqur8w3g"]
 
 [ext_resource type="Shader" uid="uid://wor4cjjarlca" path="res://Art/Shaders/SkyShader.gdshader" id="1_xgxfq"]
-[ext_resource type="Texture2D" uid="uid://b307v2kdr0w8p" path="res://Assets/Imports/AllSky/addons/AllSkyFree/Skyboxes/AllSkyFree_Sky_OvercastLow_Equirect.png" id="2_prd7m"]
+[ext_resource type="Texture2D" uid="uid://cbvepc8c8t63c" path="res://Art/Shaders/NightSkyHDRI001_4K/NightSkyHDRI001_4K_HDR.exr" id="2_prd7m"]
 
 [resource]
 shader = ExtResource("1_xgxfq")

@@ -9,7 +9,7 @@ public partial class PlayerCamera : Node3D
     [Export] public float ControllerSensitivity = 0.05f;
     [Export] public float MinPitch = -60f;
     [Export] public float MaxPitch = 45f;
-    [Export] public Vector3 Offset = new Vector3(0, 1.5f, 0);
+    [Export] public Vector3 Offset = new Vector3(-1.75f, 2.6f, 0);
 
     [Export] public SpringArm3D SpringArm;
     [Export] public float MinSpringLength = 1.0f;
@@ -43,7 +43,14 @@ public partial class PlayerCamera : Node3D
 
         if (Target != null)
         {
-            GlobalPosition = Target.GlobalPosition + Offset;
+            Vector3 right = GlobalTransform.Basis.X;
+            Vector3 up = Vector3.Up;
+
+            GlobalPosition =
+                Target.GlobalPosition
+                + right * Offset.X
+                + up * Offset.Y
+                + GlobalTransform.Basis.Z * Offset.Z;
         }
 
         // Right stick input
@@ -60,7 +67,7 @@ public partial class PlayerCamera : Node3D
 
         // Rotate camera
         Rotation += new Vector3(
-            -lookInput.Y,
+            lookInput.Y,
             -lookInput.X,
             0
         );

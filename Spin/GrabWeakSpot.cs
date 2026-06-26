@@ -38,4 +38,11 @@ public partial class GrabWeakSpot : Area3D
 
         return dot >= minDot;
     }
+
+    public void DisableGrabbing()
+    {
+        CanBeGrabbed = false;
+        Monitoring = false;
+        Monitorable = false;
+    }
 }

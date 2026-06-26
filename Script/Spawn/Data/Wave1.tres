@@ -8,5 +8,7 @@
 script = ExtResource("2_42m60")
 Enemies = Array[ExtResource("1_rjvyh")]([ExtResource("2_xvjsv")])
 DelayBetweenSpawns = 1.5
-MaxAlive = 3
+MaxAlive = 15
+WaitForAllEnemiesDead = false
+RepeatForever = true
 metadata/_custom_type_script = "uid://d3x85txodqmxf"

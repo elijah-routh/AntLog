@@ -18,6 +18,9 @@ public partial class GrabbableComponent : Node
     [Export] public DamageHitboxComponent HeldSpinHitbox;
     [Export] public bool KeepSpinHitboxActiveDuringThrow = true;
 
+    [ExportGroup("Grab Weak Spots")]
+    [Export] public GrabWeakSpot[] GrabWeakSpots;
+
     public bool IsGrabbed { get; private set; }
 
     private Node _originalParent;
@@ -302,5 +305,28 @@ public partial class GrabbableComponent : Node
     public void DisableHeldSpinHitbox()
     {
         HeldSpinHitbox?.DisableHitbox();
+    }
+
+    public void DisableGrabbing()
+    {
+        CanBeGrabbed = false;
+
+        if (IsGrabbed)
+            IsGrabbed = false;
+
+        DisableHeldSpinHitbox();
+
+        if (GrabWeakSpots == null)
+            return;
+
+        foreach (GrabWeakSpot weakSpot in GrabWeakSpots)
+        {
+            if (weakSpot == null)
+                continue;
+
+            weakSpot.DisableGrabbing();
+        }
+
+        GD.Print($"[Grabbable] Disabled grabbing for {GrabRoot?.Name}");
     }
 }

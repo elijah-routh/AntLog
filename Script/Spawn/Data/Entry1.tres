@@ -6,5 +6,5 @@
 [resource]
 script = ExtResource("1_thdef")
 EnemyScene = ExtResource("1_46nrs")
-Count = 10
+Count = 100
 metadata/_custom_type_script = "uid://c5aucc2c1t4gr"

@@ -23,10 +23,10 @@ namespace Game.Enemy
             Enemy.Movement.ResetSpeedMultiplier();
             Enemy.Movement.Stop();
 
-            _dinoController.Animations?.PlayDeath();
+            Enemy.GetNodeOrNull<GrabbableComponent>("GrabbableComponent")
+                ?.DisableGrabbing();
 
-            // Do not disable physics process here if your controller/state machine needs it.
-            // Enemy.SetPhysicsProcess(false);
+            _dinoController.Animations?.PlayDeath();
         }
 
         public override void PhysicsUpdate(double delta)

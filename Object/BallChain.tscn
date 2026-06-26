@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://dkssfsajrwonm" path="res://Spin/ThrownProjectileComponent.cs" id="10_6o4ei"]
 [ext_resource type="PackedScene" uid="uid://cbs0irwbbmb53" path="res://Assets/CompleteModels/parasaurolophus.tscn" id="10_y4bpy"]
 [ext_resource type="PackedScene" uid="uid://dj3utbkcft8us" path="res://Scene/EnemyHealthBar.tscn" id="11_y4bpy"]
+[ext_resource type="Material" uid="uid://bs7h835twwp7u" path="res://Assets/Materials/DinoGlow.tres" id="12_deoho"]
 [ext_resource type="Script" uid="uid://bgtv3db0odt6x" path="res://Script/Enemy/Attacks/DamageHitboxComponent.cs" id="12_j8sah"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_m6twh"]
@@ -22,7 +23,7 @@ size = Vector3(2.0181236, 4.6025085, 6.9555397)
 [sub_resource type="BoxShape3D" id="BoxShape3D_6o4ei"]
 size = Vector3(3.1310577, 5.0401154, 5.9716644)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_j8sah"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_deoho"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j8sah"]
@@ -77,15 +78,16 @@ ChargeMaxDistance = 20.0
 ChargeHitbox = NodePath("../DamageHitboxComponent")
 EnemyHealthBar = NodePath("../EnemyHealthBar3D")
 
-[node name="GrabbableComponent" type="Node" parent="." unique_id=1444724679 node_paths=PackedStringArray("GrabRoot", "AttachPoint", "Projectile", "CharacterBody", "CollisionObject", "CollisionShapes", "HeldSpinHitbox")]
+[node name="GrabbableComponent" type="Node" parent="." unique_id=1444724679 node_paths=PackedStringArray("GrabRoot", "AttachPoint", "Projectile", "CharacterBody", "CollisionObject", "CollisionShapes", "HeldSpinHitbox", "GrabWeakSpots")]
 script = ExtResource("8_y7oyw")
 GrabRoot = NodePath("..")
 AttachPoint = NodePath("../TailGrabArea/HoldPoint")
 Projectile = NodePath("../ThrownProjectileComponent")
 CharacterBody = NodePath("..")
 CollisionObject = NodePath("..")
-CollisionShapes = []
+CollisionShapes = [NodePath("../TailGrabArea/CollisionShape3D")]
 HeldSpinHitbox = NodePath("../HeldSpinHitbox")
+GrabWeakSpots = []
 
 [node name="EdgeCheckComponent" type="Node3D" parent="." unique_id=1122249001]
 script = ExtResource("7_y4bpy")
@@ -120,7 +122,7 @@ shape = SubResource("BoxShape3D_6o4ei")
 
 [node name="EnemyHealthBar3D" parent="." unique_id=868444524 instance=ExtResource("11_y4bpy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1972046, 0)
-texture = SubResource("ViewportTexture_j8sah")
+texture = SubResource("ViewportTexture_deoho")
 
 [node name="Parasaurolophus" parent="." unique_id=314007657 instance=ExtResource("10_y4bpy")]
 
@@ -184,12 +186,15 @@ transform = Transform3D(1, 4.2853185e-07, -2.7100273e-06, 4.285326e-07, -0.99999
 [node name="BackFoot_L" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="7" unique_id=1249991401]
 transform = Transform3D(1, -6.82121e-13, -3.663702e-06, 4.3674732e-13, -0.9999999, 2.3841856e-07, -3.6637018e-06, -2.3841856e-07, -0.9999999, 0.0074793375, 0.008284223, 0.0008617053)
 
+[node name="Parasaurolophus" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="8" unique_id=838693191]
+material_overlay = ExtResource("12_deoho")
+
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1943428122]
 path_desired_distance = 1.5
 target_desired_distance = 3.0
 path_max_distance = 20.01
 avoidance_enabled = true
-neighbor_distance = 6.0
+neighbor_distance = 10.0
 
 [node name="DamageHitboxComponent" type="Area3D" parent="." unique_id=1865023774 node_paths=PackedStringArray("KnockbackSource")]
 collision_layer = 8
@@ -212,14 +217,14 @@ collision_mask = 8
 monitoring = false
 monitorable = false
 script = ExtResource("12_j8sah")
-Damage = 2.0
+Damage = 6.0
 OnlyTargetPlayer = false
 ExcludePlayer = true
 PlayerGroupName = "player"
 HitOncePerActivation = false
 HitCooldown = 0.5
 ApplyKnockback = true
-KnockbackForce = 550.0
+KnockbackForce = 800.0
 UpwardKnockback = 0.25
 KnockbackSource = NodePath("../TailGrabArea/HoldPoint")
 

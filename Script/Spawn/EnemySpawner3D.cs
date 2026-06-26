@@ -118,7 +118,12 @@ namespace Game.Spawning
             if (_spawnTimer > 0.0f)
                 return;
 
-            StartWave(_currentWaveIndex + 1);
+            EnemySpawnWaveData wave = CurrentWave;
+
+            if (wave != null && wave.RepeatForever)
+                StartWave(_currentWaveIndex);
+            else
+                StartWave(_currentWaveIndex + 1);
         }
 
         private void UpdateCurrentWave(float delta)
@@ -235,11 +240,22 @@ namespace Game.Spawning
 
         private void CompleteCurrentWave()
         {
+            EnemySpawnWaveData wave = CurrentWave;
+
             GD.Print($"Completed wave {_currentWaveIndex + 1}");
 
             EmitSignal("WaveCompleted", _currentWaveIndex);
 
             _waveActive = false;
+
+            if (wave != null && wave.RepeatForever)
+            {
+                _waitingForNextWave = true;
+                _spawnTimer = wave.StartDelay;
+
+                GD.Print($"Repeating wave {_currentWaveIndex + 1} forever.");
+                return;
+            }
 
             int nextWaveIndex = _currentWaveIndex + 1;
 

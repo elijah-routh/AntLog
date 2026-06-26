@@ -18,6 +18,7 @@ public partial class DiveGrabComponent : Node
     public GrabbableComponent CurrentGrabbed { get; private set; }
 
     private bool _grabbedThisDive;
+    private bool _wasDiving;
 
     public override void _Ready()
     {
@@ -25,6 +26,7 @@ public partial class DiveGrabComponent : Node
         {
             DiveGrabArea.AreaEntered += OnDiveGrabAreaEntered;
             DiveGrabArea.Monitoring = true;
+            DiveGrabArea.Monitorable = true;
         }
         else
         {
@@ -37,23 +39,27 @@ public partial class DiveGrabComponent : Node
         if (Movement == null)
             return;
 
-        if (!Movement.IsDiving)
+        bool isDiving = Movement.IsDiving;
+
+        if (!isDiving)
         {
             _grabbedThisDive = false;
         }
 
         if (DiveGrabArea == null)
+        {
+            _wasDiving = isDiving;
             return;
+        }
 
-        
+        // This catches the case where the grab area was already overlapping
+        // the tail before the dive started.
+        if (isDiving && !_wasDiving)
+        {
+            CheckExistingGrabOverlaps();
+        }
 
-        //foreach (Area3D area in DiveGrabArea.GetOverlappingAreas())
-        //{
-        //    if (area is GrabWeakSpot)
-        //    {
-        //        GD.Print("[DiveGrab] Currently overlapping grab point.");
-        //    }
-        //}
+        _wasDiving = isDiving;
     }
 
     private void OnDiveGrabAreaEntered(Area3D area)
@@ -178,6 +184,18 @@ public partial class DiveGrabComponent : Node
 
     private void CheckExistingGrabOverlaps()
     {
+        if (Movement == null || !Movement.IsDiving)
+            return;
+
+        if (CurrentGrabbed != null)
+            return;
+
+        if (GrabOnlyOncePerDive && _grabbedThisDive)
+            return;
+
+        if (DiveGrabArea == null)
+            return;
+
         foreach (Area3D area in DiveGrabArea.GetOverlappingAreas())
         {
             if (area is not GrabWeakSpot grabSpot)

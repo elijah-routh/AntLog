@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://co8x08kedqq8o" path="res://Script/Weapon/Data/TestTurret.tres" id="6_11a6d"]
 [ext_resource type="Script" uid="uid://bggrrldtmrpbi" path="res://Spin/SpinCenter.cs" id="6_imo3u"]
 [ext_resource type="PackedScene" uid="uid://11eo02ylibnp" path="res://Assets/CompleteModels/hunter.tscn" id="7_ayjcg"]
+[ext_resource type="Material" uid="uid://bs7h835twwp7u" path="res://Assets/Materials/DinoGlow.tres" id="8_clfxu"]
 [ext_resource type="Script" uid="uid://c2b2jlce8ajra" path="res://Script/Player/PlayerMoveComponent.cs" id="8_roeef"]
 [ext_resource type="Script" uid="uid://c7ur3coklrfv1" path="res://Script/Player/GroundAlignComponent.cs" id="9_app8l"]
 [ext_resource type="Script" uid="uid://cgiws4dpe64rt" path="res://Script/Entity/HealthComponent.cs" id="11_7ama1"]
@@ -184,6 +185,9 @@ transform = Transform3D(0.99991274, -0.00695912, -0.009713082, 0.01192393, 0.528
 
 [node name="Foot_R" parent="PlayerBody/Hunter/RootNode/CharacterArmature/Skeleton3D" index="13" unique_id=1438924388]
 transform = Transform3D(-1, -4.622936e-08, -3.3556233e-05, 1.6952703e-07, -0.9999933, -0.0036742687, -3.3555832e-05, -0.003674388, 0.9999933, -0.0035060795, 0.002804951, 0.00041173436)
+
+[node name="Enemy" parent="PlayerBody/Hunter/RootNode/CharacterArmature/Skeleton3D" index="15" unique_id=317994006]
+material_overlay = ExtResource("8_clfxu")
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=1257778811 node_paths=PackedStringArray("Target", "SpringArm")]
 transform = Transform3D(1, 0, 0, 0, 0.91363764, -0.40652943, 0, 0.40652943, 0.91363764, 0, 0, 0)

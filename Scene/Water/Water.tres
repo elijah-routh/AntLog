@@ -10,7 +10,7 @@ fractal_type = 2
 noise = SubResource("FastNoiseLite_ums6l")
 seamless = true
 as_normal_map = true
-bump_strength = 3.0
+bump_strength = 13.2
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_uxnik"]
 noise_type = 3
@@ -21,7 +21,7 @@ fractal_type = 2
 noise = SubResource("FastNoiseLite_uxnik")
 seamless = true
 as_normal_map = true
-bump_strength = 5.0
+bump_strength = 6.3
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_w43df"]
 noise_type = 2
@@ -34,8 +34,8 @@ seamless = true
 [resource]
 render_priority = 0
 shader = ExtResource("1_uxnik")
-shader_parameter/albedo = Color(0.827451, 0.5647059, 0.5137255, 1)
-shader_parameter/albedo2 = Color(0.6509804, 0.4745098, 0.72156864, 1)
+shader_parameter/albedo = Color(0.23921569, 0.42745098, 0.8862745, 1)
+shader_parameter/albedo2 = Color(0.1401031, 0.12770662, 0.59315103, 1)
 shader_parameter/metallic = 0.0
 shader_parameter/roughness = 0.02
 shader_parameter/wave = SubResource("NoiseTexture2D_aylcy")

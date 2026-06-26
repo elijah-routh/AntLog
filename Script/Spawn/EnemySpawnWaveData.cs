@@ -17,5 +17,8 @@ namespace Game.Spawning
 
         [ExportGroup("Wave Completion")]
         [Export] public bool WaitForAllEnemiesDead = true;
+
+        [ExportGroup("Repeat")]
+        [Export] public bool RepeatForever = false;
     }
 }
