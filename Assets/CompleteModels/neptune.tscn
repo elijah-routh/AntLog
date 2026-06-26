@@ -1,5 +1,5 @@
 [gd_scene format=3 uid="uid://duxldrbrx2kbb"]
 
-[ext_resource type="PackedScene" uid="uid://duenoibsbtbk3" path="res://Assets/Ultimate Space Kit-glb/Planet-5zzi8WUMXj.glb" id="1_v1tqe"]
+[ext_resource type="PackedScene" uid="uid://duenoibsbtbk3" path="res://Assets/UsedGLB/Planet-5zzi8WUMXj.glb" id="1_v1tqe"]
 
 [node name="Neptune" unique_id=256847785 instance=ExtResource("1_v1tqe")]

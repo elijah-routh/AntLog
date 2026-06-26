@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://by0k3awll0qmq"]
+
+[resource]
+resource_name = "Frog_Secondary"
+albedo_color = Color(0.11045722, 0.09697028, 0.044043224, 1)
+metallic = 0.4
+roughness = 0.4150871
+metadata/extras = {
+"fromFBX": {
+"isTruePBR": false,
+"shadingModel": "Phong"
+}
+}

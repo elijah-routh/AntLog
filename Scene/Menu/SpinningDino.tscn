@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dy77io1kgn7hm"]
+
+[ext_resource type="PackedScene" uid="uid://cbs0irwbbmb53" path="res://Assets/CompleteModels/parasaurolophus.tscn" id="1_lb0cw"]
+[ext_resource type="Script" uid="uid://maxi5uw7785c" path="res://Script/Menu/SpinDino.cs" id="2_7j1ns"]
+
+[node name="SpinningDino" type="Node3D" unique_id=1237302082]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1788997398]
+transform = Transform3D(0.9254546, -5.516139e-08, 0.37885866, -0.14328903, 0.92571884, 0.35001847, -0.35071662, -0.37821245, 0.8567107, 5.1537476, 6.804016, 12.279663)
+current = true
+fov = 36.8
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=536723212]
+transform = Transform3D(0.91353124, 0, 0.40676853, 0, 1, 0, -0.40676853, 0, 0.91353124, 5.9403687, 2.2175903, 10.477051)
+light_color = Color(0.3254902, 0.46666667, 1, 1)
+light_energy = 2.0
+
+[node name="Parasaurolophus" parent="." unique_id=314007657 instance=ExtResource("1_lb0cw")]
+script = ExtResource("2_7j1ns")
+SpinSpeed = 55.0

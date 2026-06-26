@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://d4j8f2ob8xkdu"]
+
+[ext_resource type="PackedScene" uid="uid://dv8obvokh3sdn" path="res://Assets/UsedGLB/Bush with Flowers.glb" id="1_gfm4i"]
+
+[node name="Bush1" unique_id=876733771 instance=ExtResource("1_gfm4i")]

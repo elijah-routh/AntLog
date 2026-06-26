@@ -51,6 +51,9 @@ namespace Game.Enemy
         [ExportGroup("Pathfinding")]
         [Export] public float PathUpdateInterval { get; set; } = 0.2f;
 
+        [ExportGroup("References")]
+        [Export] public BlobAnimationController AnimationController { get; set; }
+
         protected override void EnterInitialState()
         {
             ChangeState(new IdleState(this, Enemy));

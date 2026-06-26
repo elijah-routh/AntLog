@@ -1,0 +1,65 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://c7erg0nfo5v6p"
+path="res://.godot/imported/Frog.glb-7cbbdafc34b4bf3c37e4462a3bdb4e98.scn"
+
+[deps]
+
+source_file="res://Assets/UsedGLB/Frog.glb"
+dest_files=["res://.godot/imported/Frog.glb-7cbbdafc34b4bf3c37e4462a3bdb4e98.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name="Frog"
+nodes/root_script=null
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"materials": {
+"Eye_Black": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Assets/Materials/Eye_Black.tres",
+"use_external/path": "uid://dx51lsp3h5b0"
+},
+"Eye_White": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Assets/Materials/Eye_White.tres",
+"use_external/path": "uid://d317ugae74o7c"
+},
+"Frog_Main": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Assets/Materials/Frog_Main.tres",
+"use_external/path": "uid://c714gg78b3sqb"
+},
+"Frog_Secondary": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Assets/Materials/Frog_Secondary.tres",
+"use_external/path": "uid://by0k3awll0qmq"
+}
+}
+}
+gltf/naming_version=2
+gltf/embedded_image_handling=1

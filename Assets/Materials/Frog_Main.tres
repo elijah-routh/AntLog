@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://c714gg78b3sqb"]
+
+[resource]
+resource_name = "Frog_Main"
+albedo_color = Color(0.59954923, 0.12561622, 0, 1)
+metallic = 0.55
+roughness = 0.67
+emission_enabled = true
+metadata/extras = {
+"fromFBX": {
+"isTruePBR": false,
+"shadingModel": "Phong"
+}
+}

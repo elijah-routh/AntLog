@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://b0ibtg0l62jsi"]
+
+[ext_resource type="Texture2D" uid="uid://c1jujlt5dru14" path="res://Assets/Ultimate Space Kit-glb/Enemy Large_Atlas.png" id="1_afln8"]
+
+[resource]
+resource_name = "Atlas"
+albedo_texture = ExtResource("1_afln8")
+metallic = 0.4
+metadata/extras = {
+"fromFBX": {
+"isTruePBR": false,
+"shadingModel": "Phong"
+}
+}

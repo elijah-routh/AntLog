@@ -1,0 +1,50 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://dn4bblkd0wt1l"
+path="res://.godot/imported/Enemy Large.glb-c8afb9497edadfa8860bf7c8bbb316b3.scn"
+
+[deps]
+
+source_file="res://Assets/UsedGLB/Enemy Large.glb"
+dest_files=["res://.godot/imported/Enemy Large.glb-c8afb9497edadfa8860bf7c8bbb316b3.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name="Hunter"
+nodes/root_script=null
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"materials": {
+"Atlas": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Assets/Materials/Atlas.tres",
+"use_external/path": "uid://b0ibtg0l62jsi"
+}
+}
+}
+gltf/naming_version=2
+gltf/embedded_image_handling=1

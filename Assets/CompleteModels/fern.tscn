@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://bq4a3vmsge07r"]
+
+[ext_resource type="PackedScene" uid="uid://b3clk47gepp7w" path="res://Assets/UsedGLB/Fern.glb" id="1_kjvtv"]
+
+[node name="Fern" unique_id=1944866028 instance=ExtResource("1_kjvtv")]

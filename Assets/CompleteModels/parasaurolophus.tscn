@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cbs0irwbbmb53"]
 
-[ext_resource type="PackedScene" uid="uid://b06wo6vu4jrqd" path="res://Assets/Animated Dinosaur Bundle-glb/Parasaurolophus.glb" id="1_1tm2a"]
+[ext_resource type="PackedScene" uid="uid://b06wo6vu4jrqd" path="res://Assets/UsedGLB/Parasaurolophus.glb" id="1_1tm2a"]
 [ext_resource type="Script" uid="uid://cltyodxc8x5jh" path="res://Script/Enemy/Animations/DinoAnimationController.cs" id="2_rv7g6"]
 
 [node name="Parasaurolophus" unique_id=314007657 instance=ExtResource("1_1tm2a")]

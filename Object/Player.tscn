@@ -9,9 +9,8 @@
 [ext_resource type="Script" uid="uid://bw8e2f22ssydd" path="res://Script/Player/PlayerInventory.cs" id="5_tfkfv"]
 [ext_resource type="Resource" uid="uid://co8x08kedqq8o" path="res://Script/Weapon/Data/TestTurret.tres" id="6_11a6d"]
 [ext_resource type="Script" uid="uid://bggrrldtmrpbi" path="res://Spin/SpinCenter.cs" id="6_imo3u"]
-[ext_resource type="PackedScene" uid="uid://11eo02ylibnp" path="res://Assets/CompleteModels/hunter.tscn" id="7_ayjcg"]
-[ext_resource type="Material" uid="uid://bs7h835twwp7u" path="res://Assets/Materials/DinoGlow.tres" id="8_clfxu"]
 [ext_resource type="Script" uid="uid://c2b2jlce8ajra" path="res://Script/Player/PlayerMoveComponent.cs" id="8_roeef"]
+[ext_resource type="PackedScene" uid="uid://u6fhhioptp5i" path="res://Assets/CompleteModels/Frog.tscn" id="9_0saxi"]
 [ext_resource type="Script" uid="uid://c7ur3coklrfv1" path="res://Script/Player/GroundAlignComponent.cs" id="9_app8l"]
 [ext_resource type="Script" uid="uid://cgiws4dpe64rt" path="res://Script/Entity/HealthComponent.cs" id="11_7ama1"]
 [ext_resource type="Script" uid="uid://d2pbq0v0r15su" path="res://Spin/DiveGrabComponent.cs" id="12_mgt8x"]
@@ -45,7 +44,7 @@ CameraPivot = NodePath("../CameraPivot")
 Movement = NodePath("../Move")
 GroundAlignment = NodePath("../GroundAlign")
 Health = NodePath("../HealthComponent")
-Animations = NodePath("Hunter/PlayerAnimationController")
+Animations = NodePath("Frog/PlayerAnimationController")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerBody" unique_id=1285463699]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49749756, 0)
@@ -108,86 +107,7 @@ script = ExtResource("6_imo3u")
 SpinAxis = Vector3(1, 0, 0)
 SpinSpeed = 20.0
 
-[node name="Hunter" parent="PlayerBody" unique_id=155625693 instance=ExtResource("7_ayjcg")]
-
-[node name="Skeleton3D" parent="PlayerBody/Hunter/RootNode/CharacterArmature" parent_id_path=PackedInt32Array(155625693, 17763528) index="0" unique_id=472389383]
-bones/1/position = Vector3(0.003519195, 0.0004358883, -0.00045055384)
-bones/1/rotation = Quaternion(1.1700295e-05, 0.70580643, 0.70840484, 1.2026702e-05)
-bones/2/position = Vector3(2.1529802e-05, 0.008374705, 0.0016757363)
-bones/2/rotation = Quaternion(-3.5527033e-15, 1.1920933e-07, 9.0277966e-36, 1)
-bones/4/rotation = Quaternion(0.16683148, 4.3189968e-07, 1.0312022e-07, 0.98598546)
-bones/5/rotation = Quaternion(0.09618957, -8.284731e-07, 2.1512422e-08, 0.99536306)
-bones/6/rotation = Quaternion(0.35192487, 9.694014e-07, 1.5023396e-07, 0.93602824)
-bones/7/rotation = Quaternion(-0.39071867, -0.00025390706, 0.000107201624, 0.92051023)
-bones/8/position = Vector3(0.0017719386, 0.0027544512, 0.0005405299)
-bones/8/rotation = Quaternion(-0.1344962, -0.032737687, -0.40912694, 0.9019169)
-bones/9/rotation = Quaternion(0.5204656, 0.5033431, 0.4808225, -0.4945413)
-bones/10/rotation = Quaternion(0.022454012, 0.26599237, -0.20974967, 0.940611)
-bones/22/position = Vector3(-0.0017591704, 0.0027544512, 0.00054053194)
-bones/22/rotation = Quaternion(-0.13449597, 0.032738272, 0.40912706, 0.901917)
-bones/23/rotation = Quaternion(0.52046585, -0.5033429, -0.4808226, -0.49454105)
-bones/24/rotation = Quaternion(0.022454118, -0.26599252, 0.20974974, 0.940611)
-bones/26/rotation = Quaternion(-0.028374823, 0.0048223604, 0.16748196, 0.985455)
-bones/27/rotation = Quaternion(-0.10664147, 0.00092195236, -0.008597361, 0.99425995)
-bones/29/rotation = Quaternion(-0.112770945, -0.00076995126, -0.014514983, 0.9935147)
-bones/30/rotation = Quaternion(0.0205575, 0.0009909269, 0.0012504257, 0.99978745)
-bones/32/rotation = Quaternion(0.042253964, -0.02564168, -0.23230468, 0.9713865)
-bones/33/rotation = Quaternion(-0.076612204, 0.0015270757, 0.019867538, 0.9968619)
-bones/35/rotation = Quaternion(-0.011628169, -0.0025235282, -0.21219257, 0.97715545)
-bones/36/position = Vector3(0.003395238, 1.1797213e-05, -0.0015161458)
-bones/36/rotation = Quaternion(0.9650399, 0.0087274825, 0.0021168713, 0.2619494)
-bones/36/scale = Vector3(0.99997604, 0.99998355, 0.9999317)
-bones/37/rotation = Quaternion(0.5170187, 0.0063197995, 0.0085059805, 0.85590863)
-bones/37/scale = Vector3(1.000008, 1.000047, 1.0000012)
-bones/38/position = Vector3(-0.003412068, 1.1797213e-05, -0.0015161505)
-bones/38/rotation = Quaternion(0.9650399, -0.008727581, -0.0021160017, 0.26194927)
-bones/38/scale = Vector3(0.99997616, 0.9999837, 0.999932)
-bones/39/rotation = Quaternion(0.5170187, -0.00631982, -0.008506015, 0.85590863)
-bones/39/scale = Vector3(1.000008, 1.0000468, 1.0000012)
-bones/41/position = Vector3(-0.0034929647, 0.0004358883, -0.00045055719)
-bones/41/rotation = Quaternion(-1.2070909e-05, 0.70580643, 0.70840484, -1.1657449e-05)
-
-[node name="Foot_L" parent="PlayerBody/Hunter/RootNode/CharacterArmature/Skeleton3D" index="0" unique_id=1089161000]
-transform = Transform3D(-1, -4.642763e-08, 3.355589e-05, -7.686748e-08, -0.9999933, -0.0036742687, 3.355583e-05, -0.003674388, 0.9999933, 0.00350608, 0.002804951, 0.00041173436)
-
-[node name="Head" parent="PlayerBody/Hunter/RootNode/CharacterArmature/Skeleton3D" index="1" unique_id=280162104]
-transform = Transform3D(0.99999976, 2.7512215e-11, -0.00055020314, -0.0005181992, -0.3360829, -0.94183207, -0.00018491402, 0.94183207, -0.33608302, -6.3837706e-06, -0.0018768556, 0.018675715)
-
-[node name="Pinky3_L" parent="PlayerBody/Hunter/RootNode/CharacterArmature/Skeleton3D" index="2" unique_id=1166326472]
-transform = Transform3D(-0.3710706, 0.53634256, 0.75805205, -0.84340924, 0.1469096, -0.5167959, -0.38854504, -0.8311159, 0.39784253, 0.015113899, 0.0013518699, 0.004159126)
-
-[node name="Middle3_L" parent="PlayerBody/Hunter/RootNode/CharacterArmature/Skeleton3D" index="3" unique_id=1807452976]
-transform = Transform3D(-0.54215825, 0.5118318, 0.66640264, -0.8212763, -0.15507686, -0.5490502, -0.17767791, -0.8449727, 0.5044316, 0.01456495, -0.00019237584, 0.0033333236)
-
-[node name="Index3_L" parent="PlayerBody/Hunter/RootNode/CharacterArmature/Skeleton3D" index="4" unique_id=428909766]
-transform = Transform3D(-0.6467089, 0.43423173, 0.62706476, -0.7627127, -0.36161172, -0.53619605, -0.0060796035, -0.825033, 0.5650515, 0.013386493, -0.0016798446, 0.003550718)
-
-[node name="Thumb2_L" parent="PlayerBody/Hunter/RootNode/CharacterArmature/Skeleton3D" index="5" unique_id=1844275971]
-transform = Transform3D(-0.7504258, -0.2089281, 0.6270648, -0.22126335, -0.8145773, -0.5361962, 0.62281924, -0.541122, 0.5650516, 0.011022529, -0.0016818441, 0.0056917276)
-
-[node name="Pinky3_R" parent="PlayerBody/Hunter/RootNode/CharacterArmature/Skeleton3D" index="6" unique_id=405135578]
-transform = Transform3D(-0.37107083, -0.53634226, -0.7580524, 0.84340936, 0.14690948, -0.5167958, 0.3885445, -0.8311164, 0.3978418, -0.015113889, 0.0013518628, 0.0041591222)
-
-[node name="Middle3_R" parent="PlayerBody/Hunter/RootNode/CharacterArmature/Skeleton3D" index="7" unique_id=949163051]
-transform = Transform3D(-0.54215825, -0.51183146, -0.6664028, 0.82127625, -0.15507707, -0.54905003, 0.17767747, -0.8449728, 0.5044311, -0.014564939, -0.00019238287, 0.0033333194)
-
-[node name="Index3_R" parent="PlayerBody/Hunter/RootNode/CharacterArmature/Skeleton3D" index="8" unique_id=794671028]
-transform = Transform3D(-0.6467087, -0.43423146, -0.6270652, 0.7627126, -0.36161178, -0.5361961, 0.0060793385, -0.8250333, 0.56505096, -0.0133864805, -0.001679849, 0.0035507136)
-
-[node name="Thumb2_R" parent="PlayerBody/Hunter/RootNode/CharacterArmature/Skeleton3D" index="9" unique_id=1926418613]
-transform = Transform3D(-0.75042546, 0.20892814, -0.627065, 0.22126327, -0.81457734, -0.5361961, -0.6228192, -0.54112184, 0.56505114, -0.011022519, -0.0016818476, 0.0056917267)
-
-[node name="LowerLeg_L" parent="PlayerBody/Hunter/RootNode/CharacterArmature/Skeleton3D" index="10" unique_id=1807387076]
-transform = Transform3D(0.9999126, 0.0069595403, 0.0097131245, -0.01192419, 0.5284058, 0.8488599, 0.0007748556, -0.8489515, 0.5284786, 0.0034701666, 5.7633035e-05, 0.0047162212)
-
-[node name="LowerLeg_R" parent="PlayerBody/Hunter/RootNode/CharacterArmature/Skeleton3D" index="11" unique_id=206178367]
-transform = Transform3D(0.99991274, -0.00695912, -0.009713082, 0.01192393, 0.5284061, 0.8488599, -0.00077451766, -0.84895146, 0.52847886, -0.0034701673, 5.7632802e-05, 0.0047162194)
-
-[node name="Foot_R" parent="PlayerBody/Hunter/RootNode/CharacterArmature/Skeleton3D" index="13" unique_id=1438924388]
-transform = Transform3D(-1, -4.622936e-08, -3.3556233e-05, 1.6952703e-07, -0.9999933, -0.0036742687, -3.3555832e-05, -0.003674388, 0.9999933, -0.0035060795, 0.002804951, 0.00041173436)
-
-[node name="Enemy" parent="PlayerBody/Hunter/RootNode/CharacterArmature/Skeleton3D" index="15" unique_id=317994006]
-material_overlay = ExtResource("8_clfxu")
+[node name="Frog" parent="PlayerBody" unique_id=1818828843 instance=ExtResource("9_0saxi")]
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=1257778811 node_paths=PackedStringArray("Target", "SpringArm")]
 transform = Transform3D(1, 0, 0, 0, 0.91363764, -0.40652943, 0, 0.40652943, 0.91363764, 0, 0, 0)
@@ -224,7 +144,7 @@ DiveDuration = 0.3
 CanDiveInAir = true
 KnockbackFriction = 150.0
 MaxKnockbackSpeed = 8.0
-Animations = NodePath("../PlayerBody/Hunter/PlayerAnimationController")
+Animations = NodePath("../PlayerBody/Frog/PlayerAnimationController")
 
 [node name="GroundAlign" type="Node" parent="." unique_id=1418479131 node_paths=PackedStringArray("VisualRoot")]
 script = ExtResource("9_app8l")
@@ -251,4 +171,4 @@ Step3DamageMultiplier = 1.5
 Step4DamageMultiplier = 2.0
 MinimumDamagePowerStep = 2
 
-[editable path="PlayerBody/Hunter"]
+[editable path="PlayerBody/Frog"]

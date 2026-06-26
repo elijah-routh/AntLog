@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://u6fhhioptp5i"]
+
+[ext_resource type="PackedScene" uid="uid://c7erg0nfo5v6p" path="res://Assets/UsedGLB/Frog.glb" id="1_b8mev"]
+[ext_resource type="Script" uid="uid://b0r0xkhim735y" path="res://Script/Enemy/Animations/PlayerAnimationController.cs" id="2_njkhh"]
+
+[node name="Frog" unique_id=883419285 instance=ExtResource("1_b8mev")]
+
+[node name="PlayerAnimationController" type="Node" parent="." index="2" unique_id=143771205 node_paths=PackedStringArray("AnimationPlayer")]
+script = ExtResource("2_njkhh")
+AnimationPlayer = NodePath("../AnimationPlayer")

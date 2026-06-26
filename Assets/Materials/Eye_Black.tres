@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dx51lsp3h5b0"]
+
+[resource]
+resource_name = "Eye_Black"
+albedo_color = Color(0.103962235, 0.106004104, 0.116602026, 1)
+metallic = 0.4
+roughness = 0.4150871
+metadata/extras = {
+"fromFBX": {
+"isTruePBR": false,
+"shadingModel": "Phong"
+}
+}

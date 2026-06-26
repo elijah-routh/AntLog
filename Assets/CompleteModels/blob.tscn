@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bx1kti6yl0bx5"]
+
+[ext_resource type="PackedScene" uid="uid://dh28fcc5tcc1l" path="res://Assets/Ultimate Monsters Bundle-glb/Pink Blob.glb" id="1_t4pe3"]
+[ext_resource type="Script" uid="uid://1gb4qxedd34m" path="res://Script/Enemy/Animations/BlobAnimationController.cs" id="2_kokuw"]
+
+[node name="Blob" unique_id=1396428266 instance=ExtResource("1_t4pe3")]
+
+[node name="BlobAnimationController" type="Node" parent="." index="2" unique_id=411287383]
+script = ExtResource("2_kokuw")
