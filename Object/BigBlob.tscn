@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://grcyx0kgu71p"]
+
+[ext_resource type="Script" uid="uid://dqeb6o8xxjw4" path="res://Script/Enemy/TestEnemy.cs" id="1_7hbiy"]
+[ext_resource type="Resource" uid="uid://cpctkfdnnf708" path="res://Script/Enemy/Data/TestEnemy1.tres" id="2_p722s"]
+[ext_resource type="Script" uid="uid://dblhsflas6dvv" path="res://Script/Entity/MoveComponent.cs" id="5_f01aa"]
+[ext_resource type="Script" uid="uid://cgiws4dpe64rt" path="res://Script/Entity/HealthComponent.cs" id="6_8c2y1"]
+[ext_resource type="Script" uid="uid://dt5uvoi38oyf6" path="res://Script/Enemy/Controllers/BigBlobEnemyController.cs" id="6_d2cd6"]
+[ext_resource type="PackedScene" uid="uid://dj3utbkcft8us" path="res://Scene/EnemyHealthBar.tscn" id="9_rtwnl"]
+[ext_resource type="Script" uid="uid://crnrjjg02mj5k" path="res://Script/Entity/EdgeCheckComponent.cs" id="10_w2ivy"]
+[ext_resource type="PackedScene" uid="uid://bx1kti6yl0bx5" path="res://Assets/CompleteModels/blob.tscn" id="11_ftpjb"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_we15j"]
+height = 1.6796875
+radius = 0.9199219
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_d2cd6"]
+viewport_path = NodePath("SubViewport")
+
+[node name="EnemyBody" type="CharacterBody3D" unique_id=773946387]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
+collision_layer = 8
+collision_mask = 11
+script = ExtResource("1_7hbiy")
+Data = ExtResource("2_p722s")
+
+[node name="Blob" parent="." unique_id=2041643812 instance=ExtResource("11_ftpjb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1611328, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1041290374]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16503906, 0)
+shape = SubResource("CylinderShape3D_we15j")
+
+[node name="MoveComponent" type="Node" parent="." unique_id=1518310129]
+script = ExtResource("5_f01aa")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=839736057]
+script = ExtResource("6_8c2y1")
+DestroyOwnerOnDeath = true
+
+[node name="EnemyController" type="Node" parent="." unique_id=309207712 node_paths=PackedStringArray("AnimationController", "EnemyHealthBar")]
+script = ExtResource("6_d2cd6")
+OrbitDistance = 20.0
+ApproachStrength = 2.0
+SlamJumpHeight = 15.0
+PathUpdateInterval = 0.05
+AnimationController = NodePath("../Blob/AnimationPlayer")
+EnemyHealthBar = NodePath("../EnemyHealthBar3D")
+
+[node name="EnemyHealthBar3D" parent="." unique_id=868444524 instance=ExtResource("9_rtwnl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3071289, 0)
+texture = SubResource("ViewportTexture_d2cd6")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1299013436]
+
+[node name="EdgeCheckComponent" type="Node3D" parent="." unique_id=92355007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.99261665, 0)
+script = ExtResource("10_w2ivy")
+ProbeDistance = 5.0
+ProbeHeight = 2.0
+RayLength = 7.0
+
+[editable path="Blob"]
+[editable path="EnemyHealthBar3D"]
+[editable path="EnemyHealthBar3D/SubViewport/HealthBar"]

@@ -11,13 +11,16 @@
 [ext_resource type="PackedScene" uid="uid://c5jwwups0o1sw" path="res://Assets/CompleteModels/mushrooms.tscn" id="9_mj63h"]
 [ext_resource type="Sky" uid="uid://rwxaax84eqt8" path="res://Art/Shaders/MainSky.tres" id="10_4pvoe"]
 [ext_resource type="PackedScene" uid="uid://dnjsnuj1qgiqa" path="res://Scene/Water/WaterPlane.tscn" id="11_7j4je"]
+[ext_resource type="Script" uid="uid://btwhek1fj7kfc" path="res://Script/Enemy/Targets/CircleRail3D.cs" id="12_2en87"]
 [ext_resource type="Script" uid="uid://gj7r2obpc0qf" path="res://Scene/ArenaPreviewCamera.cs" id="12_jvm40"]
+[ext_resource type="Script" uid="uid://waj67x0wgr6o" path="res://Script/Enemy/Targets/PlanetWaveSpawner3D.cs" id="13_nce7u"]
+[ext_resource type="PackedScene" uid="uid://brosfbtps7dew" path="res://Levels/PlanetTarget.tscn" id="14_ii2ry"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_ojtb0"]
 border_size = 1.5
 agent_radius = 0.9
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_4m5mn"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_2en87"]
 _surfaces = [{
 "aabb": AABB(-101.375, 0.5, -152.625, 204.75, 10, 295.75),
 "attribute_data": PackedByteArray("2NLkwZdoXL+7W5/B/mlcv2qJSMEe/DxBHwuQwZOWikFoSUTBDShCwbo7ncH8qgk/17LiwZapCT8e643BiiyNwaoaRUFlOKVBrDpFwWU4pUGGgAnBPXRdQc9UCUE9dF1Bq6pCwQAAgUGr6sPBAABwv6uqQsEBAJDBq6pHQQEAkMGrasZBAABwv6uqR0EAAIFBVXWIwQAAcL8AgAfBAUAvQVZVC0EBQC9BAWCKQQAAcL9WVQtBAEBNwQCAB8EAQE3Bz6QIQQaMY8GHMArBBoxjwazqRcFJRKjBqmpEQUlEqMFj+9dBRuKuvqozg0FNvo5BVM0uQdNLRUG2fZJBYN2uvqqLiUFGRIvBYlPeQSWyRj+11ZhBsK9GP1R9O0HDVz7B"),
@@ -32,7 +35,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray("AACAPwAAAD8AoBjDAACAPwAAKEEAMNfCALCMwgAAKEEAQGDCAMDKwgAAAD8AYJ3CALCQQgAAKEEAQGDCAACAPwAAKEEAMNfCAACAPwAAAD8AoBjDAMDOQgAAAD8AYJ3CAMDKwgAAAD8AYIpCAMDKwgAAAD8AYJ3CALCMwgAAKEEAQGDCALCMwgAAKEEAADxCAMDKwgAAAD8AYIpCAACAPwAAAD8AIA9DAMDOQgAAAD8AYIpCAMDOQgAAAD8AYJ3CAACAPwAAAD8AoBjDAMDKwgAAAD8AYJ3CAACAPwAAKEEAEMVCALCMwgAAKEEAADxCALCMwgAAKEEAQGDCAACAPwAAKEEAMNfCALCQQgAAKEEAQGDCALCQQgAAKEEAADxCALCQQgAAKEEAADxCALCQQgAAKEEAQGDCAMDOQgAAAD8AYJ3CAMDOQgAAAD8AYIpCAACAPwAAAD8AIA9DAMDKwgAAAD8AYIpCALCMwgAAKEEAADxCAACAPwAAKEEAEMVCAMDOQgAAAD8AYIpCAACAPwAAAD8AIA9DAACAPwAAKEEAEMVCALCQQgAAKEEAADxCl1wl8X6Q2caXXCXxfpDZxpdcJfF+kNnGl1wl8X6Q2cZnoyXxgG/ZxmejJfGAb9nGZ6Ml8YBv2cZnoyXxgG/Zxstgy+Aef+q/y2DL4B5/6r/LYMvgHn/qv8tgy+Aef+q//38AAP//////fwAA//////9/AAD//////38AAP//////fwAA//////9/AAD//////3//////AAD/f/////8AAP9//////wAA/3//////AAD/f/////8AAP9//////wAAM5/L4OCA6r8zn8vg4IDqvzOfy+DggOq/M5/L4OCA6r8KcVTcFW8XuQpxVNwVbxe5CnFU3BVvF7kKcVTcFW8XufSOVNzpkBe59I5U3OmQF7n0jlTc6ZAXufSOVNzpkBe5")
 }]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_guv83"]
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nce7u"]
 points = PackedVector3Array(1.0000025, 10.5, 98.54086, 1.0000048, 0.5, 143.12384, 72.352264, 10.5, 47.009068, 103.375, 0.5, 69.18693, -70.35227, 10.5, 47.00906, -101.375, 0.5, 69.18692, 72.352264, 10.5, -56.054516, 103.37499, 0.5, -78.68691, -70.352264, 10.5, -56.05452, 0.99998844, 10.5, -107.58631, -101.37499, 0.5, -78.68692, 0.99998844, 0.5, -152.62384)
 
 [sub_resource type="Environment" id="Environment_h4t5y"]
@@ -54,14 +57,14 @@ local_map_file = "uid://bvxg8gogq1rmp"
 map_settings = ExtResource("2_jvm40")
 metadata/_custom_type_script = "uid://cwu5cf7a0awcd"
 
-[node name="entity_0_worldspawn" type="StaticBody3D" parent="NavigationRegion3D/IslandGround" unique_id=917478652]
+[node name="entity_0_worldspawn" type="StaticBody3D" parent="NavigationRegion3D/IslandGround" unique_id=531172679]
 collision_mask = 0
 
-[node name="entity_0_mesh_instance" type="MeshInstance3D" parent="NavigationRegion3D/IslandGround/entity_0_worldspawn" unique_id=461916139]
-mesh = SubResource("ArrayMesh_4m5mn")
+[node name="entity_0_mesh_instance" type="MeshInstance3D" parent="NavigationRegion3D/IslandGround/entity_0_worldspawn" unique_id=1285624996]
+mesh = SubResource("ArrayMesh_2en87")
 
-[node name="entity_0_brush_0_collision_shape" type="CollisionShape3D" parent="NavigationRegion3D/IslandGround/entity_0_worldspawn" unique_id=1811914334]
-shape = SubResource("ConvexPolygonShape3D_guv83")
+[node name="entity_0_brush_0_collision_shape" type="CollisionShape3D" parent="NavigationRegion3D/IslandGround/entity_0_worldspawn" unique_id=472796940]
+shape = SubResource("ConvexPolygonShape3D_nce7u")
 
 [node name="Nature" type="Node" parent="." unique_id=1684655533]
 
@@ -425,6 +428,24 @@ transform = Transform3D(500, 0, 0, 0, 15, 0, 0, 0, 500, -0.055664063, 0.26662636
 transform = Transform3D(1, 0, 0, 0, -0.62923896, 0.7772119, 0, -0.7772119, -0.62923896, 0, 39.938274, 48.329205)
 light_color = Color(0.3254902, 0.46666667, 1, 1)
 light_energy = 1.5
+
+[node name="Targets" type="Node" parent="." unique_id=972538041]
+
+[node name="IslandRail" type="Node3D" parent="Targets" unique_id=127365300]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27.686068, 0)
+script = ExtResource("12_2en87")
+Radius = 150.0
+DrawDebug = false
+
+[node name="PlanetWaveSpawner3D" type="Node3D" parent="Targets" unique_id=1669503832 node_paths=PackedStringArray("TargetParent", "Rails")]
+script = ExtResource("13_nce7u")
+PlanetTargetScene = ExtResource("14_ii2ry")
+TargetParent = NodePath("..")
+Rails = [NodePath("../IslandRail")]
+WaveDuration = 16.0
+TargetsPerWave = 15
+SlowTargetRailSpeed = 0.01
+FastTargetRailSpeed = 0.05
 
 [node name="Pivot" type="Node3D" parent="." unique_id=1307445917 node_paths=PackedStringArray("Pivot", "Camera", "LookTarget")]
 script = ExtResource("12_jvm40")

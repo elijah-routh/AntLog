@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://rcwfrihnygac"]
+
+[resource]
+resource_name = "Pink_Main"
+albedo_color = Color(0.4932391, 0.2139745, 0.3319461, 1)
+metallic = 0.4
+roughness = 0.4150871
+emission_enabled = true
+emission = Color(0.21344873, 0.047857396, 0.26957145, 1)
+emission_energy_multiplier = 1.5
+metadata/extras = {
+"fromFBX": {
+"isTruePBR": false,
+"shadingModel": "Phong"
+}
+}

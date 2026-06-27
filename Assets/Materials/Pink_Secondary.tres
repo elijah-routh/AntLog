@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://q52hbrukqxyq"]
+
+[resource]
+resource_name = "Pink_Secondary"
+albedo_color = Color(0.3202955, 0.18450661, 0.25954783, 1)
+metallic = 0.4
+roughness = 0.4150871
+emission_enabled = true
+emission = Color(0.33836448, 0.49701822, 0.4684695, 1)
+emission_energy_multiplier = 3.0
+metadata/extras = {
+"fromFBX": {
+"isTruePBR": false,
+"shadingModel": "Phong"
+}
+}

@@ -48,7 +48,7 @@ Health = NodePath("../HealthComponent")
 Animations = NodePath("Frog/PlayerAnimationController")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerBody" unique_id=1285463699]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49749756, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.97648907, 0)
 shape = SubResource("BoxShape3D_62nw6")
 
 [node name="VisualNode" type="Node3D" parent="PlayerBody" unique_id=47670187]

@@ -12,12 +12,15 @@ public partial class MenuGameOver : CanvasLayer
     [Export] private Label killsLabel;
     [Export] private Label timeLabel;
 
-    private string _gameScenePath = "res://Scene/Game/Game.tscn";
+    private string _gameScenePath = "res://Levels/IslandMap.tscn";
     private string _mainMenuScenePath = "res://Scene/Menu/MainMenu.tscn";
 
     public override void _Ready()
     {
         ProcessMode = ProcessModeEnum.Always;
+
+        retryButton.ProcessMode = ProcessModeEnum.Always;
+        quitButton.ProcessMode = ProcessModeEnum.Always;
 
         retryButton.Pressed += RetryGame;
         quitButton.Pressed += QuitToTitle;

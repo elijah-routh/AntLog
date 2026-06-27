@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dj3utbkcft8us" path="res://Scene/EnemyHealthBar.tscn" id="11_y4bpy"]
 [ext_resource type="Material" uid="uid://bs7h835twwp7u" path="res://Assets/Materials/DinoGlow.tres" id="12_deoho"]
 [ext_resource type="Script" uid="uid://bgtv3db0odt6x" path="res://Script/Enemy/Attacks/DamageHitboxComponent.cs" id="12_j8sah"]
+[ext_resource type="Script" uid="uid://bm3mev84wc0nx" path="res://Script/Entity/FallDespawnComponent.cs" id="14_wecco"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_m6twh"]
 size = Vector3(1.870982, 4.732422, 3.881836)
@@ -126,7 +127,7 @@ texture = SubResource("ViewportTexture_deoho")
 
 [node name="Parasaurolophus" parent="." unique_id=314007657 instance=ExtResource("10_y4bpy")]
 
-[node name="Skeleton3D" parent="Parasaurolophus/RootNode/Armature" parent_id_path=PackedInt32Array(314007657, 1205494857) index="0" unique_id=1684471445]
+[node name="Skeleton3D" parent="Parasaurolophus/RootNode/Armature" parent_id_path=PackedInt32Array(314007657, 895129868) index="0" unique_id=692605343]
 bones/1/position = Vector3(0.00030816198, 0.042510204, 0.010428664)
 bones/1/rotation = Quaternion(0.011015082, -1.61575e-27, 2.4458395e-18, 0.9999393)
 bones/2/position = Vector3(-0.0018904338, -0.012997556, 0.009233219)
@@ -162,31 +163,31 @@ bones/27/position = Vector3(-0.0074793356, 0.00086170435, -0.008267542)
 bones/27/rotation = Quaternion(0.7071068, -8.066304e-07, -1.1096483e-06, 0.7071067)
 bones/28/position = Vector3(0.0074793375, 0.00086170435, -0.008397221)
 
-[node name="FrontFoot_R" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="0" unique_id=729972338]
+[node name="FrontFoot_R" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="0" unique_id=820926611]
 transform = Transform3D(0.99999946, -0.0008791229, 0.0004881136, -0.00042631011, 0.06900391, 0.9976163, -0.0009108996, -0.99761575, 0.06900349, -0.0050143898, -0.024085937, 0.017168013)
 
-[node name="BackLowLeg_R" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="1" unique_id=33389945]
+[node name="BackLowLeg_R" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="1" unique_id=1510615968]
 transform = Transform3D(0.99999905, -0.001063507, -0.0008732695, 0.00065300055, -0.19187751, 0.98141885, -0.0012114402, -0.98141885, -0.19187668, -0.007468507, 0.010110814, 0.010867719)
 
-[node name="FrontFoot_L" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="2" unique_id=1595813476]
+[node name="FrontFoot_L" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="2" unique_id=407531044]
 transform = Transform3D(0.99999976, 0.00030840468, -0.00017308723, 0.0001760507, -0.009676576, 0.99995303, 0.0003066631, -0.99995315, -0.009676814, 0.0050099907, -0.02475255, 0.017548617)
 
-[node name="BackLowLeg_L" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="3" unique_id=1872417807]
+[node name="BackLowLeg_L" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="3" unique_id=397052706]
 transform = Transform3D(0.9999993, 0.0010546697, 0.0008920245, -0.00066825, -0.19578454, 0.980647, 0.0012088083, -0.9806466, -0.19578362, 0.00746861, 0.010280338, 0.010859868)
 
-[node name="Tail5" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="4" unique_id=1267553973]
+[node name="Tail5" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="4" unique_id=337606783]
 transform = Transform3D(0.9998448, -0.0143159395, -0.0102639925, 0.0066761645, 0.84717464, -0.531272, 0.016301058, 0.531121, 0.8471389, 0.0040455847, 0.06792012, 0.036809422)
 
-[node name="Head" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="5" unique_id=629382449]
+[node name="Head" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="5" unique_id=1815884616]
 transform = Transform3D(-0.8902129, -0.06371422, 0.4510669, 0.07107918, -0.9974705, -0.00061506033, 0.44996515, 0.03151381, 0.8924898, -0.0007078104, -0.034913387, 0.047229197)
 
-[node name="BackFoot_R" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="6" unique_id=967061085]
+[node name="BackFoot_R" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="6" unique_id=2133467211]
 transform = Transform3D(1, 4.2853185e-07, -2.7100273e-06, 4.285326e-07, -0.9999999, 2.3841856e-07, -2.710027e-06, -2.3841856e-07, -0.9999999, -0.0074793356, 0.008154545, 0.0008617053)
 
-[node name="BackFoot_L" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="7" unique_id=1249991401]
+[node name="BackFoot_L" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="7" unique_id=934726015]
 transform = Transform3D(1, -6.82121e-13, -3.663702e-06, 4.3674732e-13, -0.9999999, 2.3841856e-07, -3.6637018e-06, -2.3841856e-07, -0.9999999, 0.0074793375, 0.008284223, 0.0008617053)
 
-[node name="Parasaurolophus" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="8" unique_id=838693191]
+[node name="Parasaurolophus" parent="Parasaurolophus/RootNode/Armature/Skeleton3D" index="8" unique_id=134191271]
 material_overlay = ExtResource("12_deoho")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1943428122]
@@ -232,6 +233,10 @@ KnockbackSource = NodePath("../TailGrabArea/HoldPoint")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.020492554, 3.1727905, 2.257141)
 shape = SubResource("BoxShape3D_deoho")
 debug_color = Color(0.6778497, 0.398398, 0.801054, 0.41960785)
+
+[node name="FallDespawnComponent" type="Node" parent="." unique_id=844205592 node_paths=PackedStringArray("Target")]
+script = ExtResource("14_wecco")
+Target = NodePath("..")
 
 [editable path="EnemyHealthBar3D"]
 [editable path="EnemyHealthBar3D/SubViewport/HealthBar"]

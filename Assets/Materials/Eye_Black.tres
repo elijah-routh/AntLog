@@ -5,6 +5,8 @@ resource_name = "Eye_Black"
 albedo_color = Color(0.103962235, 0.106004104, 0.116602026, 1)
 metallic = 0.4
 roughness = 0.4150871
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
 metadata/extras = {
 "fromFBX": {
 "isTruePBR": false,

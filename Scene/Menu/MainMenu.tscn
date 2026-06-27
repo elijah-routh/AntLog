@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dy77io1kgn7hm" path="res://Scene/Menu/SpinningDino.tscn" id="2_60v5t"]
 [ext_resource type="Shader" uid="uid://ded3qeo7rxka2" path="res://Art/menuBlur.gdshader" id="2_ng4i6"]
 [ext_resource type="PackedScene" uid="uid://dtc0psmclt2n1" path="res://Scene/ArenaPreview.tscn" id="4_rd8ru"]
+[ext_resource type="PackedScene" uid="uid://bud0jwuhcvuyv" path="res://Scene/Menu/SpinningFrog.tscn" id="6_kbsla"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kbsla"]
 shader = ExtResource("2_ng4i6")
@@ -64,25 +65,50 @@ render_target_update_mode = 4
 
 [node name="ArenaPreview" parent="BackgroundPreview/SubViewport" unique_id=534505466 instance=ExtResource("4_rd8ru")]
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1601699543]
+[node name="FrogSubViewportContainer" type="SubViewportContainer" parent="." unique_id=1801278438]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -663.0
+offset_top = -642.0
+offset_right = 137.0
+offset_bottom = -130.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(1.25, 1.25)
+mouse_filter = 2
+
+[node name="SubViewport" type="SubViewport" parent="FrogSubViewportContainer" unique_id=2144210671]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="SpinningFrog" parent="FrogSubViewportContainer/SubViewport" unique_id=304793996 instance=ExtResource("6_kbsla")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -120.763245, 0)
+
+[node name="DinoSubViewportContainer" type="SubViewportContainer" parent="." unique_id=1601699543]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.46574074
+anchor_bottom = 0.46574074
 offset_top = -256.0
 offset_right = 700.0
 offset_bottom = 256.0
 grow_vertical = 2
+scale = Vector2(1.25, 1.25)
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=2042183832]
+[node name="SubViewport" type="SubViewport" parent="DinoSubViewportContainer" unique_id=2042183832]
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(700, 512)
 render_target_update_mode = 4
 
-[node name="SpinningDino" parent="SubViewportContainer/SubViewport" unique_id=1237302082 instance=ExtResource("2_60v5t")]
+[node name="SpinningDino" parent="DinoSubViewportContainer/SubViewport" unique_id=1237302082 instance=ExtResource("2_60v5t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -277.809, 0)
 
 [node name="MainPanel" type="Control" parent="." unique_id=1812198190]
@@ -205,6 +231,75 @@ size_flags_vertical = 3
 theme = ExtResource("1_v5mi7")
 text = "Back
 "
+
+[node name="Controls" type="ColorRect" parent="OptionsPanel" unique_id=1881404890]
+layout_mode = 1
+offset_left = -858.0
+offset_top = -545.0
+offset_right = -393.0
+offset_bottom = -260.0
+mouse_filter = 2
+color = Color(0.28235295, 0.21960784, 0.40784314, 0.23529412)
+
+[node name="Label" type="Label" parent="OptionsPanel/Controls" unique_id=115401263]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "Controls
+Shift - Spin
+Mouse Click - Grab
+Click while Spinning - Throw"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HowToPlay" type="ColorRect" parent="OptionsPanel" unique_id=1388808627]
+layout_mode = 0
+offset_left = 402.0
+offset_top = -566.0
+offset_right = 867.0
+offset_bottom = -169.0
+mouse_filter = 2
+color = Color(0.28235295, 0.21960784, 0.40784314, 0.23529412)
+
+[node name="Label" type="Label" parent="OptionsPanel/HowToPlay" unique_id=385465909]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "How To Play
+Grab dinosaurs by aiming for their tails. Spin to build power and throw your dinosaur into outerspace. Rack up a highscore by  destroying as many planets as possible. "
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Credits" type="ColorRect" parent="OptionsPanel" unique_id=18365772]
+layout_mode = 0
+offset_left = -858.0
+offset_top = 89.0
+offset_right = -393.0
+offset_bottom = 278.0
+mouse_filter = 2
+color = Color(0.28235295, 0.21960784, 0.40784314, 0.23529412)
+
+[node name="Label" type="Label" parent="OptionsPanel/Credits" unique_id=86761666]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "GameDesign - ElisCookie
+Music - JoshTheIdiotic"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Label" type="Label" parent="." unique_id=1971978837]
 layout_mode = 1
