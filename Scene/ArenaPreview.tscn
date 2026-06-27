@@ -431,6 +431,7 @@ script = ExtResource("12_jvm40")
 Pivot = NodePath(".")
 Camera = NodePath("Camera3D")
 LookTarget = NodePath(".")
+LookAtTargetMode = false
 
 [node name="Camera3D" type="Camera3D" parent="Pivot" unique_id=2103702765]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.145315, -15.3116455)

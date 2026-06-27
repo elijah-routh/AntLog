@@ -1,0 +1,150 @@
+[gd_scene format=3 uid="uid://bkc0r6bsm15k4"]
+
+[ext_resource type="Script" uid="uid://bin3ces68dcld" path="res://Script/Menu/MenuGameOver.cs" id="1_37bvm"]
+[ext_resource type="Shader" uid="uid://ded3qeo7rxka2" path="res://Art/menuBlur.gdshader" id="2_pp5qn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f5ccp"]
+shader = ExtResource("2_pp5qn")
+shader_parameter/lod = 0.0
+
+[sub_resource type="Animation" id="Animation_5yaxq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:material:shader_parameter/lod")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_twm0p"]
+resource_name = "blur"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:material:shader_parameter/lod")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.800000038]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r0j76"]
+_data = {
+&"RESET": SubResource("Animation_5yaxq"),
+&"blur": SubResource("Animation_twm0p")
+}
+
+[node name="GameOverMenu" type="CanvasLayer" unique_id=52307389 node_paths=PackedStringArray("animationPlayer", "retryButton", "quitButton", "scoreLabel", "timeLabel")]
+script = ExtResource("1_37bvm")
+animationPlayer = NodePath("AnimationPlayer")
+retryButton = NodePath("PanelContainer/VBoxContainer/HBoxContainer/RetryButton")
+quitButton = NodePath("PanelContainer/VBoxContainer/HBoxContainer/QuitButton")
+scoreLabel = NodePath("PanelContainer/VBoxContainer/ScoreLabel")
+timeLabel = NodePath("PanelContainer/VBoxContainer/TimeLabel")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=80152005]
+material = SubResource("ShaderMaterial_f5ccp")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1446673089]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.5
+offset_top = -152.0
+offset_right = 182.0
+offset_bottom = 125.25
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1344899381]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=951584835]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 35
+text = "Complete"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=2098437213]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "Score"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1010342751]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "Time
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=338904432]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="RetryButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1088145691]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 25
+text = "Retry"
+
+[node name="QuitButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1730307021]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 25
+text = "Quit"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2094483921]
+libraries/ = SubResource("AnimationLibrary_r0j76")

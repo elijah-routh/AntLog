@@ -15,8 +15,13 @@ public partial class MenuTitle : Node
     [Export] private Button backButton;
     [Export] private CheckBox fullscreenCheckBox;
 
+    private bool _usingControllerFocus;
+
     public override void _Ready()
     {
+        ProcessMode = ProcessModeEnum.Always;
+        Input.MouseMode = Input.MouseModeEnum.Visible;
+
         if (playButton != null)
             playButton.Pressed += OnStartButtonPressed;
 
@@ -35,9 +40,33 @@ public partial class MenuTitle : Node
             fullscreenCheckBox.Toggled += OnFullscreenToggled;
         }
 
-        ShowMainMenu();
+        ShowMainMenu(false);
 
         SoundManager.Instance.PlayMenuMusic();
+    }
+
+    private void ShowMainMenu(bool grabFocusIfController = true)
+    {
+        if (mainPanel != null)
+            mainPanel.Visible = true;
+
+        if (optionsPanel != null)
+            optionsPanel.Visible = false;
+
+        if (grabFocusIfController && _usingControllerFocus)
+            playButton?.GrabFocus();
+    }
+
+    private void ShowOptionsMenu()
+    {
+        if (mainPanel != null)
+            mainPanel.Visible = false;
+
+        if (optionsPanel != null)
+            optionsPanel.Visible = true;
+
+        if (_usingControllerFocus)
+            fullscreenCheckBox?.GrabFocus();
     }
 
     private void OnStartButtonPressed()
@@ -60,24 +89,6 @@ public partial class MenuTitle : Node
         GetTree().Quit();
     }
 
-    private void ShowMainMenu()
-    {
-        if (mainPanel != null)
-            mainPanel.Visible = true;
-
-        if (optionsPanel != null)
-            optionsPanel.Visible = false;
-    }
-
-    private void ShowOptionsMenu()
-    {
-        if (mainPanel != null)
-            mainPanel.Visible = false;
-
-        if (optionsPanel != null)
-            optionsPanel.Visible = true;
-    }
-
     private void OnFullscreenToggled(bool enabled)
     {
         DisplayServer.WindowSetMode(
@@ -93,5 +104,52 @@ public partial class MenuTitle : Node
 
         return mode == DisplayServer.WindowMode.Fullscreen ||
                mode == DisplayServer.WindowMode.ExclusiveFullscreen;
+    }
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (IsControllerMenuInput(@event))
+        {
+            EnableControllerFocus();
+
+            if (optionsPanel != null && optionsPanel.Visible && @event.IsActionPressed("ui_cancel"))
+            {
+                ShowMainMenu(false);
+                GetViewport().SetInputAsHandled();
+            }
+        }
+
+        if (@event is InputEventMouseMotion || @event is InputEventMouseButton)
+        {
+            _usingControllerFocus = false;
+
+            Control focused = GetViewport().GuiGetFocusOwner();
+            focused?.ReleaseFocus();
+        }
+    }
+
+    private bool IsControllerMenuInput(InputEvent @event)
+    {
+        return @event is InputEventJoypadButton ||
+               @event is InputEventJoypadMotion ||
+               @event.IsActionPressed("ui_up") ||
+               @event.IsActionPressed("ui_down") ||
+               @event.IsActionPressed("ui_left") ||
+               @event.IsActionPressed("ui_right") ||
+               @event.IsActionPressed("ui_accept") ||
+               @event.IsActionPressed("ui_cancel");
+    }
+
+    private void EnableControllerFocus()
+    {
+        if (_usingControllerFocus)
+            return;
+
+        _usingControllerFocus = true;
+
+        if (optionsPanel != null && optionsPanel.Visible)
+            fullscreenCheckBox?.GrabFocus();
+        else
+            playButton?.GrabFocus();
     }
 }

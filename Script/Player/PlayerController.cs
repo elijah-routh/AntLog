@@ -5,6 +5,9 @@ using Godot;
 
 public partial class PlayerController : CharacterBody3D, IDamageable, IHealable, IKillable, IKnockable
 {
+    [Signal]
+    public delegate void PlayerDiedEventHandler();
+
     [Export] public Node3D CameraPivot;
     [Export] public PlayerMoveComponent Movement;
     [Export] public GroundAlignComponent GroundAlignment;
@@ -24,6 +27,12 @@ public partial class PlayerController : CharacterBody3D, IDamageable, IHealable,
     [ExportGroup("Animation")]
     [Export] public PlayerAnimationController Animations { get; set; }
 
+    [ExportGroup("Death")]
+    [Export] public float DeathGameOverDelay = 3.0f;
+
+    private bool _dead;
+
+    public bool IsDead => _dead;
 
     public override void _Ready()
     {
@@ -49,6 +58,9 @@ public partial class PlayerController : CharacterBody3D, IDamageable, IHealable,
 
     public override void _PhysicsProcess(double delta)
     {
+        if (_dead)
+            return;
+
         float dt = (float)delta;
 
         Movement.ApplyGravity(this, dt);
@@ -67,6 +79,9 @@ public partial class PlayerController : CharacterBody3D, IDamageable, IHealable,
 
     public void ApplyKnockback(Vector3 force)
     {
+        if (_dead)
+            return;
+
         if (Movement != null)
         {
             Movement.ApplyKnockback(force / Mathf.Max(KnockbackResistance, 0.01f));
@@ -97,29 +112,52 @@ public partial class PlayerController : CharacterBody3D, IDamageable, IHealable,
         HealthBar.Health = currentHealth;
     }
 
-    private void OnDied()
+    private async void OnDied()
     {
+        if (_dead)
+            return;
+
+        _dead = true;
+
         GD.Print("Warthog destroyed");
 
-        // Optional:
-        // QueueFree();
-        // Disable driving.
-        // Play explosion.
-        // Start respawn timer.
+        Velocity = Vector3.Zero;
+        SetPhysicsProcess(false);
+
+        // Play death animation.
+        Animations?.PlayDeath();
+
+        // Wait so the death animation can be seen before game-over UI/camera.
+        SceneTreeTimer timer = GetTree().CreateTimer(DeathGameOverDelay);
+        await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);
+
+        if (!GodotObject.IsInstanceValid(this))
+            return;
+
+        EmitSignal(nameof(PlayerDied));
     }
 
     public void TakeDamage(float damage)
     {
+        if (_dead)
+            return;
+
         Health?.TakeDamage(damage);
     }
 
     public void Heal(float amount)
     {
+        if (_dead)
+            return;
+
         Health?.Heal(amount);
     }
 
     public void Kill()
     {
+        if (_dead)
+            return;
+
         Health?.Kill();
     }
 }

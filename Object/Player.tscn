@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bw8e2f22ssydd" path="res://Script/Player/PlayerInventory.cs" id="5_tfkfv"]
 [ext_resource type="Resource" uid="uid://co8x08kedqq8o" path="res://Script/Weapon/Data/TestTurret.tres" id="6_11a6d"]
 [ext_resource type="Script" uid="uid://bggrrldtmrpbi" path="res://Spin/SpinCenter.cs" id="6_imo3u"]
+[ext_resource type="Script" uid="uid://gj7r2obpc0qf" path="res://Scene/ArenaPreviewCamera.cs" id="8_clfxu"]
 [ext_resource type="Script" uid="uid://c2b2jlce8ajra" path="res://Script/Player/PlayerMoveComponent.cs" id="8_roeef"]
 [ext_resource type="PackedScene" uid="uid://u6fhhioptp5i" path="res://Assets/CompleteModels/Frog.tscn" id="9_0saxi"]
 [ext_resource type="Script" uid="uid://c7ur3coklrfv1" path="res://Script/Player/GroundAlignComponent.cs" id="9_app8l"]
@@ -89,6 +90,7 @@ collision_mask = 32
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerBody/GrabArea" unique_id=1594579827]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0031738281, 0.21069336, 0.9963496)
+visible = false
 shape = SubResource("BoxShape3D_7ama1")
 
 [node name="DebugMesh" type="MeshInstance3D" parent="PlayerBody/GrabArea" unique_id=1472408158 node_paths=PackedStringArray("Movement")]
@@ -108,6 +110,66 @@ SpinAxis = Vector3(1, 0, 0)
 SpinSpeed = 20.0
 
 [node name="Frog" parent="PlayerBody" unique_id=1818828843 instance=ExtResource("9_0saxi")]
+
+[node name="Skeleton3D" parent="PlayerBody/Frog/RootNode/CharacterArmature" parent_id_path=PackedInt32Array(1818828843, 262152386) index="0" unique_id=1673454910]
+bones/1/rotation = Quaternion(1.1700294e-05, 0.7058064, 0.70840484, 1.2026701e-05)
+bones/2/rotation = Quaternion(-3.5527033e-15, 1.1920933e-07, -2.524354e-29, 1)
+bones/4/rotation = Quaternion(0.16683146, 4.3189965e-07, 1.0312022e-07, 0.9859855)
+bones/5/rotation = Quaternion(0.09618957, -8.2847305e-07, 2.151242e-08, 0.99536306)
+bones/6/rotation = Quaternion(0.35192487, 9.694014e-07, 1.5023396e-07, 0.9360283)
+bones/7/rotation = Quaternion(-0.39071864, -0.00025390703, 0.000107201646, 0.9205102)
+bones/9/rotation = Quaternion(0.52046573, 0.503343, 0.48082256, -0.49454117)
+bones/10/rotation = Quaternion(0.022454014, 0.26599237, -0.20974974, 0.94061095)
+bones/19/rotation = Quaternion(-0.07661221, -0.0015270433, -0.019867467, 0.9968619)
+bones/23/rotation = Quaternion(0.5204658, -0.5033429, -0.4808226, -0.49454117)
+bones/24/rotation = Quaternion(0.022454007, -0.26599243, 0.20974976, 0.94061095)
+bones/33/rotation = Quaternion(-0.0766122, 0.0015270606, 0.019867485, 0.9968619)
+bones/36/rotation = Quaternion(0.96504116, 0.008584562, 0.0020786084, 0.26194966)
+bones/36/scale = Vector3(0.99997604, 0.99998355, 0.9999317)
+bones/37/rotation = Quaternion(0.5170185, 0.0063197967, 0.0085059805, 0.8559087)
+bones/38/rotation = Quaternion(0.9650411, -0.00858596, -0.002078108, 0.26194972)
+bones/38/scale = Vector3(0.99997616, 0.9999838, 0.999932)
+bones/39/rotation = Quaternion(0.5170185, -0.0063198186, -0.008506016, 0.8559087)
+bones/41/rotation = Quaternion(-1.2070908e-05, 0.7058064, 0.70840484, -1.16574465e-05)
+
+[node name="Foot_L" parent="PlayerBody/Frog/RootNode/CharacterArmature/Skeleton3D" index="0" unique_id=1324924041]
+transform = Transform3D(-1, -4.642945e-08, 3.355589e-05, -7.68693e-08, -0.9999933, -0.003674388, 3.3555825e-05, -0.0036745071, 0.9999933, 0.0035060798, 0.002804951, 0.00041173436)
+
+[node name="Head" parent="PlayerBody/Frog/RootNode/CharacterArmature/Skeleton3D" index="1" unique_id=51142196]
+transform = Transform3D(0.99999976, -3.058176e-11, -0.0005502031, -0.0005181991, -0.3360829, -0.94183195, -0.00018491388, 0.94183207, -0.3360829, -6.3837692e-06, -0.0018768547, 0.018675713)
+
+[node name="Pinky3_L" parent="PlayerBody/Frog/RootNode/CharacterArmature/Skeleton3D" index="2" unique_id=1829881965]
+transform = Transform3D(-0.3710707, 0.53634185, 0.7580526, -0.84340936, 0.14690971, -0.5167959, -0.38854465, -0.8311164, 0.397842, 0.01511389, 0.0014369967, 0.004172269)
+
+[node name="Middle3_L" parent="PlayerBody/Frog/RootNode/CharacterArmature/Skeleton3D" index="3" unique_id=333216447]
+transform = Transform3D(-0.54215837, 0.5118316, 0.6664028, -0.82127655, -0.15507703, -0.54905015, -0.17767756, -0.8449731, 0.50443137, 0.01456494, -0.00010724808, 0.0033464665)
+
+[node name="Index3_L" parent="PlayerBody/Frog/RootNode/CharacterArmature/Skeleton3D" index="4" unique_id=245958398]
+transform = Transform3D(-0.6467087, 0.4342312, 0.6270648, -0.76271254, -0.3616118, -0.5361959, -0.006079113, -0.82503283, 0.5650511, 0.013386483, -0.0015947154, 0.0035638618)
+
+[node name="Thumb2_L" parent="PlayerBody/Frog/RootNode/CharacterArmature/Skeleton3D" index="5" unique_id=2027635701]
+transform = Transform3D(-0.7504252, -0.2089281, 0.6270651, -0.22126345, -0.81457746, -0.53619593, 0.62281936, -0.54112184, 0.5650513, 0.011022522, -0.001596715, 0.005704871)
+
+[node name="Pinky3_R" parent="PlayerBody/Frog/RootNode/CharacterArmature/Skeleton3D" index="6" unique_id=1852147318]
+transform = Transform3D(-0.3710709, -0.53634214, -0.7580528, 0.84340936, 0.14690967, -0.5167958, 0.3885446, -0.83111674, 0.3978418, -0.015113891, 0.0014369973, 0.0041722595)
+
+[node name="Middle3_R" parent="PlayerBody/Frog/RootNode/CharacterArmature/Skeleton3D" index="7" unique_id=152808284]
+transform = Transform3D(-0.54215854, -0.5118314, -0.66640306, 0.8212764, -0.15507706, -0.5490501, 0.17767736, -0.8449734, 0.5044311, -0.014564943, -0.00010724699, 0.0033464571)
+
+[node name="Index3_R" parent="PlayerBody/Frog/RootNode/CharacterArmature/Skeleton3D" index="8" unique_id=1996046171]
+transform = Transform3D(-0.646709, -0.43423128, -0.6270653, 0.7627126, -0.36161193, -0.5361961, 0.00607893, -0.8250335, 0.565051, -0.013386484, -0.001594716, 0.0035638516)
+
+[node name="Thumb2_R" parent="PlayerBody/Frog/RootNode/CharacterArmature/Skeleton3D" index="9" unique_id=1775465957]
+transform = Transform3D(-0.7504256, 0.20892827, -0.62706524, 0.22126332, -0.8145771, -0.5361961, -0.62281984, -0.5411219, 0.5650511, -0.011022523, -0.0015967132, 0.005704864)
+
+[node name="LowerLeg_L" parent="PlayerBody/Frog/RootNode/CharacterArmature/Skeleton3D" index="10" unique_id=1849828133]
+transform = Transform3D(0.9999128, 0.006708861, 0.00987038, -0.011925212, 0.5284058, 0.8488601, 0.0004789636, -0.84895396, 0.5284756, 0.003469085, 5.7633268e-05, 0.0047162017)
+
+[node name="LowerLeg_R" parent="PlayerBody/Frog/RootNode/CharacterArmature/Skeleton3D" index="11" unique_id=1321692596]
+transform = Transform3D(0.999913, -0.006710752, -0.0098689385, 0.011924991, 0.5284058, 0.8488602, -0.00048132997, -0.848954, 0.52847546, -0.003469096, 5.763187e-05, 0.004716201)
+
+[node name="Foot_R" parent="PlayerBody/Frog/RootNode/CharacterArmature/Skeleton3D" index="13" unique_id=2144915326]
+transform = Transform3D(-1, -4.623118e-08, -3.3556233e-05, 1.6953067e-07, -0.9999933, -0.003674388, -3.355583e-05, -0.0036745071, 0.9999933, -0.00350608, 0.002804951, 0.00041173436)
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=1257778811 node_paths=PackedStringArray("Target", "SpringArm")]
 transform = Transform3D(1, 0, 0, 0, 0.91363764, -0.40652943, 0, 0.40652943, 0.91363764, 0, 0, 0)
@@ -152,7 +214,6 @@ VisualRoot = NodePath("../PlayerBody/VisualNode")
 
 [node name="HealthComponent" type="Node" parent="." unique_id=923055927]
 script = ExtResource("11_7ama1")
-DestroyOwnerOnDeath = true
 
 [node name="DiveGrabComponent" type="Node" parent="." unique_id=730239500 node_paths=PackedStringArray("Movement", "DiveGrabArea", "HoldPoint", "ThrowDirectionSource")]
 script = ExtResource("12_mgt8x")
@@ -170,5 +231,14 @@ Step2DamageMultiplier = 1.25
 Step3DamageMultiplier = 1.5
 Step4DamageMultiplier = 2.0
 MinimumDamagePowerStep = 2
+
+[node name="DeathPivot" type="Node3D" parent="." unique_id=947326442 node_paths=PackedStringArray("Pivot", "Camera", "LookTarget")]
+script = ExtResource("8_clfxu")
+Pivot = NodePath(".")
+Camera = NodePath("DeathCamera3D")
+LookTarget = NodePath("../PlayerBody")
+
+[node name="DeathCamera3D" type="Camera3D" parent="DeathPivot" unique_id=559970390]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.145315, -15.3116455)
 
 [editable path="PlayerBody/Frog"]

@@ -14,17 +14,24 @@ public partial class ArenaPreviewCamera : Node3D
     [Export] public Node3D LookTarget;
     [Export] public Vector3 FallbackLookPosition = Vector3.Zero;
 
+    [ExportGroup("Mode")]
+    [Export] public bool LookAtTargetMode = true;
+    [Export] public bool MakeCurrentOnReady = false;
+
     public override void _Ready()
     {
+        ProcessMode = ProcessModeEnum.Always;
+
         if (Pivot == null)
             Pivot = this;
 
         if (Camera != null)
         {
-            Camera.Current = true;
+            Camera.Current = MakeCurrentOnReady;
             Camera.Position = new Vector3(0, CameraHeight, OrbitRadius);
-            LookAwayFromTarget();
         }
+
+        UpdateLookDirection();
     }
 
     public override void _Process(double delta)
@@ -34,7 +41,28 @@ public partial class ArenaPreviewCamera : Node3D
 
         Pivot.RotateY(Mathf.DegToRad(OrbitSpeedDegrees) * (float)delta);
 
-        LookAwayFromTarget();
+        UpdateLookDirection();
+    }
+
+    public void SetTarget(Node3D target)
+    {
+        LookTarget = target;
+
+        if (target != null && Pivot != null)
+            Pivot.GlobalPosition = target.GlobalPosition;
+
+        if (Camera != null)
+            Camera.Current = true;
+
+        UpdateLookDirection();
+    }
+
+    private void UpdateLookDirection()
+    {
+        if (LookAtTargetMode)
+            LookAtTarget();
+        else
+            LookAwayFromTarget();
     }
 
     private void LookAtTarget()
@@ -59,8 +87,6 @@ public partial class ArenaPreviewCamera : Node3D
             : FallbackLookPosition;
 
         Vector3 awayDirection = Camera.GlobalPosition - targetPosition;
-
-        // Only use X/Z direction. Ignore vertical difference.
         awayDirection.Y = 0;
 
         if (awayDirection.LengthSquared() < 0.001f)
@@ -68,10 +94,7 @@ public partial class ArenaPreviewCamera : Node3D
 
         awayDirection = awayDirection.Normalized();
 
-        // Pick a point in front of the camera, away from the target.
         Vector3 lookPosition = Camera.GlobalPosition + awayDirection;
-
-        // Keep the look point level with the camera so it only rotates around Y.
         lookPosition.Y = Camera.GlobalPosition.Y;
 
         Camera.LookAt(lookPosition, Vector3.Up);

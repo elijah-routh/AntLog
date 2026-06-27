@@ -5,10 +5,12 @@
 [ext_resource type="Resource" uid="uid://cmylwk71tnb24" path="res://Trenchbroom/tankdev_settings.tres" id="2_w2mix"]
 [ext_resource type="Material" uid="uid://wjn06m1i1p6e" path="res://Trenchbroom/textures/SBS - Tiny Texture Pack - 256x256/256x256/Grass/Grass_02-256x256.tres" id="4_elxrv"]
 [ext_resource type="Script" uid="uid://b525wwiajqy7i" path="res://Script/Menu/ScoreManager.cs" id="7_jm65e"]
+[ext_resource type="Script" uid="uid://blh4ig162bcyk" path="res://Script/Level/GameOverController.cs" id="8_xapup"]
 [ext_resource type="Script" uid="uid://btwhek1fj7kfc" path="res://Script/Enemy/Targets/CircleRail3D.cs" id="9_u0g6g"]
 [ext_resource type="Script" uid="uid://b0ddttqi65nxe" path="res://Script/Enemy/Targets/TargetWaveSpawner3D.cs" id="10_wvnm0"]
 [ext_resource type="PackedScene" uid="uid://cgltfwt3d54te" path="res://Assets/CompleteModels/tree_1.tscn" id="11_rkjth"]
 [ext_resource type="PackedScene" uid="uid://bgp3kkbtk48s7" path="res://Assets/CompleteModels/tree_2.tscn" id="12_ixerh"]
+[ext_resource type="PackedScene" uid="uid://bkc0r6bsm15k4" path="res://Scene/Menu/GameOverMenu.tscn" id="12_v5h2u"]
 [ext_resource type="PackedScene" uid="uid://cfu7wc04v1lui" path="res://Assets/CompleteModels/grass.tscn" id="13_ixerh"]
 [ext_resource type="PackedScene" uid="uid://dhsq1cio25516" path="res://Object/Player.tscn" id="13_ywusi"]
 [ext_resource type="PackedScene" uid="uid://bq4a3vmsge07r" path="res://Assets/CompleteModels/fern.tscn" id="14_xjovg"]
@@ -77,6 +79,25 @@ mesh = SubResource("ArrayMesh_w6eyw")
 [node name="entity_0_brush_0_collision_shape" type="CollisionShape3D" parent="NavigationRegion3D/IslandGround/entity_0_worldspawn" unique_id=894128156]
 shape = SubResource("ConvexPolygonShape3D_jm65e")
 
+[node name="PlayerRoot" parent="." unique_id=920046093 instance=ExtResource("13_ywusi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 10, 1)
+
+[node name="PlayerBody" parent="PlayerRoot" index="0" unique_id=750631945 node_paths=PackedStringArray("HealthBar")]
+HealthBar = NodePath("../../MenuStuff/HUD/HealthBar")
+
+[node name="WorldEnvironment" type="Node" parent="." unique_id=1671059563]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="WorldEnvironment" unique_id=565392737]
+environment = SubResource("Environment_h2ovn")
+
+[node name="WaterPlane" parent="WorldEnvironment" unique_id=507181257 instance=ExtResource("26_h2ovn")]
+transform = Transform3D(500, 0, 0, 0, 15, 0, 0, 0, 500, -0.055664063, 0.26662636, 0.061279297)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=450139916]
+transform = Transform3D(1, 0, 0, 0, -0.62923896, 0.7772119, 0, -0.7772119, -0.62923896, 0, 39.938274, 48.329205)
+light_color = Color(0.3254902, 0.46666667, 1, 1)
+light_energy = 1.5
+
 [node name="MenuStuff" type="Node" parent="." unique_id=150875263]
 
 [node name="HUD" parent="MenuStuff" unique_id=1896632546 node_paths=PackedStringArray("ScoreManager") instance=ExtResource("17_wvnm0")]
@@ -104,6 +125,16 @@ SpinPower = NodePath("../../../../PlayerRoot/SpinPowerComponent")
 [node name="ScoreManager" type="Node" parent="MenuStuff" unique_id=1809023297]
 script = ExtResource("7_jm65e")
 
+[node name="GameOver" type="Node" parent="MenuStuff" unique_id=641799353 node_paths=PackedStringArray("player", "deathCameraRig", "playerCamera", "pauseMenu", "gameOverMenu")]
+script = ExtResource("8_xapup")
+player = NodePath("../../PlayerRoot/PlayerBody")
+deathCameraRig = NodePath("../../PlayerRoot/DeathPivot")
+playerCamera = NodePath("../../PlayerRoot/CameraPivot/SpringArm3D/Camera3D")
+pauseMenu = NodePath("../PauseMenu")
+gameOverMenu = NodePath("../GameOverMenu")
+
+[node name="GameOverMenu" parent="MenuStuff" unique_id=52307389 instance=ExtResource("12_v5h2u")]
+
 [node name="Targets" type="Node" parent="." unique_id=1426692446]
 
 [node name="ThrowTarget" parent="Targets" unique_id=1661693050 instance=ExtResource("15_w6eyw")]
@@ -128,6 +159,29 @@ Rails = [NodePath("../IslandRail"), NodePath("../IslandHighRail")]
 TargetsPerWave = 10
 SlowTargetRailSpeed = 0.01
 FastTargetRailSpeed = 0.05
+
+[node name="Enemies" type="Node" parent="." unique_id=212556385]
+
+[node name="SpawnManager" type="Node3D" parent="Enemies" unique_id=986923291 node_paths=PackedStringArray("SpawnParent", "SpawnPoints")]
+script = ExtResource("16_wvnm0")
+SpawnParent = NodePath("..")
+SpawnPoints = [NodePath("../SpawnLocation"), NodePath("../SpawnLocation2"), NodePath("../SpawnLocation3")]
+Waves = Array[ExtResource("17_rkjth")]([ExtResource("18_ixerh")])
+
+[node name="SpawnLocation" type="Marker3D" parent="Enemies" unique_id=1085009787]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.26892, 10, -18.47949)
+script = ExtResource("17_hsq0f")
+SpawnRadius = 10.0
+
+[node name="SpawnLocation2" type="Marker3D" parent="Enemies" unique_id=264884920]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 10, -37.60826)
+script = ExtResource("17_hsq0f")
+SpawnRadius = 10.0
+
+[node name="SpawnLocation3" type="Marker3D" parent="Enemies" unique_id=1534636963]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.88495, 10, 24.545033)
+script = ExtResource("17_hsq0f")
+SpawnRadius = 10.0
 
 [node name="Nature" type="Node" parent="." unique_id=893571659]
 
@@ -479,49 +533,7 @@ transform = Transform3D(1.9812914, 0, -0.27291834, 0, 2, 0, 0.27291834, 0, 1.981
 [node name="mushrooms5" parent="Nature/Other" unique_id=698649008 instance=ExtResource("16_kkmdq")]
 transform = Transform3D(1.3936541, 0, -1.4344782, 0, 2, 0, 1.4344782, 0, 1.3936541, 60.249878, 3.6191669, -57.708965)
 
-[node name="WorldEnvironment" type="Node" parent="." unique_id=1671059563]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="WorldEnvironment" unique_id=565392737]
-environment = SubResource("Environment_h2ovn")
-
-[node name="WaterPlane" parent="WorldEnvironment" unique_id=507181257 instance=ExtResource("26_h2ovn")]
-transform = Transform3D(500, 0, 0, 0, 15, 0, 0, 0, 500, -0.055664063, 0.26662636, 0.061279297)
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=450139916]
-transform = Transform3D(1, 0, 0, 0, -0.62923896, 0.7772119, 0, -0.7772119, -0.62923896, 0, 39.938274, 48.329205)
-light_color = Color(0.3254902, 0.46666667, 1, 1)
-light_energy = 1.5
-
-[node name="Enemies" type="Node" parent="." unique_id=212556385]
-
-[node name="SpawnManager" type="Node3D" parent="Enemies" unique_id=986923291 node_paths=PackedStringArray("SpawnParent", "SpawnPoints")]
-script = ExtResource("16_wvnm0")
-SpawnParent = NodePath("..")
-SpawnPoints = [NodePath("../SpawnLocation"), NodePath("../SpawnLocation2"), NodePath("../SpawnLocation3")]
-Waves = Array[ExtResource("17_rkjth")]([ExtResource("18_ixerh")])
-
-[node name="SpawnLocation" type="Marker3D" parent="Enemies" unique_id=1085009787]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.26892, 10, -18.47949)
-script = ExtResource("17_hsq0f")
-SpawnRadius = 10.0
-
-[node name="SpawnLocation2" type="Marker3D" parent="Enemies" unique_id=264884920]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 10, -37.60826)
-script = ExtResource("17_hsq0f")
-SpawnRadius = 10.0
-
-[node name="SpawnLocation3" type="Marker3D" parent="Enemies" unique_id=1534636963]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.88495, 10, 24.545033)
-script = ExtResource("17_hsq0f")
-SpawnRadius = 10.0
-
-[node name="PlayerRoot" parent="." unique_id=920046093 instance=ExtResource("13_ywusi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 10, 1)
-
-[node name="PlayerBody" parent="PlayerRoot" index="0" unique_id=750631945 node_paths=PackedStringArray("HealthBar")]
-HealthBar = NodePath("../../MenuStuff/HUD/HealthBar")
-
-[editable path="MenuStuff/HUD"]
-[editable path="MenuStuff/HUD/SpinPowerBarUI"]
 [editable path="PlayerRoot"]
 [editable path="PlayerRoot/PlayerBody/Frog"]
+[editable path="MenuStuff/HUD"]
+[editable path="MenuStuff/HUD/SpinPowerBarUI"]

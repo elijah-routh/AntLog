@@ -4,10 +4,25 @@ public partial class GrabAreaDebugVisual : MeshInstance3D
 {
     [Export] public PlayerMoveComponent Movement;
 
+    [ExportGroup("Debug")]
+    [Export]
+    public bool ShowDebugVisual
+    {
+        get => _showDebugVisual;
+        set
+        {
+            _showDebugVisual = value;
+
+            if (IsInsideTree())
+                ApplyVisibility();
+        }
+    }
+
     [ExportGroup("Colors")]
     [Export] public Color InactiveColor = new Color(1f, 1f, 1f, 0.15f);
     [Export] public Color ActiveColor = new Color(1f, 0f, 0f, 0.65f);
 
+    private bool _showDebugVisual;
     private StandardMaterial3D _material;
 
     public override void _Ready()
@@ -16,13 +31,20 @@ public partial class GrabAreaDebugVisual : MeshInstance3D
         _material.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
         _material.ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
         _material.AlbedoColor = InactiveColor;
+        _material.EmissionEnabled = false;
+        _material.Emission = Colors.Black;
+        _material.EmissionEnergyMultiplier = 0.0f;
 
         MaterialOverride = _material;
-        Visible = true;
+
+        ApplyVisibility();
     }
 
     public override void _Process(double delta)
     {
+        if (!_showDebugVisual)
+            return;
+
         if (_material == null || Movement == null)
             return;
 
@@ -32,5 +54,10 @@ public partial class GrabAreaDebugVisual : MeshInstance3D
         _material.EmissionEnabled = active;
         _material.Emission = active ? new Color(1f, 0f, 0f) : Colors.Black;
         _material.EmissionEnergyMultiplier = active ? 2.0f : 0.0f;
+    }
+
+    private void ApplyVisibility()
+    {
+        Visible = _showDebugVisual;
     }
 }

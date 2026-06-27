@@ -3,7 +3,12 @@
 [ext_resource type="Script" uid="uid://bd10uv5iedn61" path="res://Script/Menu/MenuTitle.cs" id="1_q7bsc"]
 [ext_resource type="Theme" uid="uid://i3xjdcnxdk4a" path="res://Art/DinoTheme.tres" id="1_v5mi7"]
 [ext_resource type="PackedScene" uid="uid://dy77io1kgn7hm" path="res://Scene/Menu/SpinningDino.tscn" id="2_60v5t"]
+[ext_resource type="Shader" uid="uid://ded3qeo7rxka2" path="res://Art/menuBlur.gdshader" id="2_ng4i6"]
 [ext_resource type="PackedScene" uid="uid://dtc0psmclt2n1" path="res://Scene/ArenaPreview.tscn" id="4_rd8ru"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kbsla"]
+shader = ExtResource("2_ng4i6")
+shader_parameter/lod = 0.0
 
 [node name="MainMenu" type="Control" unique_id=1556643241 node_paths=PackedStringArray("playButton", "optionsButton", "exitButton", "mainPanel", "optionsPanel", "backButton", "fullscreenCheckBox")]
 layout_mode = 3
@@ -29,6 +34,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="ColorRect" type="ColorRect" parent="." unique_id=445326342]
+material = SubResource("ShaderMaterial_kbsla")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
 [node name="BackgroundPreview" type="SubViewportContainer" parent="." unique_id=1232989553]
 z_index = -4
 layout_mode = 1
@@ -41,7 +56,9 @@ mouse_filter = 2
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="BackgroundPreview" unique_id=964207397]
-size = Vector2i(1152, 648)
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
 
 [node name="ArenaPreview" parent="BackgroundPreview/SubViewport" unique_id=534505466 instance=ExtResource("4_rd8ru")]
 
