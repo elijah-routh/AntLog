@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://brosfbtps7dew"]
+
+[ext_resource type="Script" uid="uid://bokpp2yc47wmk" path="res://Levels/PlanetTarget.cs" id="1_q0v8f"]
+[ext_resource type="PackedScene" uid="uid://b5510fathifim" path="res://Assets/CompleteModels/saturn.tscn" id="2_w4664"]
+[ext_resource type="PackedScene" uid="uid://d4l86ovqtvkv3" path="res://Assets/CompleteModels/jupiter.tscn" id="3_8sjsn"]
+[ext_resource type="PackedScene" uid="uid://ciwubmwjuy33n" path="res://Assets/CompleteModels/earth.tscn" id="4_15unb"]
+[ext_resource type="PackedScene" uid="uid://cpvegvq27bl4h" path="res://Assets/CompleteModels/asteroid.tscn" id="5_kvw4i"]
+[ext_resource type="PackedScene" uid="uid://d1r5jnsw8xo0r" path="res://Assets/CompleteModels/saturn_2.tscn" id="6_qtmce"]
+[ext_resource type="PackedScene" uid="uid://b01da3lssyyxl" path="res://Assets/CompleteModels/mercury.tscn" id="7_olf5c"]
+[ext_resource type="PackedScene" uid="uid://duxldrbrx2kbb" path="res://Assets/CompleteModels/neptune.tscn" id="8_cmta1"]
+[ext_resource type="PackedScene" uid="uid://b0jkk1cqluqr3" path="res://Assets/CompleteModels/pluto.tscn" id="9_0bod8"]
+[ext_resource type="PackedScene" uid="uid://dabj11yv76de7" path="res://Assets/CompleteModels/uranus.tscn" id="10_yterv"]
+[ext_resource type="PackedScene" uid="uid://by2i1qjlk0p0n" path="res://Assets/CompleteModels/moon.tscn" id="11_qtmce"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q0v8f"]
+size = Vector3(2.25, 2.25, 2.25)
+
+[node name="PlanetTarget" type="Node3D" unique_id=286545772 node_paths=PackedStringArray("HitArea", "VisualSpawnPoint")]
+script = ExtResource("1_q0v8f")
+HitArea = NodePath("Area3D")
+VisualSpawnPoint = NodePath(".")
+TargetVisualScenes = Array[PackedScene]([ExtResource("2_w4664"), ExtResource("3_8sjsn"), ExtResource("4_15unb"), ExtResource("5_kvw4i"), ExtResource("6_qtmce"), ExtResource("7_olf5c"), ExtResource("8_cmta1"), ExtResource("9_0bod8"), ExtResource("10_yterv"), ExtResource("11_qtmce")])
+SmallScale = 5.0
+LargeScale = 10.0
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1458424803]
+collision_layer = 128
+collision_mask = 72
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=920703189]
+shape = SubResource("BoxShape3D_q0v8f")

@@ -10,7 +10,7 @@
 shader = ExtResource("2_ng4i6")
 shader_parameter/lod = 0.0
 
-[node name="MainMenu" type="Control" unique_id=1556643241 node_paths=PackedStringArray("playButton", "optionsButton", "exitButton", "mainPanel", "optionsPanel", "backButton", "fullscreenCheckBox")]
+[node name="MainMenu" type="Control" unique_id=1556643241 node_paths=PackedStringArray("playButton", "optionsButton", "exitButton", "mainPanel", "optionsPanel", "backButton", "volumeSlider", "volumeLabel", "battleMusicCheckBox")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,7 +24,9 @@ exitButton = NodePath("MainPanel/VBoxContainer/ExitButton")
 mainPanel = NodePath("MainPanel")
 optionsPanel = NodePath("OptionsPanel")
 backButton = NodePath("OptionsPanel/VBoxContainer/BackButton")
-fullscreenCheckBox = NodePath("OptionsPanel/VBoxContainer/FullscreenCheckBox")
+volumeSlider = NodePath("OptionsPanel/VBoxContainer/Label/VolumeSlider")
+volumeLabel = NodePath("OptionsPanel/VBoxContainer/Label")
+battleMusicCheckBox = NodePath("OptionsPanel/VBoxContainer/MusicSwap")
 
 [node name="Panel" type="Panel" parent="." unique_id=1455037833]
 layout_mode = 1
@@ -84,7 +86,6 @@ render_target_update_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -277.809, 0)
 
 [node name="MainPanel" type="Control" parent="." unique_id=1812198190]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -136,8 +137,25 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_top = 141.0
+offset_bottom = 141.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="OptionsPanel" unique_id=2029499738]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -308.0
+offset_top = -278.0
+offset_right = 308.0
+offset_bottom = 278.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.28235295, 0.21960784, 0.40784314, 0.23529412)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="OptionsPanel" unique_id=1617808979]
 layout_mode = 1
@@ -146,13 +164,40 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -139.5
-offset_top = -130.25
-offset_right = 139.5
-offset_bottom = 130.25
+offset_left = -217.0
+offset_top = -223.0
+offset_right = 217.0
+offset_bottom = 228.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 19
+
+[node name="Label" type="Label" parent="OptionsPanel/VBoxContainer" unique_id=461570480]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 35
+text = "Volume Control"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VolumeSlider" type="HSlider" parent="OptionsPanel/VBoxContainer/Label" unique_id=741858922]
+layout_mode = 0
+offset_top = 117.0
+offset_right = 434.0
+offset_bottom = 185.0
+size_flags_vertical = 3
+step = 10.0
+value = 50.0
+tick_count = 10
+ticks_position = 3
+
+[node name="MusicSwap" type="CheckBox" parent="OptionsPanel/VBoxContainer" unique_id=1375362963]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 20
+theme_override_font_sizes/font_size = 35
+text = "Swap Menu and Level Music"
 
 [node name="BackButton" type="Button" parent="OptionsPanel/VBoxContainer" unique_id=1754408494]
 layout_mode = 2
@@ -160,10 +205,6 @@ size_flags_vertical = 3
 theme = ExtResource("1_v5mi7")
 text = "Back
 "
-
-[node name="FullscreenCheckBox" type="CheckBox" parent="OptionsPanel/VBoxContainer" unique_id=1375362963]
-layout_mode = 2
-text = "Fullscreen"
 
 [node name="Label" type="Label" parent="." unique_id=1971978837]
 layout_mode = 1
@@ -173,15 +214,15 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -247.0
-offset_top = -211.0
+offset_top = -261.0
 offset_right = 247.0
-offset_bottom = -88.0
+offset_bottom = -138.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 10
 theme_override_constants/shadow_offset_y = 10
-theme_override_font_sizes/font_size = 70
+theme_override_font_sizes/font_size = 80
 text = "Dino Toss"
 horizontal_alignment = 1
 vertical_alignment = 1

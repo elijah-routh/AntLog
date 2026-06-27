@@ -107,6 +107,9 @@ namespace Game.Enemy
             if (IsInState<DinoChargeState>())
                 return;
 
+            SoundManager.Instance.PlayHitSound();
+
+
             ChangeState(new DinoChaseOrbitState(this, Enemy, Target));
         }
 

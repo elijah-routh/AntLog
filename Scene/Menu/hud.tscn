@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bk6vsvvvq2041"]
 
 [ext_resource type="Script" uid="uid://bpf57o0yvii5l" path="res://Script/Menu/HUD.cs" id="1_3quw2"]
-[ext_resource type="Texture2D" uid="uid://b20mrjlr4nl0o" path="res://Assets/Images/FunnyFish.png" id="1_cevek"]
+[ext_resource type="PackedScene" uid="uid://bp4xd3n722suy" path="res://Scene/Menu/ScorePopup.tscn" id="2_8n1xa"]
 [ext_resource type="Script" uid="uid://cd3y4al2n7y44" path="res://Scene/Menu/Reticle.cs" id="3_11exn"]
 [ext_resource type="PackedScene" uid="uid://b0sjrn1cmy1x5" path="res://Scene/Menu/HealthBar.tscn" id="4_id85m"]
 [ext_resource type="PackedScene" uid="uid://rtfdii1hgpwy" path="res://Scene/Menu/SpinPowerBar.tscn" id="5_bvxm0"]
@@ -13,8 +13,10 @@ corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 
-[node name="HUD" type="CanvasLayer" unique_id=1896632546]
+[node name="HUD" type="CanvasLayer" unique_id=1896632546 node_paths=PackedStringArray("PopupRoot")]
 script = ExtResource("1_3quw2")
+ScorePopupScene = ExtResource("2_8n1xa")
+PopupRoot = NodePath("PopupRoot")
 
 [node name="Panel" type="Panel" parent="." unique_id=1852014348]
 offset_left = 31.0
@@ -23,22 +25,13 @@ offset_right = 318.0
 offset_bottom = 103.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_gs7re")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=1434263351]
-offset_left = 46.0
-offset_top = 35.0
-offset_right = 128.60886
-offset_bottom = 96.0
-texture = ExtResource("1_cevek")
-expand_mode = 1
-flip_h = true
-
 [node name="ScoreCount" type="Label" parent="." unique_id=1266123490]
-offset_left = 137.0
+offset_left = 92.0
 offset_top = 43.0
-offset_right = 292.0
+offset_right = 259.0
 offset_bottom = 88.0
 theme_override_font_sizes/font_size = 29
-text = " X"
+text = " Score: 1000"
 
 [node name="Reticle" type="CenterContainer" parent="." unique_id=2107039370]
 offset_right = 40.0
@@ -64,3 +57,11 @@ offset_right = -56.0
 offset_bottom = -54.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="PopupRoot" type="Control" parent="." unique_id=1195141388]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

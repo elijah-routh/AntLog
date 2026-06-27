@@ -346,6 +346,8 @@ public partial class PlayerMoveComponent : Node
 
     private void StartDive(CharacterBody3D body, Vector3 direction)
     {
+
+        SoundManager.Instance.PlayGrabSound();
         IsDiving = true;
         IsSpinning = false;
 

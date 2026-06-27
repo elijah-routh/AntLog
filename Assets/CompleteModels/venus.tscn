@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://d4b8alaccufrb"]
+
+[ext_resource type="PackedScene" uid="uid://0oxkoglfom6y" path="res://Assets/UsedGLB/Planet-rYguWNNPvA.glb" id="1_epfv8"]
+
+[node name="Venus" unique_id=1001165997 instance=ExtResource("1_epfv8")]

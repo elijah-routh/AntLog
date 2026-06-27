@@ -11,6 +11,17 @@ public partial class SoundManager : Node
 
     [ExportGroup("Sound Effects")]
     [Export] public AudioStreamPlayer ButtonPlayer;
+    [Export] public AudioStreamPlayer ExplosionPlayer;
+    [Export] public AudioStreamPlayer ExplosionPlayer2;
+    [Export] public AudioStreamPlayer ExplosionPlayer3;
+    [Export] public AudioStreamPlayer ExplosionPlayer4;
+    [Export] public AudioStreamPlayer WinPlayer;
+    [Export] public AudioStreamPlayer ThrowPlayer;
+    [Export] public AudioStreamPlayer GrabPlayer;
+    [Export] public AudioStreamPlayer HurtPlayer;
+    [Export] public AudioStreamPlayer HitPlayer;
+
+    public bool SwapMenuAndLevelMusic { get; private set; } = false;
 
     public override void _Ready()
     {
@@ -23,19 +34,77 @@ public partial class SoundManager : Node
         Instance = this;
     }
 
+    public void SetSwapMenuAndLevelMusic(bool enabled)
+    {
+        SwapMenuAndLevelMusic = enabled;
+    }
+
+    public void ToggleSwapMenuAndLevelMusic(bool enabled)
+    {
+        SetSwapMenuAndLevelMusic(enabled);
+        PlayMenuMusic();
+    }
+
     public void PlayButtonSound()
     {
         PlaySfx(ButtonPlayer);
     }
 
+    public void PlayExplosionSound()
+    {
+        PlaySfx(ExplosionPlayer);
+    }
+
+    public void PlayExplosionSound2()
+    {
+        PlaySfx(ExplosionPlayer2);
+    }
+
+    public void PlayExplosionSound3()
+    {
+        PlaySfx(ExplosionPlayer3);
+    }
+
+    public void PlayExplosionSound4()
+    {
+        PlaySfx(ExplosionPlayer4);
+    }
+
+    public void PlayWinSound()
+    {
+        PlaySfx(WinPlayer);
+    }
+
+    public void PlayThrowSound()
+    {
+        PlaySfx(ThrowPlayer);
+    }
+
+    public void PlayGrabSound()
+    {
+        PlaySfx(GrabPlayer);
+    }
+
+    public void PlayHurtSound()
+    {
+        PlaySfx(HurtPlayer);
+    }
+
+    public void PlayHitSound()
+    {
+        PlaySfx(HitPlayer);
+    }
+
     public void PlayMenuMusic()
     {
-        PlayMusic(MenuMusic);
+        AudioStream music = SwapMenuAndLevelMusic ? LevelMusic : MenuMusic;
+        PlayMusic(music);
     }
 
     public void PlayLevelMusic()
     {
-        PlayMusic(LevelMusic);
+        AudioStream music = SwapMenuAndLevelMusic ? MenuMusic : LevelMusic;
+        PlayMusic(music);
     }
 
     public void StopMusic()
@@ -49,7 +118,6 @@ public partial class SoundManager : Node
         if (MusicPlayer == null || music == null)
             return;
 
-        // Make imported audio loop if supported
         if (music is AudioStreamOggVorbis ogg)
             ogg.Loop = true;
         else if (music is AudioStreamMP3 mp3)

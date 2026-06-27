@@ -142,6 +142,8 @@ public partial class PlayerController : CharacterBody3D, IDamageable, IHealable,
         if (_dead)
             return;
 
+        SoundManager.Instance.PlayHurtSound();
+
         Health?.TakeDamage(damage);
     }
 

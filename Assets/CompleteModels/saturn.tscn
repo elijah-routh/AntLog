@@ -2,4 +2,4 @@
 
 [ext_resource type="PackedScene" uid="uid://kwhnmmjkekg7" path="res://Assets/UsedGLB/Planet-9g1aIbfR9Y.glb" id="1_pc62b"]
 
-[node name="Saturn" unique_id=27352453 instance=ExtResource("1_pc62b")]
+[node name="Saturn" unique_id=950102927 instance=ExtResource("1_pc62b")]

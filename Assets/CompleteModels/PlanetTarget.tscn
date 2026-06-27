@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://t1yw2p26ibda"]
+
+[ext_resource type="Script" uid="uid://bokpp2yc47wmk" path="res://Levels/PlanetTarget.cs" id="1_vad4g"]
+
+[node name="PlanetTarget" type="Node3D" unique_id=1469500300 node_paths=PackedStringArray("TargetMeshes")]
+script = ExtResource("1_vad4g")
+TargetMeshes = []

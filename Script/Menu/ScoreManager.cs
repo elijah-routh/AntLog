@@ -5,6 +5,9 @@ public partial class ScoreManager : Node
     [Signal]
     public delegate void ScoreChangedEventHandler(int score);
 
+    [Signal]
+    public delegate void PointsAddedEventHandler(int amount);
+
     public int Score { get; private set; }
 
     public override void _Ready()
@@ -18,7 +21,9 @@ public partial class ScoreManager : Node
             return;
 
         Score += amount;
-        EmitSignal(nameof(ScoreChanged), Score);
+
+        EmitSignal(SignalName.ScoreChanged, Score);
+        EmitSignal(SignalName.PointsAdded, amount);
 
         GD.Print($"Score: {Score}");
     }
@@ -26,6 +31,6 @@ public partial class ScoreManager : Node
     public void ResetScore()
     {
         Score = 0;
-        EmitSignal(nameof(ScoreChanged), Score);
+        EmitSignal(SignalName.ScoreChanged, Score);
     }
 }

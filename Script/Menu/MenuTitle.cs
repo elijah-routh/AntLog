@@ -14,8 +14,13 @@ public partial class MenuTitle : Node
     [ExportGroup("Options")]
     [Export] private Button backButton;
     [Export] private CheckBox fullscreenCheckBox;
+    [Export] private HSlider volumeSlider;
+    [Export] private Label volumeLabel;
+    [Export] private CheckBox battleMusicCheckBox;
 
     private bool _usingControllerFocus;
+
+    private const string MasterBusName = "Master";
 
     public override void _Ready()
     {
@@ -40,9 +45,65 @@ public partial class MenuTitle : Node
             fullscreenCheckBox.Toggled += OnFullscreenToggled;
         }
 
+        if (volumeSlider != null)
+        {
+            volumeSlider.MinValue = 0.0f;
+            volumeSlider.MaxValue = 100.0f;
+            volumeSlider.Step = 1.0f;
+            volumeSlider.Value = 100.0f;
+            volumeSlider.ValueChanged += OnVolumeChanged;
+
+            ApplyVolume(100.0f);
+        }
+
+        if (battleMusicCheckBox != null)
+        {
+            battleMusicCheckBox.ButtonPressed =
+                SoundManager.Instance != null &&
+                SoundManager.Instance.SwapMenuAndLevelMusic;
+
+            battleMusicCheckBox.Toggled += OnBattleMusicToggled;
+        }
+
         ShowMainMenu(false);
 
-        SoundManager.Instance.PlayMenuMusic();
+        SoundManager.Instance?.PlayMenuMusic();
+    }
+
+    private void OnVolumeChanged(double value)
+    {
+        ApplyVolume((float)value);
+    }
+
+    private void ApplyVolume(float percent)
+    {
+        percent = Mathf.Clamp(percent, 0.0f, 100.0f);
+
+        int busIndex = AudioServer.GetBusIndex(MasterBusName);
+        if (busIndex == -1)
+            return;
+
+        if (percent <= 0.0f)
+        {
+            AudioServer.SetBusMute(busIndex, true);
+        }
+        else
+        {
+            AudioServer.SetBusMute(busIndex, false);
+
+            float linearVolume = percent / 100.0f;
+            float dbVolume = Mathf.LinearToDb(linearVolume);
+
+            AudioServer.SetBusVolumeDb(busIndex, dbVolume);
+        }
+
+        if (volumeLabel != null)
+            volumeLabel.Text = $"Volume: {Mathf.RoundToInt(percent)}%";
+    }
+
+    private void OnBattleMusicToggled(bool enabled)
+    {
+        SoundManager.Instance?.ToggleSwapMenuAndLevelMusic(enabled);
     }
 
     private void ShowMainMenu(bool grabFocusIfController = true)
@@ -66,7 +127,7 @@ public partial class MenuTitle : Node
             optionsPanel.Visible = true;
 
         if (_usingControllerFocus)
-            fullscreenCheckBox?.GrabFocus();
+            volumeSlider?.GrabFocus();
     }
 
     private void OnStartButtonPressed()
@@ -148,7 +209,7 @@ public partial class MenuTitle : Node
         _usingControllerFocus = true;
 
         if (optionsPanel != null && optionsPanel.Visible)
-            fullscreenCheckBox?.GrabFocus();
+            volumeSlider?.GrabFocus();
         else
             playButton?.GrabFocus();
     }

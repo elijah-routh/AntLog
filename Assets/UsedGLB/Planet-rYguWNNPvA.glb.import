@@ -14,7 +14,7 @@ dest_files=["res://.godot/imported/Planet-rYguWNNPvA.glb-112acecc5a8db9e61bf6bbd
 [params]
 
 nodes/root_type=""
-nodes/root_name=""
+nodes/root_name="Venus"
 nodes/root_script=null
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
@@ -37,6 +37,14 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={}
+_subresources={
+"materials": {
+"Atlas": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Assets/Materials/AtlasWarm.tres",
+"use_external/path": "uid://dww3d6g1mbbfm"
+}
+}
+}
 gltf/naming_version=2
 gltf/embedded_image_handling=1

@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://b0jkk1cqluqr3"]
+
+[ext_resource type="PackedScene" uid="uid://bjxb640r5i5ct" path="res://Assets/UsedGLB/Planet-EC1Lk2IamI.glb" id="1_0lpet"]
+
+[node name="Pluto" unique_id=821071525 instance=ExtResource("1_0lpet")]

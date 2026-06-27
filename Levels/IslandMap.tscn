@@ -15,14 +15,15 @@
 [ext_resource type="PackedScene" uid="uid://dhsq1cio25516" path="res://Object/Player.tscn" id="13_ywusi"]
 [ext_resource type="PackedScene" uid="uid://bq4a3vmsge07r" path="res://Assets/CompleteModels/fern.tscn" id="14_xjovg"]
 [ext_resource type="PackedScene" uid="uid://d4j8f2ob8xkdu" path="res://Assets/CompleteModels/bush_1.tscn" id="15_cb87r"]
-[ext_resource type="PackedScene" uid="uid://nr7wfdjtmf3l" path="res://Object/ThrowTarget.tscn" id="15_w6eyw"]
 [ext_resource type="PackedScene" uid="uid://c5jwwups0o1sw" path="res://Assets/CompleteModels/mushrooms.tscn" id="16_kkmdq"]
 [ext_resource type="Script" uid="uid://ctmw0nlu8i38p" path="res://Script/Spawn/EnemySpawner3D.cs" id="16_wvnm0"]
+[ext_resource type="PackedScene" uid="uid://brosfbtps7dew" path="res://Levels/PlanetTarget.tscn" id="17_hbj87"]
 [ext_resource type="Script" uid="uid://d15iailfhkf8g" path="res://Script/Spawn/EnemySpawnPoint3D.cs" id="17_hsq0f"]
 [ext_resource type="Script" uid="uid://d3x85txodqmxf" path="res://Script/Spawn/EnemySpawnWaveData.cs" id="17_rkjth"]
 [ext_resource type="PackedScene" uid="uid://bk6vsvvvq2041" path="res://Scene/Menu/hud.tscn" id="17_wvnm0"]
 [ext_resource type="PackedScene" uid="uid://bbdhynmtewp4j" path="res://Scene/Menu/menu_pause.tscn" id="18_hsq0f"]
 [ext_resource type="Resource" uid="uid://4fo2ag0cgm4x" path="res://Script/Spawn/Data/Wave1.tres" id="18_ixerh"]
+[ext_resource type="Script" uid="uid://waj67x0wgr6o" path="res://Script/Enemy/Targets/PlanetWaveSpawner3D.cs" id="20_0bv2d"]
 [ext_resource type="Sky" uid="uid://rwxaax84eqt8" path="res://Art/Shaders/MainSky.tres" id="25_hcl6m"]
 [ext_resource type="PackedScene" uid="uid://dnjsnuj1qgiqa" path="res://Scene/Water/WaterPlane.tscn" id="26_h2ovn"]
 
@@ -137,26 +138,34 @@ gameOverMenu = NodePath("../GameOverMenu")
 
 [node name="Targets" type="Node" parent="." unique_id=1426692446]
 
-[node name="ThrowTarget" parent="Targets" unique_id=1661693050 instance=ExtResource("15_w6eyw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 107.217896, 17.38071, 0)
-
 [node name="IslandRail" type="Node3D" parent="Targets" unique_id=1315635127]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.098749, 0)
 script = ExtResource("9_u0g6g")
 Radius = 150.0
+DrawDebug = false
 
 [node name="IslandHighRail" type="Node3D" parent="Targets" unique_id=1130189868]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 41.219345, 0)
 script = ExtResource("9_u0g6g")
 Radius = 75.0
+DrawDebug = false
 DebugColor = Color(0.24313726, 1, 0.92941177, 1)
 
 [node name="TargetWaveSpawner3D" type="Node3D" parent="Targets" unique_id=844738347 node_paths=PackedStringArray("TargetParent", "Rails")]
 script = ExtResource("10_wvnm0")
-TargetScene = ExtResource("15_w6eyw")
+TargetParent = NodePath("..")
+Rails = []
+TargetsPerWave = 10
+SlowTargetRailSpeed = 0.01
+FastTargetRailSpeed = 0.05
+
+[node name="PlanetWaveSpawner3D" type="Node3D" parent="Targets" unique_id=67709726 node_paths=PackedStringArray("TargetParent", "Rails")]
+script = ExtResource("20_0bv2d")
+PlanetTargetScene = ExtResource("17_hbj87")
 TargetParent = NodePath("..")
 Rails = [NodePath("../IslandRail"), NodePath("../IslandHighRail")]
-TargetsPerWave = 10
+WaveDuration = 10.0
+TargetsPerWave = 15
 SlowTargetRailSpeed = 0.01
 FastTargetRailSpeed = 0.05
 
