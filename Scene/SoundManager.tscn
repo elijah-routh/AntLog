@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://7yof33ed26u0" path="res://Assets/SFX/400 Sounds Pack/Retro/explosion_small.wav" id="6_25sf3"]
 [ext_resource type="AudioStream" uid="uid://cxeu7586rlmmk" path="res://Assets/SFX/400 Sounds Pack/Retro/explosion_medium.wav" id="7_sh74b"]
 [ext_resource type="AudioStream" uid="uid://b8k4g2lecn8gx" path="res://Assets/SFX/400 Sounds Pack/Retro/explosion_large.wav" id="8_2cf5a"]
-[ext_resource type="AudioStream" uid="uid://dftlmwwb1niq3" path="res://Assets/SFX/400 Sounds Pack/Musical Effects/brass_level_complete.wav" id="9_25sf3"]
+[ext_resource type="AudioStream" uid="uid://doyfton3xrnar" path="res://Assets/SFX/400 Sounds Pack/Musical Effects/brass_defeated.wav" id="9_e2rva"]
 [ext_resource type="AudioStream" uid="uid://bjp5aqxc46ydn" path="res://Assets/SFX/400 Sounds Pack/Retro/jump.wav" id="10_e2rva"]
 [ext_resource type="AudioStream" uid="uid://cegyh2mwarquf" path="res://Assets/SFX/400 Sounds Pack/Other/whoosh_1.wav" id="11_kwr6g"]
 [ext_resource type="AudioStream" uid="uid://c6giirulnlrsc" path="res://Assets/SFX/400 Sounds Pack/Retro/punch.wav" id="12_gnsag"]
@@ -48,7 +48,8 @@ stream = ExtResource("7_sh74b")
 stream = ExtResource("8_2cf5a")
 
 [node name="WinPlayer" type="AudioStreamPlayer" parent="." unique_id=159209920]
-stream = ExtResource("9_25sf3")
+stream = ExtResource("9_e2rva")
+volume_db = 12.0
 
 [node name="ThrowPlayer" type="AudioStreamPlayer" parent="." unique_id=1787738756]
 stream = ExtResource("10_e2rva")

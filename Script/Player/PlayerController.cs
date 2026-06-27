@@ -126,6 +126,7 @@ public partial class PlayerController : CharacterBody3D, IDamageable, IHealable,
 
         // Play death animation.
         Animations?.PlayDeath();
+        SoundManager.Instance.PlayWinSound();
 
         // Wait so the death animation can be seen before game-over UI/camera.
         SceneTreeTimer timer = GetTree().CreateTimer(DeathGameOverDelay);

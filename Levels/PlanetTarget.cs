@@ -17,6 +17,13 @@ namespace Game.Targets
             Fast
         }
 
+        public enum SpinDirectionType
+        {
+            None,
+            Left,
+            Right
+        }
+
         [Signal]
         public delegate void TargetHitEventHandler(PlanetTarget target, int points);
 
@@ -40,6 +47,14 @@ namespace Game.Targets
         [Export] public float SlowMoveSpeed = 0.01f;
         [Export] public float FastMoveSpeed = 0.05f;
 
+        [ExportGroup("Spin Settings")]
+        [Export] public bool EnableRandomSpin = true;
+        [Export] public float SpinSpeedDegrees = 30.0f;
+        [Export] public Vector3 SpinAxis = new Vector3(0f, 1f, 0f);
+        [Export] public bool RandomizeStartingYRotation = true;
+        [Export] public float MinStartingYRotationDegrees = 0f;
+        [Export] public float MaxStartingYRotationDegrees = 360f;
+
         [ExportGroup("Score Settings")]
         [Export] public int BasePoints = 100;
         [Export] public float SmallSizeMultiplier = 2.0f;
@@ -54,6 +69,7 @@ namespace Game.Targets
         public float MoveSpeed { get; private set; }
         public int PointValue { get; private set; }
         public Node3D CurrentVisual { get; private set; }
+        public SpinDirectionType SpinDirection { get; private set; } = SpinDirectionType.None;
 
         private bool _hasBeenHit;
         private readonly RandomNumberGenerator _rng = new();
@@ -74,6 +90,8 @@ namespace Game.Targets
             ApplySize();
             ApplySpeed();
             CalculatePoints();
+            PickRandomSpin();
+            ApplyRandomStartingYRotation();
 
             if (PickRandomVisualOnReady)
                 PickRandomVisual();
@@ -90,6 +108,11 @@ namespace Game.Targets
             }
         }
 
+        public override void _Process(double delta)
+        {
+            ApplySpin(delta);
+        }
+
         public void Setup(TargetSizeType sizeType, TargetSpeedType speedType)
         {
             SizeType = sizeType;
@@ -98,6 +121,8 @@ namespace Game.Targets
             ApplySize();
             ApplySpeed();
             CalculatePoints();
+            PickRandomSpin();
+            ApplyRandomStartingYRotation();
 
             PickRandomVisual();
 
@@ -131,6 +156,56 @@ namespace Game.Targets
                 : SlowSpeedMultiplier;
 
             PointValue = Mathf.RoundToInt(BasePoints * sizeMultiplier * speedMultiplier);
+        }
+
+        private void PickRandomSpin()
+        {
+            if (!EnableRandomSpin)
+            {
+                SpinDirection = SpinDirectionType.None;
+                return;
+            }
+
+            int randomSpin = _rng.RandiRange(0, 2);
+
+            SpinDirection = randomSpin switch
+            {
+                0 => SpinDirectionType.None,
+                1 => SpinDirectionType.Left,
+                2 => SpinDirectionType.Right,
+                _ => SpinDirectionType.None
+            };
+        }
+
+        private void ApplySpin(double delta)
+        {
+            if (SpinDirection == SpinDirectionType.None)
+                return;
+
+            if (SpinAxis.LengthSquared() <= 0.001f)
+                return;
+
+            float directionMultiplier = SpinDirection == SpinDirectionType.Left ? -1f : 1f;
+            float rotationAmount = Mathf.DegToRad(SpinSpeedDegrees) * directionMultiplier * (float)delta;
+
+            Rotate(SpinAxis.Normalized(), rotationAmount);
+        }
+
+        private void ApplyRandomStartingYRotation()
+        {
+            if (!RandomizeStartingYRotation)
+                return;
+
+            float randomY = _rng.RandfRange(
+                MinStartingYRotationDegrees,
+                MaxStartingYRotationDegrees
+            );
+
+            RotationDegrees = new Vector3(
+                RotationDegrees.X,
+                randomY,
+                RotationDegrees.Z
+            );
         }
 
         public void PickRandomVisual()

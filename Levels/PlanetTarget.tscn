@@ -22,7 +22,7 @@ VisualSpawnPoint = NodePath(".")
 TargetVisualScenes = Array[PackedScene]([ExtResource("2_w4664"), ExtResource("3_8sjsn"), ExtResource("4_15unb"), ExtResource("5_kvw4i"), ExtResource("6_qtmce"), ExtResource("7_olf5c"), ExtResource("8_cmta1"), ExtResource("9_0bod8"), ExtResource("10_yterv"), ExtResource("11_qtmce")])
 SmallScale = 5.0
 LargeScale = 10.0
-SpinSpeedDegrees = 25.0
+SpinSpeedDegrees = 20.0
 
 [node name="Area3D" type="Area3D" parent="." unique_id=1458424803]
 collision_layer = 128
